@@ -1,2 +1,13 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Faults/>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/ns:composite/ns:wire/ns:target.uri[.='getCreditStatus']</loc>
+      <line>83</line>
+      <col>17</col>
+      <file>C:\Oracle\Middleware\config\soa\POProcessing\POProcessing\SOA\composite.xml</file>
+      <name>C:\Oracle\Middleware\config\soa\POProcessing\POProcessing\SOA\composite.xml</name>
+      <fix/>
+      <msg>Fallo de validación de esquema con la excepción "null"</msg>
+   </Fault>
+</Faults>
