@@ -1,0 +1,12 @@
+<adapter-config name="validateCC" adapter="db" wsdlLocation="../WSDLs/validateCC.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory UIConnectionName="soacursoJonathanAbregoDataSource" location="eis/DB/soacursoJonathanAbrego"/>
+  <endpoint-interaction portType="validateCC_ptt" operation="validateCC">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="SERENA"/>
+      <property name="ProcedureName" value="VALIDATECC"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>
