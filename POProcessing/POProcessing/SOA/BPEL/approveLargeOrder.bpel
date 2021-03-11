@@ -28,7 +28,7 @@
          xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
          xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
          xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
-         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
     <!-- 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,6 +67,7 @@
         <variable name="outputVariable" messageType="client:approveLargeOrderResponseMessage"/>
         <variable name="invokeCCStatusService_execute_InputVariable" messageType="ns1:requestMessage"/>
         <variable name="invokeCCStatusService_execute_OutputVariable" messageType="ns1:replyMessage"/>
+        <variable messageType="bpelx:RuntimeFaultMessage" name="FaultVar"/>
     </variables>
 
     <!-- 
@@ -94,10 +95,34 @@
                     part="payload" query="/ns2:Order"/>
             </copy>
         </assign>
-        <invoke name="invokeCCStatusService" partnerLink="getCreditStatus"
-                inputVariable="invokeCCStatusService_execute_InputVariable"
-                outputVariable="invokeCCStatusService_execute_OutputVariable" portType="ns1:execute_ptt"
-                operation="execute"/>
+        <scope name="Scope1">
+            <faultHandlers>
+                <catch faultName="bpelx:bindingFault" faultVariable="FaultVar">
+                    <switch name="Switch1">
+                        <case condition="bpws:getVariableData('FaultVar','code')=20001">
+                            <bpelx:annotation>
+                                <bpelx:general/>
+                            </bpelx:annotation>
+                            <assign name="assign_UNKNOWNCC">
+                                <copy>
+                                    <from expression="'UNKNOWN CC'"/>
+                                    <to bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"
+                                        variable="invokeCCStatusService_execute_OutputVariable" part="part1"
+                                        query="/ns3:creditcardStatus"/>
+                                </copy>
+                            </assign>
+                        </case>
+                        <otherwise>
+                            <throw name="Throw_Binding_Fault" faultName="bpelx:bindingFault" faultVariable="FaultVar"/>
+                        </otherwise>
+                    </switch>
+                </catch>
+            </faultHandlers>
+            <invoke name="invokeCCStatusService" partnerLink="getCreditStatus"
+                    inputVariable="invokeCCStatusService_execute_InputVariable"
+                    outputVariable="invokeCCStatusService_execute_OutputVariable" portType="ns1:execute_ptt"
+                    operation="execute"/>
+        </scope>
         <switch name="EvaluateCCStatus">
             <case condition="bpws:getVariableData('invokeCCStatusService_execute_OutputVariable','part1','/ns3:creditcardStatus')='VALID'">
                 <bpelx:annotation>

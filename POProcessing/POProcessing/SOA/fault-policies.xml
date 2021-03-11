@@ -5,12 +5,19 @@
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <Conditions>
       <!-- Step #1: Add your fault handler for remote fault here: -->
-      <faultName xmlns:bpelx="http://schemas.oracle.com/bpel/extension" name="bpelx:remoteFault">
+      <faultName name="bpelx:remoteFault" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
         <condition>
-          <action ref="ora-human-intervention"/>
+          <action ref="my-java-handler"/>
         </condition>
       </faultName>
       <!-- Step #2: Add your fault handler for binding fault here: -->
+      <faultName xmlns:bpelx="http://schemas.oracle.com/bpel/extension" name="bpelx:bindingFault">
+        <condition>
+          <!-- Let the component handle this specific binding fault -->
+          <test>$fault.code="20001"</test>
+          <action ref="my-java-handler"/>
+        </condition>
+      </faultName>
       <!-- Step #3: Add your fault handler for mediator faults here: -->
     </Conditions>
     <Actions>
@@ -48,7 +55,7 @@
       <!-- Property set for MyFaultHandler customer java action -->
       <propertySet name="myProps">
         <property name="logFileName">myfaulthandler.log</property>
-        <property name="logFileDir">c:\po\log</property>
+        <property name="logFileDir">/home/oracle/cursosoa/jonathanabrego/samples/soa/poprocessing/log</property>
       </propertySet>
       <!-- Step #5: Add new property set for MyFaultHandler for logging Mediator faults here:-->
     </Properties>
