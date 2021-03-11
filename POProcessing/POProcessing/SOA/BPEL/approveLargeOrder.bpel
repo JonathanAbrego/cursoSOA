@@ -1,0 +1,133 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Thu Mar 11 12:15:44 CST 2021
+  Author:  jonab
+  Type: BPEL 1.1 Process
+  Purpose: Asynchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="approveLargeOrder"
+         targetNamespace="http://xmlns.oracle.com/POProcessing/POProcessing/approveLargeOrder"
+         xmlns="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:client="http://xmlns.oracle.com/POProcessing/POProcessing/approveLargeOrder"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:ns1="http://oracle.com/sca/soapservice/CreditCardValidationJonathanAbrego/validationForCCJonathanAbrego/getStatusByCC"
+         xmlns:ns3="http://www.globalcompany.com/ns/CCAuthorizationService"
+         xmlns:ns2="http://xmlns.oracle.com/ns/order"
+         xmlns:bpel2="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <bpelx:annotation>
+        <bpelx:analysis>
+            <bpelx:property name="wsdlFile">
+                <![CDATA[../WSDLs/approveLargeOrder.wsdl]]>
+            </bpelx:property>
+        </bpelx:analysis>
+    </bpelx:annotation>
+    <partnerLinks>
+        <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+        <partnerLink name="approvelargeorder_client" partnerLinkType="client:approveLargeOrder" myRole="approveLargeOrderProvider" partnerRole="approveLargeOrderRequester"/>
+        <partnerLink name="getCreditStatus" partnerLinkType="ns1:getCreditStatus" partnerRole="execute_ptt"/>
+    </partnerLinks>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        VARIABLES                                                        
+        List of messages and XML documents used within this BPEL process 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <variables>
+        <!-- Reference to the message passed as input during initiation -->
+        <variable name="inputVariable" messageType="client:approveLargeOrderRequestMessage"/>
+
+        <!-- Reference to the message that will be sent back to the requester during callback -->
+        <variable name="outputVariable" messageType="client:approveLargeOrderResponseMessage"/>
+        <variable name="invokeCCStatusService_execute_InputVariable" messageType="ns1:requestMessage"/>
+        <variable name="invokeCCStatusService_execute_OutputVariable" messageType="ns1:replyMessage"/>
+    </variables>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC                                               
+       Set of activities coordinating the flow of messages across the    
+       services integrated within this business process                  
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <sequence name="main">
+        <!-- Receive input from requestor. (Note: This maps to operation defined in approveLargeOrder.wsdl) -->
+        <receive name="receiveInput" partnerLink="approvelargeorder_client" portType="client:approveLargeOrder" operation="process" variable="inputVariable" createInstance="yes"/>
+        <assign name="assignCCNumber">
+            <copy>
+                <from bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" variable="inputVariable"
+                      part="payload" query="/ns2:Order/ns2:creditCardInfo/ns2:cardNumber"/>
+                <to bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"
+                    variable="invokeCCStatusService_execute_InputVariable" part="part1"
+                    query="/ns3:creditcardStatusRequest/ns3:CCNumber"/>
+            </copy>
+            <copy>
+                <from bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" variable="inputVariable"
+                      part="payload" query="/ns2:Order"/>
+                <to bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" variable="outputVariable"
+                    part="payload" query="/ns2:Order"/>
+            </copy>
+        </assign>
+        <invoke name="invokeCCStatusService" partnerLink="getCreditStatus"
+                inputVariable="invokeCCStatusService_execute_InputVariable"
+                outputVariable="invokeCCStatusService_execute_OutputVariable" portType="ns1:execute_ptt"
+                operation="execute"/>
+        <switch name="EvaluateCCStatus">
+            <case condition="bpws:getVariableData('invokeCCStatusService_execute_OutputVariable','part1','/ns3:creditcardStatus')='VALID'">
+                <bpelx:annotation>
+                    <bpelx:general>
+                        <bpelx:property name="userLabel">
+                            <![CDATA[CreditCardValid]]>
+                        </bpelx:property>
+                    </bpelx:general>
+                </bpelx:annotation>
+                <assign name="assignApproval">
+                    <copy>
+                        <from expression="'approved'"/>
+                        <to bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" variable="outputVariable"
+                            part="payload" query="/ns2:Order/ns2:status"/>
+                    </copy>
+                </assign>
+            </case>
+            <otherwise>
+                <assign name="assignInvalidCC">
+                    <copy>
+                        <from expression="'invalidCreditCard'"/>
+                        <to bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" variable="outputVariable"
+                            part="payload" query="/ns2:Order/ns2:status"/>
+                    </copy>
+                </assign>
+            </otherwise>
+        </switch>
+        <!-- 
+          Asynchronous callback to the requester. (Note: the callback location and correlation id is transparently handled using WS-addressing.)
+        -->
+        <invoke name="callbackClient" partnerLink="approvelargeorder_client" portType="client:approveLargeOrderCallback" operation="processResponse" inputVariable="outputVariable"/>
+    </sequence>
+</process>
