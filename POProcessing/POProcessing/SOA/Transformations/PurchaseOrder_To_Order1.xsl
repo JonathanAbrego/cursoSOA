@@ -42,9 +42,7 @@
          <ns0:qty>
             <xsl:value-of select="/ns0:PurchaseOrder/ns0:quantity"/>
          </ns0:qty>
-         <ns0:status>
-            <xsl:value-of select="/ns0:PurchaseOrder/ns0:status"/>
-         </ns0:status>
+         <ns0:status>approved</ns0:status>
          <ns0:creditCardInfo>
             <ns0:cardNumber>
                <xsl:value-of select="/ns0:PurchaseOrder/ns0:ccNumber"/>

@@ -3,7 +3,8 @@
                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
                 xmlns:tns="http://oracle.com/sca/soapservice/POProcessing/POProcessing/recibePO"
                 xmlns:client="http://xmlns.oracle.com/POProcessing/POProcessing/approveLargeOrder"
-                xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+                xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+                xmlns:ns2="http://schemas.oracle.com/bpel/extension">
    <oracle-xsl-mapper:schema>
       <!--SPECIFICATION OF MAP SOURCES AND TARGETS, DO NOT MODIFY.-->
       <oracle-xsl-mapper:mapSources>
