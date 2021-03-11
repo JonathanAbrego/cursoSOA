@@ -5,17 +5,6 @@
           xmlns:inp1="http://xmlns.oracle.com/ns/order">
   <operation name="execute" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
     <switch>
-      <case executionType="sequential" name="WriteApprovalJonathanAbregoResults.Write">
-        <condition language="xpath">
-          <expression>($in.part1/inp1:PurchaseOrder/inp1:price * $in.part1/inp1:PurchaseOrder/inp1:quantity) &lt; 1000</expression>
-        </condition>
-        <action>
-          <transform>
-            <part name="$out.body" function="xslt(../Transformations/PurchaseOrder_To_Order1.xsl, $in.part1)"/>
-          </transform>
-          <invoke reference="WriteApprovalJonathanAbregoResults" operation="Write"/>
-        </action>
-      </case>
       <case executionType="sequential" name="approveLargeOrder.approvelargeorder_client.process">
         <condition language="xpath">
           <expression>($in.part1/inp1:PurchaseOrder/inp1:price * $in.part1/inp1:PurchaseOrder/inp1:quantity) &gt;= 1000</expression>
@@ -32,6 +21,17 @@
               <forward reference="WriteApprovalJonathanAbregoResults" operation="Write"/>
             </onCallback>
           </invoke>
+        </action>
+      </case>
+      <case executionType="parallel" name="WriteApprovalJonathanAbregoResults.Write">
+        <condition language="xpath">
+          <expression>($in.part1/inp1:PurchaseOrder/inp1:price * $in.part1/inp1:PurchaseOrder/inp1:quantity) &lt; 1000</expression>
+        </condition>
+        <action>
+          <transform>
+            <part name="$out.body" function="xslt(../Transformations/PurchaseOrder_To_Order1.xsl, $in.part1)"/>
+          </transform>
+          <invoke reference="WriteApprovalJonathanAbregoResults" operation="Write"/>
         </action>
       </case>
     </switch>
