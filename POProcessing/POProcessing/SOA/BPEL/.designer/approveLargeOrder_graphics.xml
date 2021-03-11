@@ -4,16 +4,24 @@
    <annotationfile/>
    <iconize/>
    <partnerlink_locations>
-      <partnerlink name="approvelargeorder_client" x="0" y="554" side="left"/>
-      <partnerlink name="getCreditStatus" x="972" y="323" side="right"/>
+      <partnerlink name="approvelargeorder_client" x="0" y="734" side="left"/>
+      <partnerlink name="ManualPOApprovalJonathanAbrego.TaskService" x="0" y="18" side="left"/>
+      <partnerlink name="getCreditStatus" x="1172" y="323" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,119,1094,524" show_swimlanes="true">
+   <graph_layout viewport="0,675,1238,531" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
       <layout_item collapsed="false" xpath="/process/sequence/scope" type="scope" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence/scope/faultHandlers/catch" type="catch"/>
       <layout_item collapsed="false" xpath="/process/sequence/scope/faultHandlers/catch/switch" type="switch"/>
       <layout_item collapsed="false" xpath="/process/sequence/switch" type="switch"/>
+      <layout_item collapsed="false" xpath="/process/sequence/switch/case/sequence" type="sequence"/>
+      <layout_item collapsed="true" xpath="/process/sequence/switch/case/sequence/scope" type="human task" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/sequence/switch/case/sequence/scope/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/switch/case/sequence/switch" type="switch"/>
+      <layout_item collapsed="false" xpath="/process/sequence/switch/case/sequence/switch/case[1]/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/switch/case/sequence/switch/case[2]/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/switch/case/sequence/switch/otherwise/sequence" type="sequence"/>
    </graph_layout>
    <bookmarks/>
 </graphics>

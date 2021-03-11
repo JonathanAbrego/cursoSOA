@@ -2,8 +2,28 @@
 <Faults>
    <Fault>
       <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>HumanTasks/ManualPOApprovalJonathanAbrego.task</file>
+      <name>HumanTasks/ManualPOApprovalJonathanAbrego.task</name>
+      <fix/>
+      <msg>Task owner not specified</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>HumanTasks/ManualPOApprovalJonathanAbrego.task</file>
+      <name>HumanTasks/ManualPOApprovalJonathanAbrego.task</name>
+      <fix/>
+      <msg>Error assignee not specified</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
       <loc>/ns:composite/ns:wire/ns:target.uri[.='getCreditStatus']</loc>
-      <line>83</line>
+      <line>99</line>
       <col>17</col>
       <file>C:\Oracle\Middleware\config\soa\POProcessing\POProcessing\SOA\composite.xml</file>
       <name>C:\Oracle\Middleware\config\soa\POProcessing\POProcessing\SOA\composite.xml</name>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<JavaBean xmlns="http://xmlns.oracle.com/adfm/beanmodel" version="12.2.1.9.14"
+          id="ManualPOApprovalJonathanAbregoPayloadType"
+          Package="ApproveTaskDetailsJonathanAbrego_ManualPOApprovalJonathanAbrego"
+          BeanClass="ApproveTaskDetailsJonathanAbrego_ManualPOApprovalJonathanAbrego.ManualPOApprovalJonathanAbregoPayloadType"
+          isJavaBased="false">
+  <AccessorAttribute id="Order" IsCollection="true"
+                     BeanClass="ApproveTaskDetailsJonathanAbrego_ManualPOApprovalJonathanAbrego.OrderType"
+                     CollectionBeanClass="ApproveTaskDetailsJonathanAbrego_ManualPOApprovalJonathanAbrego.OrderType_Order_Operations">
+    <Properties>
+      <Property Name="minOccurs" Value="1"/>
+      <Property Name="maxOccurs" Value="1"/>
+      <Property Name="LABEL" Value="Order"/>
+      <Property Name="nillable" Value="false"/>
+      <Property Name="originalName" Value="Order"/>
+      <Property Name="targetNamespace" Value="http://xmlns.oracle.com/ns/order"/>
+    </Properties>
+  </AccessorAttribute>
+</JavaBean>

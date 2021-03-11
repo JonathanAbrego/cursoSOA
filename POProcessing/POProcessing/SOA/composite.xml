@@ -21,6 +21,8 @@
           location="WSDLs/approveLargeOrder.wsdl" importType="wsdl"/>
   <import namespace="http://oracle.com/sca/soapservice/CreditCardValidationJonathanAbrego/validationForCCJonathanAbrego/getStatusByCC"
           location="WSDLs/getStatusByCCWrapper.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/bpel/workflow/taskService"
+          location="oramds:/soa/shared/workflow/TaskServiceInterface.wsdl" importType="wsdl"/>
   <service name="receivePO" ui:wsdlLocation="WSDLs/recibePO.wsdl">
     <interface.wsdl interface="http://oracle.com/sca/soapservice/POProcessing/POProcessing/recibePO#wsdl.interface(execute_ptt)"/>
     <binding.ws port="http://oracle.com/sca/soapservice/POProcessing/POProcessing/recibePO#wsdl.endpoint(recibePO/execute_pt)">
@@ -55,8 +57,22 @@
       <reference name="getCreditStatus" ui:wsdlLocation="WSDLs/getStatusByCCWrapper.wsdl">
         <interface.wsdl interface="http://oracle.com/sca/soapservice/CreditCardValidationJonathanAbrego/validationForCCJonathanAbrego/getStatusByCC#wsdl.interface(execute_ptt)"/>
       </reference>
+      <reference name="ManualPOApprovalJonathanAbrego.TaskService"
+                 ui:wsdlLocation="oramds:/soa/shared/workflow/TaskServiceInterface.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskService)"
+                        callbackInterface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskServiceCallback)"/>
+      </reference>
     </componentType>
     <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string" many="false">async.persist</property>
+  </component>
+  <component name="ManualPOApprovalJonathanAbrego">
+    <implementation.workflow src="HumanTasks/ManualPOApprovalJonathanAbrego.task"/>
+    <componentType>
+      <service name="TaskService" ui:wsdlLocation="oramds:/soa/shared/workflow/TaskServiceInterface.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskService)"
+                        callbackInterface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskServiceCallback)"/>
+      </service>
+    </componentType>
   </component>
   <reference name="WriteApprovalJonathanAbregoResults" ui:wsdlLocation="WSDLs/WriteApprovalJonathanAbregoResults.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/file/POProcessing/POProcessing/WriteApprovalJonathanAbregoResults#wsdl.interface(Write_ptt)"/>
@@ -85,5 +101,9 @@
   <wire>
     <source.uri>routePO/approveLargeOrder.approvelargeorder_client</source.uri>
     <target.uri>approveLargeOrder/approvelargeorder_client</target.uri>
+  </wire>
+  <wire>
+    <source.uri>approveLargeOrder/ManualPOApprovalJonathanAbrego.TaskService</source.uri>
+    <target.uri>ManualPOApprovalJonathanAbrego/TaskService</target.uri>
   </wire>
 </composite>
