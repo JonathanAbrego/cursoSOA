@@ -36,7 +36,8 @@
          xmlns:ns5="http://xmlns.oracle.com/bpel/workflow/TaskEvidenceService"
          xmlns:ns6="http://www.globalcompany.com/ns/OrderBooking/rules"
          xmlns:ns7="http://xmlns.oracle.com/ManualApproval/ManualApproval_DecisionService_1"
-         xmlns:ns8="http://xmlns.oracle.com/bpel">
+         xmlns:ns8="http://xmlns.oracle.com/bpel"
+         xmlns:ns9="http://xmlns.oracle.com/POProcessing/POProcessing/FulfillmentProcess">
 
     <!-- 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,6 +64,8 @@
                      partnerRole="TaskService" myRole="TaskServiceCallbackListener"/>
         <partnerLink name="ManualApproval.ManualApproval_DecisionService_1" partnerRole="IDecisionService_Role"
                      partnerLinkType="ns7:IDecisionService_PLT"/>
+        <partnerLink name="FulfillmentProcess.fulfillmentprocess_client" partnerLinkType="ns9:FulfillmentProcess"
+                     partnerRole="FulfillmentProcessProvider" myRole="FulfillmentProcessRequester"/>
     </partnerLinks>
 
     <!-- 
@@ -82,6 +85,7 @@
         <variable messageType="bpelx:RuntimeFaultMessage" name="FaultVar"/>
         <variable name="ManualPOApprovalJonathanAbrego1_globalVariable" messageType="ns4:taskMessage"/>
         <variable name="approvalRequerid" element="ns6:discountandshipping"/>
+        <variable name="Invoke_Fulfillment_process_InputVariable" messageType="ns9:FulfillmentProcessRequestMessage"/>
     </variables>
 
     <!-- 
@@ -326,6 +330,24 @@
                     </copy>
                 </assign>
             </otherwise>
+        </switch>
+        <switch name="Switch_fulfillment">
+            <case condition="bpws:getVariableData('outputVariable','payload','/ns2:Order/ns2:status') = 'approved'">
+                <sequence name="Sequence4">
+                    <assign name="Transformation1">
+                        <bpelx:annotation>
+                            <bpelx:pattern>transformation</bpelx:pattern>
+                        </bpelx:annotation>
+                        <copy>
+                            <from expression="ora:doXSLTransformForDoc('../Transformations/Transformation_1.xsl', $inputVariable.payload)"/>
+                            <to variable="Invoke_Fulfillment_process_InputVariable" part="payload"/>
+                        </copy>
+                    </assign>
+                    <invoke name="Invoke_Fulfillment" partnerLink="FulfillmentProcess.fulfillmentprocess_client"
+                            inputVariable="Invoke_Fulfillment_process_InputVariable" portType="ns9:FulfillmentProcess"
+                            operation="process"/>
+                </sequence>
+            </case>
         </switch>
         <!-- 
           Asynchronous callback to the requester. (Note: the callback location and correlation id is transparently handled using WS-addressing.)

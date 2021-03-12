@@ -8,7 +8,7 @@
   Type: BPEL 1.1 Process
   Purpose: Asynchronous BPEL Process
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
---><process name="approveLargeOrder" targetNamespace="http://xmlns.oracle.com/POProcessing/POProcessing/approveLargeOrder" xmlns="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:client="http://xmlns.oracle.com/POProcessing/POProcessing/approveLargeOrder" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:ns1="http://oracle.com/sca/soapservice/CreditCardValidationJonathanAbrego/validationForCCJonathanAbrego/getStatusByCC" xmlns:ns3="http://www.globalcompany.com/ns/CCAuthorizationService" xmlns:ns2="http://xmlns.oracle.com/ns/order" xmlns:bpel2="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns4="http://xmlns.oracle.com/bpel/workflow/taskService" xmlns:task="http://xmlns.oracle.com/bpel/workflow/task" xmlns:wfcommon="http://xmlns.oracle.com/bpel/workflow/common" xmlns:wf="http://schemas.oracle.com/bpel/extensions/workflow" xmlns:ns5="http://xmlns.oracle.com/bpel/workflow/TaskEvidenceService" xmlns:ns6="http://www.globalcompany.com/ns/OrderBooking/rules" xmlns:ns7="http://xmlns.oracle.com/ManualApproval/ManualApproval_DecisionService_1" xmlns:ns8="http://xmlns.oracle.com/bpel" id="BpPrc0">
+--><process name="approveLargeOrder" targetNamespace="http://xmlns.oracle.com/POProcessing/POProcessing/approveLargeOrder" xmlns="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:client="http://xmlns.oracle.com/POProcessing/POProcessing/approveLargeOrder" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:ns1="http://oracle.com/sca/soapservice/CreditCardValidationJonathanAbrego/validationForCCJonathanAbrego/getStatusByCC" xmlns:ns3="http://www.globalcompany.com/ns/CCAuthorizationService" xmlns:ns2="http://xmlns.oracle.com/ns/order" xmlns:bpel2="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns4="http://xmlns.oracle.com/bpel/workflow/taskService" xmlns:task="http://xmlns.oracle.com/bpel/workflow/task" xmlns:wfcommon="http://xmlns.oracle.com/bpel/workflow/common" xmlns:wf="http://schemas.oracle.com/bpel/extensions/workflow" xmlns:ns5="http://xmlns.oracle.com/bpel/workflow/TaskEvidenceService" xmlns:ns6="http://www.globalcompany.com/ns/OrderBooking/rules" xmlns:ns7="http://xmlns.oracle.com/ManualApproval/ManualApproval_DecisionService_1" xmlns:ns8="http://xmlns.oracle.com/bpel" xmlns:ns9="http://xmlns.oracle.com/POProcessing/POProcessing/FulfillmentProcess" id="BpPrc0">
 
     <!-- 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,6 +33,7 @@
         <partnerLink name="getCreditStatus" partnerLinkType="ns1:getCreditStatus" partnerRole="execute_ptt"/>
         <partnerLink name="ManualPOApprovalJonathanAbrego.TaskService" partnerLinkType="ns4:TaskService" partnerRole="TaskService" myRole="TaskServiceCallbackListener"/>
         <partnerLink name="ManualApproval.ManualApproval_DecisionService_1" partnerRole="IDecisionService_Role" partnerLinkType="ns7:IDecisionService_PLT"/>
+        <partnerLink name="FulfillmentProcess.fulfillmentprocess_client" partnerLinkType="ns9:FulfillmentProcess" partnerRole="FulfillmentProcessProvider" myRole="FulfillmentProcessRequester"/>
     </partnerLinks>
 
     <!-- 
@@ -52,6 +53,7 @@
         <variable messageType="bpelx:RuntimeFaultMessage" name="FaultVar"/>
         <variable name="ManualPOApprovalJonathanAbrego1_globalVariable" messageType="ns4:taskMessage"/>
         <variable name="approvalRequerid" element="ns6:discountandshipping"/>
+        <variable name="Invoke_Fulfillment_process_InputVariable" messageType="ns9:FulfillmentProcessRequestMessage"/>
     </variables>
 
     <!-- 
@@ -257,9 +259,25 @@
                 </assign>
             </otherwise>
         </switch>
+        <switch name="Switch_fulfillment" id="BpSwt4">
+            <case condition="bpws:getVariableData('outputVariable','payload','/ns2:Order/ns2:status') = 'approved'">
+                <sequence name="Sequence4" id="BpSeq8">
+                    <assign name="Transformation1" id="BpAss12">
+                        <bpelx:annotation>
+                            <bpelx:pattern>transformation</bpelx:pattern>
+                        </bpelx:annotation>
+                        <copy>
+                            <from expression="ora:doXSLTransformForDoc('../Transformations/Transformation_1.xsl', $inputVariable.payload)"/>
+                            <to variable="Invoke_Fulfillment_process_InputVariable" part="payload"/>
+                        </copy>
+                    </assign>
+                    <invoke name="Invoke_Fulfillment" partnerLink="FulfillmentProcess.fulfillmentprocess_client" inputVariable="Invoke_Fulfillment_process_InputVariable" portType="ns9:FulfillmentProcess" operation="process" id="BpInv3"/>
+                </sequence>
+            </case>
+        </switch>
         <!-- 
           Asynchronous callback to the requester. (Note: the callback location and correlation id is transparently handled using WS-addressing.)
         -->
-        <invoke name="callbackClient" partnerLink="approvelargeorder_client" portType="client:approveLargeOrderCallback" operation="processResponse" inputVariable="outputVariable" id="BpInv3"/>
+        <invoke name="callbackClient" partnerLink="approvelargeorder_client" portType="client:approveLargeOrderCallback" operation="processResponse" inputVariable="outputVariable" id="BpInv4"/>
     </sequence>
 </process>

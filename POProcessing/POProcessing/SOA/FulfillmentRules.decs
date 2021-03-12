@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<decisionServices xmlns="http://xmlns.oracle.com/bpel/rules" name="FulfillmentRules">
+    <ruleEngineProvider provider="Oracle_11.0.0.0.0" name="OracleRulesSDK">
+        <repository type="SCA-Archive">
+            <path>POProcessing/oracle/rules/fulfillmentrules/FulfillmentRules.rules</path>
+        </repository>
+    </ruleEngineProvider>
+    <decisionService name="OracleRulesFulfillment" ruleEngineProviderReference="OracleRulesSDK" targetNamespace="http://xmlns.oracle.com/FulfillmentRules/OracleRulesFulfillment">
+        <catalog>FulfillmentRules</catalog>
+        <pattern name="CallFunctionStateless">
+            <arguments>
+                <call>fulfillmentrules.FulfillmentRules.lment</call>
+            </arguments>
+        </pattern>
+        <pattern name="CallFunctionStateful">
+            <arguments>
+                <call>fulfillmentrules.FulfillmentRules.lment</call>
+            </arguments>
+        </pattern>
+    </decisionService>
+    <schemaInformation>
+        <dictionary fqnPackage="fulfillmentrules" fqnName="FulfillmentRules" updateNumber="33">
+            <schemaBrowser>
+                <package>com.oracle.xmlns.ns.fulfillment</package>
+                <namespace>http://xmlns.oracle.com/ns/fulfillment</namespace>
+            </schemaBrowser>
+            <schemaImport namespace="http://xmlns.oracle.com/ns/fulfillment" localPart="fulfillment.xsd" schemaLocation="Schemas/fulfillment.xsd">
+                <import namespace="http://xmlns.oracle.com/ns/fulfillment" localPart="fulfillment.xsd" schemaLocation="Schemas/fulfillment.xsd"/>
+            </schemaImport>
+        </dictionary>
+    </schemaInformation>
+</decisionServices>

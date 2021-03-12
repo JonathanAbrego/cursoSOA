@@ -1,0 +1,17 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="OracleRulesFulfillment"
+     targetNamespace="http://xmlns.oracle.com/FulfillmentRules/OracleRulesFulfillment"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+     xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:tns="http://xmlns.oracle.com/FulfillmentRules/OracleRulesFulfillment"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="FulfillmentRules.OracleRulesFulfillment">
+        <plnk:role name="IDecisionService">
+            <plnk:portType name="tns:IDecisionService"/>
+        </plnk:role>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://xmlns.oracle.com/FulfillmentRules/OracleRulesFulfillment" location="OracleRulesFulfillment.wsdl"/>
+</wsdl:definitions>

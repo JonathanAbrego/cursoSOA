@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
     <dgm:gService name="receivePO">
-        <dgm:body borderWidth="2" arcRad="20" X="21" Y="134" width="137" height="84">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="207" width="137" height="84">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="11" Y="127" width="156" height="98">
+        <dgm:shadow arcRad="20" X="11" Y="200" width="156" height="98">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:outputPort name="receivePO" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://oracle.com/sca/soapservice/POProcessing/POProcessing/recibePO#wsdl.interface(execute_ptt)"/>
@@ -15,11 +15,11 @@
         </dgm:operations>
     </dgm:gService>
     <dgm:gReference name="WriteApprovalJonathanAbregoResults">
-        <dgm:body borderWidth="2" arcRad="20" X="1064" Y="26" width="136" height="84">
+        <dgm:body borderWidth="2" arcRad="20" X="1068" Y="26" width="136" height="84">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="1054" Y="19" width="156" height="98">
+        <dgm:shadow arcRad="20" X="1058" Y="19" width="156" height="98">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="WriteApprovalJonathanAbregoResults" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/file/POProcessing/POProcessing/WriteApprovalJonathanAbregoResults#wsdl.interface(Write_ptt)"/>
@@ -29,11 +29,11 @@
         </dgm:operations>
     </dgm:gReference>
     <dgm:gReference name="getCreditStatus">
-        <dgm:body borderWidth="2" arcRad="20" X="1064" Y="144" width="136" height="84">
+        <dgm:body borderWidth="2" arcRad="20" X="1068" Y="144" width="136" height="84">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="1054" Y="137" width="156" height="98">
+        <dgm:shadow arcRad="20" X="1058" Y="137" width="156" height="98">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="getCreditStatus" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://oracle.com/sca/soapservice/CreditCardValidationJonathanAbrego/validationForCCJonathanAbrego/getStatusByCC#wsdl.interface(execute_ptt)"/>
@@ -43,95 +43,147 @@
         </dgm:operations>
     </dgm:gReference>
     <dgm:gComponent name="routePO">
-        <dgm:body borderWidth="2" arcRad="20" X="287" Y="119" width="130" height="86">
+        <dgm:body borderWidth="2" arcRad="20" X="288" Y="192" width="130" height="111">
             <dgm:borderColor r="128" g="92" b="148"/>
             <dgm:lightBgColor r="208" g="169" b="227"/>
             <dgm:darkBgColor r="183" g="132" b="212"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="277" Y="112" width="150" height="102">
+        <dgm:shadow arcRad="20" X="278" Y="185" width="150" height="127">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="routePO" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://oracle.com/sca/soapservice/POProcessing/POProcessing/recibePO#wsdl.interface(execute_ptt)"/>
         <dgm:outputPort name="WriteApprovalJonathanAbregoResults" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/file/POProcessing/POProcessing/WriteApprovalJonathanAbregoResults#wsdl.interface(Write_ptt)"/>
         <dgm:outputPort name="approveLargeOrder.approvelargeorder_client" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/POProcessing/POProcessing/approveLargeOrder#wsdl.interface(approveLargeOrder)" callbackInterface="http://xmlns.oracle.com/POProcessing/POProcessing/approveLargeOrder#wsdl.interface(approveLargeOrderCallback)"/>
+        <dgm:outputPort name="FulfillmentProcess.fulfillmentprocess_client" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/POProcessing/POProcessing/FulfillmentProcess#wsdl.interface(FulfillmentProcess)" callbackInterface="http://xmlns.oracle.com/POProcessing/POProcessing/FulfillmentProcess#wsdl.interface(FulfillmentProcessCallback)"/>
         <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
     </dgm:gComponent>
     <dgm:gComponent name="approveLargeOrder">
-        <dgm:body borderWidth="2" arcRad="20" X="546" Y="192" width="130" height="111">
+        <dgm:body borderWidth="2" arcRad="20" X="548" Y="215" width="130" height="136">
             <dgm:borderColor r="69" g="113" b="140"/>
             <dgm:lightBgColor r="166" g="208" b="230"/>
             <dgm:darkBgColor r="99" g="162" b="201"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="536" Y="185" width="150" height="127">
+        <dgm:shadow arcRad="20" X="538" Y="208" width="150" height="152">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="approvelargeorder_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/POProcessing/POProcessing/approveLargeOrder#wsdl.interface(approveLargeOrder)" callbackInterface="http://xmlns.oracle.com/POProcessing/POProcessing/approveLargeOrder#wsdl.interface(approveLargeOrderCallback)"/>
         <dgm:outputPort name="getCreditStatus" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://oracle.com/sca/soapservice/CreditCardValidationJonathanAbrego/validationForCCJonathanAbrego/getStatusByCC#wsdl.interface(execute_ptt)"/>
         <dgm:outputPort name="ManualPOApprovalJonathanAbrego.TaskService" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskService)" callbackInterface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskServiceCallback)"/>
-        <dgm:outputPort name="ManualApproval.ManualApproval_DecisionService_11" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/ManualApproval/ManualApproval_DecisionService_1#wsdl.interface(IDecisionService)"/>
+        <dgm:outputPort name="ManualApproval.ManualApproval_DecisionService_1" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/ManualApproval/ManualApproval_DecisionService_1#wsdl.interface(IDecisionService)"/>
+        <dgm:outputPort name="FulfillmentProcess.fulfillmentprocess_client" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/POProcessing/POProcessing/FulfillmentProcess#wsdl.interface(FulfillmentProcess)" callbackInterface="http://xmlns.oracle.com/POProcessing/POProcessing/FulfillmentProcess#wsdl.interface(FulfillmentProcessCallback)"/>
         <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
     </dgm:gComponent>
     <dgm:gComponent name="ManualPOApprovalJonathanAbrego">
-        <dgm:body borderWidth="2" arcRad="20" X="805" Y="205" width="130" height="61">
+        <dgm:body borderWidth="2" arcRad="20" X="808" Y="209" width="130" height="61">
             <dgm:borderColor r="109" g="136" b="65"/>
             <dgm:lightBgColor r="201" g="224" b="155"/>
             <dgm:darkBgColor r="157" g="195" b="93"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="795" Y="198" width="150" height="77">
+        <dgm:shadow arcRad="20" X="798" Y="202" width="150" height="77">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="TaskService" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskService)" callbackInterface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskServiceCallback)"/>
         <dgm:nodeIcon URI="/oracle/tip/tools/ide/workflow/resources/images/humantask_20x20.png" X="10" Y="4" width="20" height="20"/>
     </dgm:gComponent>
     <dgm:gComponent name="ManualApproval">
-        <dgm:body borderWidth="2" arcRad="20" X="805" Y="300" width="130" height="61">
+        <dgm:body borderWidth="2" arcRad="20" X="808" Y="304" width="130" height="61">
             <dgm:borderColor r="178" g="138" b="53"/>
             <dgm:lightBgColor r="255" g="226" b="142"/>
             <dgm:darkBgColor r="255" g="198" b="77"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="795" Y="293" width="150" height="77">
+        <dgm:shadow arcRad="20" X="798" Y="297" width="150" height="77">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="ManualApproval_DecisionService_1" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/ManualApproval/ManualApproval_DecisionService_1#wsdl.interface(IDecisionService)"/>
         <dgm:nodeIcon URI="/oracle/tip/tools/ide/rules/plugins/resources/images/soa/decision_20x20.png" X="10" Y="4" width="20" height="20"/>
     </dgm:gComponent>
+    <dgm:gComponent name="FulfillmentProcess">
+        <dgm:body borderWidth="2" arcRad="20" X="808" Y="399" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="798" Y="392" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="fulfillmentprocess_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/POProcessing/POProcessing/FulfillmentProcess#wsdl.interface(FulfillmentProcess)" callbackInterface="http://xmlns.oracle.com/POProcessing/POProcessing/FulfillmentProcess#wsdl.interface(FulfillmentProcessCallback)"/>
+        <dgm:outputPort name="FulfillmentRules.OracleRulesFulfillment" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/FulfillmentRules/OracleRulesFulfillment#wsdl.interface(IDecisionService)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="FulfillmentRules">
+        <dgm:body borderWidth="2" arcRad="20" X="548" Y="416" width="130" height="61">
+            <dgm:borderColor r="178" g="138" b="53"/>
+            <dgm:lightBgColor r="255" g="226" b="142"/>
+            <dgm:darkBgColor r="255" g="198" b="77"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="538" Y="409" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="OracleRulesFulfillment" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/FulfillmentRules/OracleRulesFulfillment#wsdl.interface(IDecisionService)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/rules/plugins/resources/images/soa/decision_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
     <dgm:gWireLink source="receivePO" target="routePO/routePO" width="2">
-        <dgm:gSegment X1="168" Y1="144" X2="277" Y2="144"/>
+        <dgm:gSegment X1="168" Y1="217" X2="278" Y2="217"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="routePO/WriteApprovalJonathanAbregoResults" target="WriteApprovalJonathanAbregoResults" width="2">
-        <dgm:gSegment X1="427" Y1="144" X2="451" Y2="144"/>
-        <dgm:gSegment X1="451" Y1="144" X2="451" Y2="36"/>
-        <dgm:gSegment X1="451" Y1="36" X2="1054" Y2="36"/>
+        <dgm:gSegment X1="428" Y1="217" X2="452" Y2="217"/>
+        <dgm:gSegment X1="452" Y1="217" X2="452" Y2="36"/>
+        <dgm:gSegment X1="452" Y1="36" X2="1058" Y2="36"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="approveLargeOrder/getCreditStatus" target="getCreditStatus" width="2">
-        <dgm:gSegment X1="686" Y1="217" X2="710" Y2="217"/>
-        <dgm:gSegment X1="710" Y1="217" X2="710" Y2="154"/>
-        <dgm:gSegment X1="710" Y1="154" X2="1054" Y2="154"/>
+        <dgm:gSegment X1="688" Y1="240" X2="712" Y2="240"/>
+        <dgm:gSegment X1="712" Y1="240" X2="712" Y2="154"/>
+        <dgm:gSegment X1="712" Y1="154" X2="1058" Y2="154"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="routePO/approveLargeOrder.approvelargeorder_client" target="approveLargeOrder/approvelargeorder_client" width="2">
-        <dgm:gSegment X1="427" Y1="169" X2="451" Y2="169"/>
-        <dgm:gSegment X1="451" Y1="169" X2="451" Y2="217"/>
-        <dgm:gSegment X1="451" Y1="217" X2="536" Y2="217"/>
+        <dgm:gSegment X1="428" Y1="242" X2="452" Y2="242"/>
+        <dgm:gSegment X1="452" Y1="242" X2="452" Y2="240"/>
+        <dgm:gSegment X1="452" Y1="240" X2="538" Y2="240"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="approveLargeOrder/ManualPOApprovalJonathanAbrego.TaskService" target="ManualPOApprovalJonathanAbrego/TaskService" width="2">
-        <dgm:gSegment X1="686" Y1="242" X2="725" Y2="242"/>
-        <dgm:gSegment X1="725" Y1="242" X2="725" Y2="230"/>
-        <dgm:gSegment X1="725" Y1="230" X2="795" Y2="230"/>
+        <dgm:gSegment X1="688" Y1="265" X2="727" Y2="265"/>
+        <dgm:gSegment X1="727" Y1="265" X2="727" Y2="234"/>
+        <dgm:gSegment X1="727" Y1="234" X2="798" Y2="234"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
-    <dgm:gWireLink source="approveLargeOrder/ManualApproval.ManualApproval_DecisionService_11" target="ManualApproval/ManualApproval_DecisionService_1" width="2">
-        <dgm:gSegment X1="686" Y1="267" X2="710" Y2="267"/>
-        <dgm:gSegment X1="710" Y1="267" X2="710" Y2="325"/>
-        <dgm:gSegment X1="710" Y1="325" X2="795" Y2="325"/>
+    <dgm:gWireLink source="approveLargeOrder/ManualApproval.ManualApproval_DecisionService_1" target="ManualApproval/ManualApproval_DecisionService_1" width="2">
+        <dgm:gSegment X1="688" Y1="290" X2="742" Y2="290"/>
+        <dgm:gSegment X1="742" Y1="290" X2="742" Y2="329"/>
+        <dgm:gSegment X1="742" Y1="329" X2="798" Y2="329"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="FulfillmentProcess/FulfillmentRules.OracleRulesFulfillment" target="FulfillmentRules/OracleRulesFulfillment" width="2">
+        <dgm:gSegment X1="948" Y1="424" X2="972" Y2="424"/>
+        <dgm:gSegment X1="972" Y1="424" X2="972" Y2="503"/>
+        <dgm:gSegment X1="972" Y1="503" X2="452" Y2="503"/>
+        <dgm:gSegment X1="452" Y1="503" X2="452" Y2="441"/>
+        <dgm:gSegment X1="452" Y1="441" X2="538" Y2="441"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="approveLargeOrder/FulfillmentProcess.fulfillmentprocess_client" target="FulfillmentProcess/fulfillmentprocess_client" width="2">
+        <dgm:gSegment X1="688" Y1="315" X2="727" Y2="315"/>
+        <dgm:gSegment X1="727" Y1="315" X2="727" Y2="424"/>
+        <dgm:gSegment X1="727" Y1="424" X2="798" Y2="424"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="routePO/FulfillmentProcess.fulfillmentprocess_client" target="FulfillmentProcess/fulfillmentprocess_client" width="2">
+        <dgm:gSegment X1="428" Y1="267" X2="452" Y2="267"/>
+        <dgm:gSegment X1="452" Y1="267" X2="452" Y2="388"/>
+        <dgm:gSegment X1="452" Y1="388" X2="712" Y2="388"/>
+        <dgm:gSegment X1="712" Y1="388" X2="712" Y2="424"/>
+        <dgm:gSegment X1="712" Y1="424" X2="798" Y2="424"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
