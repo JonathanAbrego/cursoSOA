@@ -23,7 +23,7 @@
    <Fault>
       <severity>warning</severity>
       <loc>/ns:composite/ns:wire/ns:target.uri[.='FulfillmentProcess/fulfillmentprocess_client']</loc>
-      <line>169</line>
+      <line>196</line>
       <col>17</col>
       <file>C:\Oracle\Middleware\config\soa\POProcessing\POProcessing\SOA\composite.xml</file>
       <name>C:\Oracle\Middleware\config\soa\POProcessing\POProcessing\SOA\composite.xml</name>
