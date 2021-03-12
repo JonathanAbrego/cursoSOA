@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="POProcessing">
+      <!--Add search and replace rules for the import section of a composite
+	Example:
+	<searchReplace>
+		<search>http://my-dev-server</search>
+		<replace>http://my-test-server</replace>
+	<searchReplace>
+	<searchReplace>
+		<search>8888</search>
+		<replace>8889</replace>
+	<searchReplace>-->
+      <import>
+         <searchReplace>
+            <search/>
+            <replace/>
+         </searchReplace>
+      </import>
+      <service name="receivePO">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://oracle.com/sca/soapservice/POProcessing/POProcessing/recibePO#wsdl.endpoint(recibePO/execute_pt)</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>NEVER</replace>
+            </property>
+         </binding>
+      </service>
+      <property name="productVersion">
+         <replace>12.2.1.3.0.170820</replace>
+      </property>
+      <property name="compositeID">
+         <replace>3334c888-1aa2-4146-9867-c38b9a816b84</replace>
+      </property>
+      <!--Add search and replace rules for the component properties
+	For components and service/reference bindings, you can add policy references.
+	Example:
+	<component name="*">
+		<wsp:PolicyReference orawsp:category="management" orawsp:status="enabled" URI="oracle/log_policy"/>
+	</component>-->
+      <component name="approveLargeOrder">
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <component name="FulfillmentProcess">
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <!--Add search and replace rules for the reference properties
+	Example:
+	<searchReplace>
+		<search>http://my-dev-server</search>
+		<replace>http://my-test-server</replace>
+	<searchReplace>
+	<searchReplace>
+		<search>8888
+		<replace>8889</replace>
+	<searchReplace>
+	or provide a new replace value like:
+	<replace>http://my-new-server:8889/myservice</replace>-->
+      <reference name="WriteApprovalJonathanAbregoResults">
+         <property name="FileNamingConvention">
+            <replace>orderuoutput_%SEQ%.xml</replace>
+         </property>
+         <binding type="jca"/>
+      </reference>
+      <reference name="getCreditStatus">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://oracle.com/sca/soapservice/CreditCardValidationJonathanAbrego/validationForCCJonathanAbrego/getStatusByCC#wsdl.endpoint(getStatusByCC/execute_pt)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>http://fmw:8101/soa-infra/services/jonathanAbrego/validationForCCJonathanAbrego!1.0/getStatusByCC?WSDL</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="JMS_USPS">
+         <binding type="jca"/>
+      </reference>
+      <reference name="JMS_UPS">
+         <binding type="jca"/>
+      </reference>
+      <reference name="JMS_FedEX">
+         <binding type="jca"/>
+      </reference>
+   </composite>
+   <!--To configure monitor.config: 
+	<property name="enabled"><replace>true</replace></property>
+	<property name="dataObjectsFolder"><searchReplace><search>mydev</search><replace>myproduction</replace></searchReplace></property>
+	
+	sample properties to configure for file/ftp adapter: 
+	<jca:property name="PhysicalDirectory"><replace>c:\temp</replace></jca:property>
+	<jca:property name="DeleteFile"><replace>true</replace></jca:property>
+	<jca:property name="PollingFrequency"><replace>3</replace></jca:property>
+	
+	sample properties to configure for JMS adapter: 
+	<jca:property name="DestinationName"><replace>jms/DemoSupplierTopic</replace></jca:property>
+	<jca:property name="TimeToLive"><replace>0</replace></jca:property>
+	
+	To add search and replace rules for wsdls, xsd and jca files
+	Example:
+	<searchReplace>
+		<search>http://my-dev-server</search>
+		<replace>http://my-test-server</replace>
+	<searchReplace>
+	<searchReplace>
+		<search>8888</search>
+		<replace>8889</replace>
+	<searchReplace>
+	-->
+   <wsdlAndSchema name="Adapters/JMS_FedEX_jms.jca|Adapters/JMS_UPS_jms.jca|Adapters/JMS_USPS_jms.jca|Adapters/WriteApprovalJonathanAbregoResults_file.jca|Schemas/creditcheck.xsd|Schemas/DecisionServicePrimitiveTypes.xsd|Schemas/fulfillment.xsd|Schemas/internalorder.xsd|Schemas/ManualApproval_DecisionService_1MessageTypes.xsd|Schemas/ManualApproval_DecisionService_1Types.xsd|Schemas/ManualPOApprovalJonathanAbregoPayload.xsd|Schemas/ManualPOApprovalJonathanAbregoWorkflowTask.xsd|Schemas/OracleRulesFulfillmentMessageTypes.xsd|Schemas/OracleRulesFulfillmentTypes.xsd|Schemas/OrderBookingDiscount.xsd|Schemas/po.xsd|Schemas/TaskStateMachine.xsd|WSDLs/approveLargeOrder.wsdl|WSDLs/FulfillmentProcess.wsdl|WSDLs/getStatusByCC.wsdl|WSDLs/getStatusByCCWrapper.wsdl|WSDLs/JMS_FedEX.wsdl|WSDLs/JMS_UPS.wsdl|WSDLs/JMS_USPS.wsdl|WSDLs/ManualApproval_DecisionService_1.wsdl|WSDLs/OracleRulesFulfillment.wsdl|WSDLs/OracleRulesFulfillmentWrapper.wsdl|WSDLs/recibePO.wsdl|WSDLs/RuntimeFault.wsdl|WSDLs/WriteApprovalJonathanAbregoResults.wsdl">
+   <jca:property name="PhysicalDirectory">
+    <replace>/home/oracle/cursosoa/jonathanabrego</replace>
+    </jca:property>
+      <searchReplace>
+         <search/>
+         <replace/>
+      </searchReplace>
+   </wsdlAndSchema>
+</SOAConfigPlan>

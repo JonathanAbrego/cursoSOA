@@ -1,0 +1,62 @@
+Modified Composite [ POProcessing ]
+  Composite properties
+	Property [ productVersion ]
+		No change in old and new value 12.2.1.3.0.170820 
+	Property [ compositeID ]
+		No change in old and new value 3334c888-1aa2-4146-9867-c38b9a816b84 
+	Component
+	  Component  [ approveLargeOrder ]
+	    Property [ bpel.config.oneWayDeliveryPolicy ]
+		No change in old and new value async.persist 
+	  Component  [ FulfillmentProcess ]
+	    Property [ bpel.config.oneWayDeliveryPolicy ]
+		No change in old and new value async.persist 
+	Service
+	  Service  [ receivePO ]
+	    Service Bindings
+	  	Binding  [ ws ]
+	    Property [ weblogic.wsee.wsat.transaction.flowOption ]
+		No change in old and new value NEVER 
+	Attribute name=port
+		No change in old and new value http://oracle.com/sca/soapservice/POProcessing/POProcessing/recibePO#wsdl.endpoint(recibePO/execute_pt) 
+	Reference
+	  Reference  [ WriteApprovalJonathanAbregoResults ]
+	    Reference Bindings
+	  Reference  [ getCreditStatus ]
+	    Reference Bindings
+	  Reference  [ JMS_FedEX ]
+	    Reference Bindings
+	  Reference  [ JMS_USPS ]
+	    Reference Bindings
+	  Reference  [ JMS_UPS ]
+	    Reference Bindings
+	  Reference  [ WriteApprovalJonathanAbregoResults ]
+	    Property [ FileNamingConvention ]
+		Old [ test_%SEQ%.xml ] 
+		New [ orderuoutput_%SEQ%.xml ] 
+	    Reference Bindings
+	  	Binding  [ jca ]
+	  Reference  [ getCreditStatus ]
+	    Reference Bindings
+	  	Binding  [ ws ]
+	    Property [ weblogic.wsee.wsat.transaction.flowOption ]
+		No change in old and new value WSDLDriven 
+	Attribute name=port
+		No change in old and new value http://oracle.com/sca/soapservice/CreditCardValidationJonathanAbrego/validationForCCJonathanAbrego/getStatusByCC#wsdl.endpoint(getStatusByCC/execute_pt) 
+	Attribute name=location
+		No change in old and new value http://fmw:8101/soa-infra/services/jonathanAbrego/validationForCCJonathanAbrego!1.0/getStatusByCC?WSDL 
+	  Reference  [ JMS_USPS ]
+	    Reference Bindings
+	  	Binding  [ jca ]
+	  Reference  [ JMS_UPS ]
+	    Reference Bindings
+	  	Binding  [ jca ]
+	  Reference  [ JMS_FedEX ]
+	    Reference Bindings
+	  	Binding  [ jca ]
+---End Match for composite [ POProcessing ] in config plan---
+Checking for replacement in wsdl and schema files
+	WSDL Adapters/WriteApprovalJonathanAbregoResults_file.jca JCA properties 
+	Property [ PhysicalDirectory ]
+		Old Value [ /home/oracle/cursosoa/jonathanabrego ] 
+		New Value [ /home/oracle/cursosoa/jonathanabrego ] 
