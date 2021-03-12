@@ -7,6 +7,7 @@
      xmlns:ns1="http://xmlns.oracle.com/ns/order"
      xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
      xmlns:ns2="http://schemas.oracle.com/bpel/extension"
+     xmlns:ns3="http://www.globalcompany.com/ns/OrderBooking/rules"
     >
     <plnk:partnerLinkType name="approveLargeOrder">
         <plnk:role name="approveLargeOrderProvider">
@@ -21,6 +22,9 @@
         <schema xmlns="http://www.w3.org/2001/XMLSchema">
             <import namespace="http://xmlns.oracle.com/ns/order" schemaLocation="../Schemas/internalorder.xsd"/>
         </schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.globalcompany.com/ns/OrderBooking/rules" schemaLocation="../Schemas/OrderBookingDiscount.xsd"/>
+        </xsd:schema>
     </wsdl:types>
     <wsdl:message name="approveLargeOrderRequestMessage">
         <wsdl:part name="payload" element="ns1:Order"/>

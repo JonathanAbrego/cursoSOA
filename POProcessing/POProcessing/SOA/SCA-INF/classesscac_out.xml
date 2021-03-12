@@ -22,8 +22,8 @@
    </Fault>
    <Fault>
       <severity>warning</severity>
-      <loc>/ns:composite/ns:wire/ns:target.uri[.='getCreditStatus']</loc>
-      <line>99</line>
+      <loc>/ns:composite/ns:wire/ns:target.uri[.='ManualApproval/ManualApproval_DecisionService_1']</loc>
+      <line>125</line>
       <col>17</col>
       <file>C:\Oracle\Middleware\config\soa\POProcessing\POProcessing\SOA\composite.xml</file>
       <name>C:\Oracle\Middleware\config\soa\POProcessing\POProcessing\SOA\composite.xml</name>

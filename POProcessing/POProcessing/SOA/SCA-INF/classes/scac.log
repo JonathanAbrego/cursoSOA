@@ -1,36 +1,36 @@
-2021-03-11 16:56:15.899/1.270 Oracle Coherence 12.2.1.3.0 <Info> (thread=main, member=n/a): Loaded operational configuration from "jar:file:/C:/Oracle/JDev122130/coherence/lib/coherence.jar!/tangosol-coherence.xml"
-2021-03-11 16:56:15.923/1.294 Oracle Coherence 12.2.1.3.0 <Info> (thread=main, member=n/a): Loaded operational overrides from "jar:file:/C:/Oracle/JDev122130/coherence/lib/coherence.jar!/tangosol-coherence-override-dev.xml"
-2021-03-11 16:56:15.924/1.295 Oracle Coherence 12.2.1.3.0 <D5> (thread=main, member=n/a): Optional configuration override "/tangosol-coherence-override.xml" is not specified
-2021-03-11 16:56:15.926/1.297 Oracle Coherence 12.2.1.3.0 <D5> (thread=main, member=n/a): Optional configuration override "cache-factory-config.xml" is not specified
-2021-03-11 16:56:15.926/1.298 Oracle Coherence 12.2.1.3.0 <D5> (thread=main, member=n/a): Optional configuration override "cache-factory-builder-config.xml" is not specified
-2021-03-11 16:56:15.927/1.298 Oracle Coherence 12.2.1.3.0 <D5> (thread=main, member=n/a): Optional configuration override "/custom-mbeans.xml" is not specified
+2021-03-11 18:40:45.297/1.334 Oracle Coherence 12.2.1.3.0 <Info> (thread=main, member=n/a): Loaded operational configuration from "jar:file:/C:/Oracle/JDev122130/coherence/lib/coherence.jar!/tangosol-coherence.xml"
+2021-03-11 18:40:45.319/1.355 Oracle Coherence 12.2.1.3.0 <Info> (thread=main, member=n/a): Loaded operational overrides from "jar:file:/C:/Oracle/JDev122130/coherence/lib/coherence.jar!/tangosol-coherence-override-dev.xml"
+2021-03-11 18:40:45.320/1.356 Oracle Coherence 12.2.1.3.0 <D5> (thread=main, member=n/a): Optional configuration override "/tangosol-coherence-override.xml" is not specified
+2021-03-11 18:40:45.322/1.358 Oracle Coherence 12.2.1.3.0 <D5> (thread=main, member=n/a): Optional configuration override "cache-factory-config.xml" is not specified
+2021-03-11 18:40:45.323/1.360 Oracle Coherence 12.2.1.3.0 <D5> (thread=main, member=n/a): Optional configuration override "cache-factory-builder-config.xml" is not specified
+2021-03-11 18:40:45.325/1.361 Oracle Coherence 12.2.1.3.0 <D5> (thread=main, member=n/a): Optional configuration override "/custom-mbeans.xml" is not specified
 
 Oracle Coherence Version 12.2.1.3.0 Build 68243
  Grid Edition: Development mode
 Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved.
 
-2021-03-11 16:56:16.519/1.891 Oracle Coherence GE 12.2.1.3.0 <Info> (thread=main, member=n/a): Created cache factory com.tangosol.net.ExtensibleConfigurableCacheFactory
-2021-03-11 16:56:16.608/1.979 Oracle Coherence GE 12.2.1.3.0 <Info> (thread=main, member=n/a): The cluster name has not been configured, a value of "jonab's cluster" has been automatically generated
-mar 11, 2021 4:56:17 PM oracle.soa.scac.ValidateComposite loadWSDLs
+2021-03-11 18:40:45.893/1.929 Oracle Coherence GE 12.2.1.3.0 <Info> (thread=main, member=n/a): Created cache factory com.tangosol.net.ExtensibleConfigurableCacheFactory
+2021-03-11 18:40:45.982/2.017 Oracle Coherence GE 12.2.1.3.0 <Info> (thread=main, member=n/a): The cluster name has not been configured, a value of "jonab's cluster" has been automatically generated
+mar 11, 2021 6:40:47 PM oracle.soa.scac.ValidateComposite loadWSDLs
 ADVERTENCIA: Validating WSDLs from WSDLManager....  with option UseSoaInfraMds:false
-mar 11, 2021 4:56:18 PM oracle.fabric.common.wsdl.SchemaManager isIncrementalBuildSupported
+mar 11, 2021 6:40:48 PM oracle.fabric.common.wsdl.SchemaManager isIncrementalBuildSupported
 INFORMACIÓN: XMLSchema incremental build enabled.
-mar 11, 2021 4:56:19 PM com.collaxa.cube.CubeLogger info
+mar 11, 2021 6:40:50 PM com.collaxa.cube.CubeLogger info
 INFORMACIÓN: validando "BPEL/approveLargeOrder.bpel" ...
-mar 11, 2021 4:56:20 PM oracle.fabric.common.wsdl.SchemaManager buildXDKSchema
+mar 11, 2021 6:40:51 PM oracle.fabric.common.wsdl.SchemaManager buildXDKSchema
 INFORMACIÓN: Namespace specified for the lookup belongs to a default namespace URI: http://www.w3.org/2001/XMLSchema. Will not attempt to build the schema model for it...
-mar 11, 2021 4:56:20 PM oracle.fabric.common.wsdl.SchemaManager buildXDKSchema
+mar 11, 2021 6:40:51 PM oracle.fabric.common.wsdl.SchemaManager buildXDKSchema
 INFORMACIÓN: Namespace specified for the lookup belongs to a default namespace URI: http://www.w3.org/2001/XMLSchema. Will not attempt to build the schema model for it...
-mar 11, 2021 4:56:20 PM oracle.fabric.common.wsdl.SchemaManager buildXDKSchema
+mar 11, 2021 6:40:51 PM oracle.fabric.common.wsdl.SchemaManager buildXDKSchema
 INFORMACIÓN: Namespace specified for the lookup belongs to a default namespace URI: http://www.w3.org/2001/XMLSchema. Will not attempt to build the schema model for it...
-mar 11, 2021 4:56:20 PM com.collaxa.cube.CubeLogger info
-INFORMACIÓN: Composed "approveLargeOrder" in 67.9 milliseconds [nodes 37=1+36, 544.8 nodes/sec]
-mar 11, 2021 4:56:22 PM com.collaxa.cube.CubeLogger info
-INFORMACIÓN: Compiled "approveLargeOrder" in 1.090 seconds
-mar 11, 2021 4:56:22 PM com.collaxa.cube.CubeLogger info
-INFORMACIÓN: Gathered 7 files in 1.0 milliseconds
-mar 11, 2021 4:56:22 PM com.collaxa.cube.CubeLogger info
-INFORMACIÓN: Packaged "approveLargeOrder" in 35.2 milliseconds
+mar 11, 2021 6:40:51 PM com.collaxa.cube.CubeLogger info
+INFORMACIÓN: Composed "approveLargeOrder" in 62.1 milliseconds [nodes 50=2+48, 805.3 nodes/sec]
+mar 11, 2021 6:40:52 PM com.collaxa.cube.CubeLogger info
+INFORMACIÓN: Compiled "approveLargeOrder" in 1.048 seconds
+mar 11, 2021 6:40:52 PM com.collaxa.cube.CubeLogger info
+INFORMACIÓN: Gathered 8 files in 0.9 milliseconds
+mar 11, 2021 6:40:52 PM com.collaxa.cube.CubeLogger info
+INFORMACIÓN: Packaged "approveLargeOrder" in 69.2 milliseconds
 Fallo de validación de esquema con la excepción "null"
 oracle.xml.parser.schema.XSDException
 	at oracle.xml.parser.schema.XSDBuilder.buildSchema(XSDBuilder.java:1141)
