@@ -14,5 +14,5 @@
         </plnk:role>
     </plnk:partnerLinkType>
     <wsdl:import namespace="http://oracle.com/sca/soapservice/CreditCardValidationJonathanAbrego/validationForCCJonathanAbrego/getStatusByCC"
-         location="http://fmw:8101/soa-infra/services/jonathanAbrego/validationForCCJonathanAbrego!1.0/WSDLs/getStatusByCC.wsdl"/>
+         location="http://fmw:8101/CreditServiceJonathanAbrego/ProxyService/ValidateCredit?WSDL"/>
 </wsdl:definitions>
