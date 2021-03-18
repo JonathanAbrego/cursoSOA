@@ -211,7 +211,7 @@
                                                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$años</to>
                                             </copy>
                                             <copy>
-                                                <from>concat('Fecha 12 futura: ',substring($inputVariable.payload/ns1:date,6,2),'-',$años,substring($inputVariable.payload/ns1:date,8,3))</from>
+                                                <from>concat('Fecha 12 pasada: ',substring($inputVariable.payload/ns1:date,6,2),'-',$años,substring($inputVariable.payload/ns1:date,8,3))</from>
                                                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:responseDate</to>
                                             </copy>
                                         </assign>
@@ -231,16 +231,16 @@
                                                     <condition>(number(substring($inputVariable.payload/ns1:date,6,2))-$meses) &gt;= 1</condition>
                                                     <assign name="Assign16">
                                                         <copy>
-                                                            <from>number(substring($inputVariable.payload/ns1:date,3,2))+$años</from>
+                                                            <from>number(substring($inputVariable.payload/ns1:date,3,2))-$años</from>
                                                             <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$años</to>
-                                                        </copy>
-                                                        <copy>
-                                                            <from>concat('Fecha 12 pasada: ',$meses,'-',$años,substring($inputVariable.payload/ns1:date,8,3))</from>
-                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:responseDate</to>
                                                         </copy>
                                                         <copy>
                                                             <from>number(substring($inputVariable.payload/ns1:date,6,2))-$meses</from>
                                                             <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$meses</to>
+                                                        </copy>
+                                                        <copy>
+                                                            <from>concat('Fecha 12 pasada: ',$meses,'-',$años,substring($inputVariable.payload/ns1:date,8,3))</from>
+                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:responseDate</to>
                                                         </copy>
                                                     </assign>
                                                 </if>
