@@ -51,6 +51,9 @@
                <xsl:value-of select="/ns0:PurchaseOrder/ns0:ccType"/>
             </ns0:cardType>
          </ns0:creditCardInfo>
+         <ns0:ordiFileName>
+            <xsl:value-of select="/ns0:PurchaseOrder/ns0:fileName"/>
+         </ns0:ordiFileName>
       </ns0:Order>
    </xsl:template>
 </xsl:stylesheet>

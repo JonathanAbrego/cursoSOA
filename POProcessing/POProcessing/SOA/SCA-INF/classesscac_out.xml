@@ -22,6 +22,16 @@
    </Fault>
    <Fault>
       <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>Mediators/routePO.mplan</file>
+      <name>Mediators/routePO.mplan</name>
+      <fix/>
+      <msg>Asignación del elemento "$in.part1/inp1:PurchaseOrder/inp1:fileName" a la propiedad "$out.property.jca.file.FileName". Asegúrese de que el origen es un nodo de hoja, de lo contrario, todos los nodos secundarios se concatenarán y se asignarán al destino.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
       <loc>/ns:composite/ns:wire/ns:target.uri[.='FulfillmentProcess/fulfillmentprocess_client']</loc>
       <line>212</line>
       <col>17</col>

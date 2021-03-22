@@ -44,7 +44,8 @@ Modified Composite [ POProcessing ]
 	Attribute name=port
 		No change in old and new value http://oracle.com/sca/soapservice/CreditCardValidationJonathanAbrego/validationForCCJonathanAbrego/getStatusByCC#wsdl.endpoint(getStatusByCC/execute_pt) 
 	Attribute name=location
-		No change in old and new value http://fmw:8101/soa-infra/services/jonathanAbrego/validationForCCJonathanAbrego!1.0/getStatusByCC?WSDL 
+		Old [ http://fmw:8101/CreditServiceJonathanAbrego/ProxyService/ValidateCredit?WSDL ] 
+		New [ http://fmw:8101/soa-infra/services/jonathanAbrego/validationForCCJonathanAbrego!1.0/getStatusByCC?WSDL ] 
 	  Reference  [ JMS_USPS ]
 	    Reference Bindings
 	  	Binding  [ jca ]

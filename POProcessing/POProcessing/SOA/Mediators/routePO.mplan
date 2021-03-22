@@ -44,6 +44,10 @@
           <transform>
             <part name="$out.body" function="xslt(../Transformations/PurchaseOrder_To_Order1.xsl, $in.part1)"/>
           </transform>
+          <assign>
+            <copy expression="$in.part1/inp1:PurchaseOrder/inp1:fileName" target="$out.property.jca.file.FileName"
+                  xmlns:inp1="http://xmlns.oracle.com/ns/order"/>
+          </assign>
           <invoke reference="WriteApprovalJonathanAbregoResults" operation="Write"/>
         </action>
       </case>
