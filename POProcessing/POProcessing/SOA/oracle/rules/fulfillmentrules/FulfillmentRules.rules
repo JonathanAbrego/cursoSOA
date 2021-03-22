@@ -854,7 +854,7 @@
       <Type>double</Type>
       <Form>Range</Form>
       <Bucket id="G}-12a1670b:1782505bc41:-7bd7">
-        <Name>&lt;1000</Name>
+        <Name>&lt;1000.0</Name>
         <Alias>small</Alias>
         <Visible>true</Visible>
         <CreationUpdateNumber>8</CreationUpdateNumber>
@@ -867,7 +867,7 @@
         </Expression>
       </Bucket>
       <Bucket id="G}-12a1670b:1782505bc41:-7bd5">
-        <Name>[1000..5000)</Name>
+        <Name>[1000.0..5000.0)</Name>
         <Alias>large</Alias>
         <Visible>true</Visible>
         <CreationUpdateNumber>12</CreationUpdateNumber>
@@ -875,30 +875,30 @@
         <Otherwise>false</Otherwise>
         <Excluded>false</Excluded>
         <Expression id="L}113">
-          <Value>1000</Value>
-          <ResolvedValue>1000</ResolvedValue>
+          <Value>1000.0</Value>
+          <ResolvedValue>1000.0</ResolvedValue>
           <IsConstant>true</IsConstant>
           <ParameterID>B}nil</ParameterID>
         </Expression>
       </Bucket>
       <Bucket id="G}-12a1670b:1782505bc41:-7bd6">
-        <Name>&gt;=5000</Name>
-        <Alias>xtlarge</Alias>
+        <Name>&gt;=5000.0</Name>
+        <Alias>xtralarge</Alias>
         <Visible>true</Visible>
         <CreationUpdateNumber>11</CreationUpdateNumber>
         <Inclusive>true</Inclusive>
         <Otherwise>false</Otherwise>
         <Excluded>false</Excluded>
         <Expression id="L}108">
-          <Value>5000</Value>
-          <ResolvedValue>5000</ResolvedValue>
+          <Value>5000.0</Value>
+          <ResolvedValue>5000.0</ResolvedValue>
           <IsConstant>true</IsConstant>
           <ParameterID>B}nil</ParameterID>
         </Expression>
       </Bucket>
       <CalendarForm>Date</CalendarForm>
       <Excluded>false</Excluded>
-      <ValidationUpdateNumber>17</ValidationUpdateNumber>
+      <ValidationUpdateNumber>38</ValidationUpdateNumber>
     </BucketSet>
     <SupportsXPathEnabled>false</SupportsXPathEnabled>
     <DecisionFunction id="G}-12a1670b:1782505bc41:-7bdc">
@@ -938,20 +938,20 @@
       <RuleFiringLimitError>true</RuleFiringLimitError>
       <UniqueRulesets>false</UniqueRulesets>
     </DecisionFunction>
-    <UpdateNumber>21</UpdateNumber>
-    <ValidationUpdateNumber>28</ValidationUpdateNumber>
+    <UpdateNumber>38</UpdateNumber>
+    <ValidationUpdateNumber>38</ValidationUpdateNumber>
     <UpdateTime>0</UpdateTime>
   </DataModel>
   <RuleSet id="G}-12a1670b:1782505bc41:-7bdd">
     <Name>Ruleset1</Name>
     <Alias>Ruleset1</Alias>
-    <ValidationUpdateNumber>33</ValidationUpdateNumber>
+    <ValidationUpdateNumber>38</ValidationUpdateNumber>
     <Active>true</Active>
     <CalendarForm>DateTime</CalendarForm>
     <RuleSheet id="G}-12a1670b:1782505bc41:-7bd4">
       <Name>DecisionTable1</Name>
       <Alias>Decision Table 1</Alias>
-      <ValidationUpdateNumber>33</ValidationUpdateNumber>
+      <ValidationUpdateNumber>38</ValidationUpdateNumber>
       <Priority>medium</Priority>
       <Active>true</Active>
       <CalendarForm>DateTime</CalendarForm>
@@ -962,17 +962,6 @@
         <IDofFactType>J}com.oracle.xmlns.ns.fulfillment.FulfillmentType</IDofFactType>
         <FactPath>FulfillmentType</FactPath>
         <FactPathIDs>L}134</FactPathIDs>
-        <Form>FormIsA</Form>
-        <IDofOperator>B}==</IDofOperator>
-        <Connective>&amp;&amp;</Connective>
-        <Visible>false</Visible>
-        <DSLId>B}nil</DSLId>
-      </SimpleTest>
-      <SimpleTest id="L}175">
-        <FactType>CarrierSelection</FactType>
-        <IDofFactType>J}com.oracle.xmlns.ns.fulfillment.CarrierSelection</IDofFactType>
-        <FactPath>CarrierSelection</FactPath>
-        <FactPathIDs>L}175</FactPathIDs>
         <Form>FormIsA</Form>
         <IDofOperator>B}==</IDofOperator>
         <Connective>&amp;&amp;</Connective>
@@ -997,7 +986,7 @@
         </DimensionNode>
         <DimensionNode id="L}154">
           <BucketIDTable>G}-12a1670b:1782505bc41:-7bd6</BucketIDTable>
-          <Values>xtlarge</Values>
+          <Values>xtralarge</Values>
           <ParentDimensionNode>B}nil</ParentDimensionNode>
           <ChildDimensionNodes></ChildDimensionNodes>
         </DimensionNode>
@@ -1111,8 +1100,8 @@
     <VisibilityFilterEnabled>false</VisibilityFilterEnabled>
     <CreationUpdateNumber>3</CreationUpdateNumber>
   </RuleSet>
-  <ValidationUpdateNumber>33</ValidationUpdateNumber>
-  <UpdateNumber>33</UpdateNumber>
+  <ValidationUpdateNumber>38</ValidationUpdateNumber>
+  <UpdateNumber>38</UpdateNumber>
   <ResourceBundle>FulfillmentRulesTranslations</ResourceBundle>
   <TestModel id="L}3">
     <ValidationUpdateNumber>1</ValidationUpdateNumber>

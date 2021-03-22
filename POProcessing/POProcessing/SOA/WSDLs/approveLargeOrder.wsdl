@@ -19,10 +19,16 @@
     </plnk:partnerLinkType>
     <wsdl:import namespace="http://schemas.oracle.com/bpel/extension" location="RuntimeFault.wsdl"/>
     <wsdl:types>
-        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="http://xmlns.oracle.com/POProcessing/POProcessing/approveLargeOrder"
+             xmlns:ns1="http://xmlns.oracle.com/ns/order" xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+             xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://www.globalcompany.com/ns/OrderBooking/rules">
             <import namespace="http://xmlns.oracle.com/ns/order" schemaLocation="../Schemas/internalorder.xsd"/>
         </schema>
-        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="http://xmlns.oracle.com/POProcessing/POProcessing/approveLargeOrder"
+             xmlns:ns1="http://xmlns.oracle.com/ns/order" xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+             xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://www.globalcompany.com/ns/OrderBooking/rules">
             <xsd:import namespace="http://www.globalcompany.com/ns/OrderBooking/rules" schemaLocation="../Schemas/OrderBookingDiscount.xsd"/>
         </xsd:schema>
     </wsdl:types>

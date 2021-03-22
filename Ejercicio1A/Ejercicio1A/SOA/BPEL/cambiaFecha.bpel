@@ -93,18 +93,27 @@
           <condition>string-length($inputVariable.payload/ns1:date)= 10</condition>
           <if name="comparaFechaActual">
             <documentation>
-              <![CDATA[fecha es menor]]>
+              <![CDATA[fecha diferente]]>
             </documentation>
-            <condition>$inputVariable.payload/ns1:date &lt; $fechaAux</condition>
+            <condition>($inputVariable.payload/ns1:date &lt; $fechaAux)  or ($inputVariable.payload/ns1:date &gt; $fechaAux)</condition>
             <sequence name="Sequence3">
               <if name="If1">
-                <condition>(xp20:month-from-dateTime($fechaAux)- 3) &gt;= 1</condition>
-                <assign name="Assign1">
+                <condition>($inputVariable.payload/ns1:date &gt; $fechaAux)</condition>
+                <assign name="Assign20">
                   <copy>
-                    <from>concat(number(xp20:year-from-dateTime($fechaAux))-1,'-',number(xp20:month-from-dateTime($fechaAux))-3,'-' ,xp20:day-from-dateTime($fechaAux))</from>
+                    <from>$fechaAux</from>
                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$fechaAux</to>
                   </copy>
                 </assign>
+                <elseif>
+                  <condition>(xp20:month-from-dateTime($fechaAux)- 3) &gt;= 1</condition>
+                  <assign name="Assign1">
+                    <copy>
+                      <from>concat(number(xp20:year-from-dateTime($fechaAux))-1,'-',number(xp20:month-from-dateTime($fechaAux))-3,'-' ,xp20:day-from-dateTime($fechaAux))</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$fechaAux</to>
+                    </copy>
+                  </assign>
+                </elseif>
                 <else>
                   <assign name="Assign2">
                     <copy>
@@ -123,7 +132,7 @@
                 </else>
               </if>
               <if name="If2">
-                <condition>$inputVariable.payload/ns1:date &lt; $fechaAux</condition>
+                <condition>($inputVariable.payload/ns1:date &lt; $fechaAux) or ($inputVariable.payload/ns1:date &gt; $fechaAux)</condition>
                 <sequence name="Sequence4">
                   <assign name="assign">
                     <copy>
@@ -330,6 +339,14 @@
                         </if>
                       </sequence>
                     </elseif>
+                    <else>
+                      <assign name="Assign21">
+                        <copy>
+                          <from>'Operación no valida'</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:responseDate</to>
+                        </copy>
+                      </assign>
+                    </else>
                   </if>
                 </sequence>
                 <else>

@@ -19,7 +19,7 @@
         </pattern>
     </decisionService>
     <schemaInformation>
-        <dictionary fqnPackage="fulfillmentrules" fqnName="FulfillmentRules" updateNumber="33">
+        <dictionary fqnPackage="fulfillmentrules" fqnName="FulfillmentRules" updateNumber="38">
             <schemaBrowser>
                 <package>com.oracle.xmlns.ns.fulfillment</package>
                 <namespace>http://xmlns.oracle.com/ns/fulfillment</namespace>

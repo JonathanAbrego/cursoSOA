@@ -121,7 +121,7 @@
             </sequence>
         </scope>
         <switch name="Switch1">
-            <case condition="bpws:getVariableData('outputVariable','payload','/ns2:CarrierSelection/ns2:carrier') = 'FedEX'">
+            <case condition="bpws:getVariableData('outputVariable','payload','/ns2:CarrierSelection/ns2:carrier') = 'FedEx'">
                 <bpelx:annotation>
                     <bpelx:general>
                         <bpelx:property name="userLabel">
@@ -160,6 +160,20 @@
                             <to bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"
                                 variable="Invoke_UPS_Produce_Message_InputVariable" part="body"
                                 query="/ns2:Fulfillment/ns2:total"/>
+                        </copy>
+                        <copy>
+                            <from bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"
+                                  variable="inputVariable" part="payload" query="/ns2:Fulfillment/ns2:customerId"/>
+                            <to bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"
+                                variable="Invoke_UPS_Produce_Message_InputVariable" part="body"
+                                query="/ns2:Fulfillment/ns2:customerId"/>
+                        </copy>
+                        <copy>
+                            <from bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"
+                                  variable="inputVariable" part="payload" query="/ns2:Fulfillment/ns2:orderId"/>
+                            <to bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"
+                                variable="Invoke_UPS_Produce_Message_InputVariable" part="body"
+                                query="/ns2:Fulfillment/ns2:orderId"/>
                         </copy>
                     </assign>
                     <invoke name="Invoke_UPS" partnerLink="JMS_UPS"

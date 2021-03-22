@@ -4,13 +4,13 @@
    <annotationfile/>
    <iconize/>
    <partnerlink_locations>
-      <partnerlink name="approvelargeorder_client" x="0" y="1061" side="left"/>
+      <partnerlink name="approvelargeorder_client" x="0" y="881" side="left"/>
       <partnerlink name="ManualPOApprovalJonathanAbrego.TaskService" x="0" y="18" side="left"/>
-      <partnerlink name="FulfillmentProcess.fulfillmentprocess_client" x="0" y="1873" side="left"/>
-      <partnerlink name="getCreditStatus" x="1303" y="323" side="right"/>
-      <partnerlink name="ManualApproval.ManualApproval_DecisionService_1" x="1303" y="18" side="right"/>
+      <partnerlink name="FulfillmentProcess.fulfillmentprocess_client" x="0" y="1513" side="left"/>
+      <partnerlink name="getCreditStatus" x="1047" y="323" side="right"/>
+      <partnerlink name="ManualApproval.ManualApproval_DecisionService_1" x="1047" y="18" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="36,1272,1224,516" show_swimlanes="true">
+   <graph_layout viewport="59,1189,1052,532" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
       <layout_item collapsed="false" xpath="/process/sequence/scope" type="scope" showhandlers="true"/>
@@ -21,7 +21,7 @@
       <layout_item collapsed="true" xpath="/process/sequence/switch[1]/case/sequence/scope" type="rule" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence/switch[1]/case/sequence/scope/sequence" type="sequence"/>
       <layout_item collapsed="false" xpath="/process/sequence/switch[1]/case/sequence/switch" type="switch"/>
-      <layout_item collapsed="false" xpath="/process/sequence/switch[1]/case/sequence/switch/case/sequence" type="sequence"/>
+      <layout_item collapsed="true" xpath="/process/sequence/switch[1]/case/sequence/switch/case/sequence" type="sequence"/>
       <layout_item collapsed="true" xpath="/process/sequence/switch[1]/case/sequence/switch/case/sequence/scope" type="human task" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence/switch[1]/case/sequence/switch/case/sequence/scope/sequence" type="sequence"/>
       <layout_item collapsed="false" xpath="/process/sequence/switch[1]/case/sequence/switch/case/sequence/switch" type="switch"/>
