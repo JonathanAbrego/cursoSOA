@@ -23,6 +23,12 @@
    <!--User Editing allowed BELOW this line - DO NOT DELETE THIS LINE-->
    <xsl:template match="/">
       <tns:Fulfillment>
+         <tns:customerId>
+            <xsl:value-of select="/ns0:PurchaseOrder/ns0:CustID"/>
+         </tns:customerId>
+         <tns:orderId>
+            <xsl:value-of select="/ns0:PurchaseOrder/ns0:ID"/>
+         </tns:orderId>
          <tns:total>
             <xsl:value-of select="/ns0:PurchaseOrder/ns0:price * /ns0:PurchaseOrder/ns0:quantity"/>
          </tns:total>

@@ -108,6 +108,14 @@
                             <from bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" variable="inputVariable" part="payload" query="/ns2:Fulfillment/ns2:total"/>
                             <to bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" variable="Invoke_FedEX_Produce_Message_InputVariable" part="body" query="/ns2:Fulfillment/ns2:total"/>
                         </copy>
+                        <copy>
+                            <from bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" variable="inputVariable" part="payload" query="/ns2:Fulfillment/ns2:customerId"/>
+                            <to bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" variable="Invoke_FedEX_Produce_Message_InputVariable" part="body" query="/ns2:Fulfillment/ns2:customerId"/>
+                        </copy>
+                        <copy>
+                            <from bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" variable="inputVariable" part="payload" query="/ns2:Fulfillment/ns2:orderId"/>
+                            <to bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" variable="Invoke_FedEX_Produce_Message_InputVariable" part="body" query="/ns2:Fulfillment/ns2:orderId"/>
+                        </copy>
                     </assign>
                     <invoke name="Invoke_FedEX" partnerLink="JMS_FedEX" inputVariable="Invoke_FedEX_Produce_Message_InputVariable" portType="ns4:Produce_Message_ptt" operation="Produce_Message" id="BpInv1"/>
                 </sequence>
@@ -151,6 +159,14 @@
                         <copy>
                             <from bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" variable="inputVariable" part="payload" query="/ns2:Fulfillment/ns2:total"/>
                             <to bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" variable="Invoke_USPS_Produce_Message_InputVariable" part="body" query="/ns2:Fulfillment/ns2:total"/>
+                        </copy>
+                        <copy>
+                            <from bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" variable="inputVariable" part="payload" query="/ns2:Fulfillment/ns2:customerId"/>
+                            <to bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" variable="Invoke_USPS_Produce_Message_InputVariable" part="body" query="/ns2:Fulfillment/ns2:customerId"/>
+                        </copy>
+                        <copy>
+                            <from bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" variable="inputVariable" part="payload" query="/ns2:Fulfillment/ns2:orderId"/>
+                            <to bpelx:language="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" variable="Invoke_USPS_Produce_Message_InputVariable" part="body" query="/ns2:Fulfillment/ns2:orderId"/>
                         </copy>
                     </assign>
                     <invoke name="Invoke_USPS" partnerLink="JMS_USPS" inputVariable="Invoke_USPS_Produce_Message_InputVariable" portType="ns5:Produce_Message_ptt" operation="Produce_Message" id="BpInv3"/>

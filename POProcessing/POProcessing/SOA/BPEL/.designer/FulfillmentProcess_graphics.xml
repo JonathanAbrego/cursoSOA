@@ -7,10 +7,10 @@
       <partnerlink name="fulfillmentprocess_client" x="0" y="362" side="left"/>
       <partnerlink name="JMS_FedEX" x="0" y="419" side="left"/>
       <partnerlink name="JMS_UPS" x="0" y="476" side="left"/>
-      <partnerlink name="FulfillmentRules.OracleRulesFulfillment" x="1635" y="18" side="right"/>
-      <partnerlink name="JMS_USPS" x="1635" y="475" side="right"/>
+      <partnerlink name="FulfillmentRules.OracleRulesFulfillment" x="832" y="18" side="right"/>
+      <partnerlink name="JMS_USPS" x="832" y="475" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,0,1855,808" show_swimlanes="true">
+   <graph_layout viewport="0,150,1052,547" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
       <layout_item collapsed="true" xpath="/process/sequence/scope" type="rule" showhandlers="true"/>
