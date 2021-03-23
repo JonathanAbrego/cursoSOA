@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.example.org"
+            targetNamespace="http://www.example.org" elementFormDefault="qualified">
+  <xsd:element name="entrada">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="empresa">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="nombre_empresa" type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="empleados">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="empleado" type="tipo_empleado" fixed="empleado" maxOccurs="3"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="departamentos">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="departamento" type="tipo_departamento" maxOccurs="3"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="tipo_empleado">
+    <xsd:sequence>
+      <xsd:element name="nombre" type="xsd:string"/>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:string"/>
+    <xsd:attribute name="dpto" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:complexType name="tipo_departamento">
+    <xsd:sequence>
+      <xsd:element name="nombreDepartamento" type="xsd:string"/>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:string"/>
+  </xsd:complexType>
+</xsd:schema>
