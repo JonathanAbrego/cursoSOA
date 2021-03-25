@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.bwr.mx" targetNamespace="http://www.bwr.mx"
+            elementFormDefault="qualified">
+  <xsd:element name="salida">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="departamento" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="empelado" maxOccurs="unbounded">
+                <xsd:complexType>
+                  <xsd:simpleContent>
+                    <xsd:extension base="xsd:string">
+                      <xsd:attribute name="id" type="xsd:string"/>
+                    </xsd:extension>
+                  </xsd:simpleContent>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="fecha" type="xsd:date"/>
+            </xsd:sequence>
+            <xsd:attribute name="nombre" type="xsd:string"/>
+            <xsd:attribute name="id" type="xsd:string"/>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="empresa" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entrada xmlns="http://www.bwr.mx">
+   <empresa>
+      <nombre_empresa>BWR</nombre_empresa>
+   </empresa>
+   <empleados>
+      <empleado id="A001" dpto="*">Eduardo Reyes</empleado>
+      <empleado id="A002" dpto="D02">Enrqiue Miranda</empleado>
+      <empleado id="A003" dpto="D45">Rene Zavala</empleado>
+   </empleados>
+   <departamentos>
+      <departamento id="D01">Concultoria</departamento>
+      <departamento id="D02">Sistemas</departamento>
+      <departamento id="D03">Administracion</departamento>
+   </departamentos>
+</entrada>

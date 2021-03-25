@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="Transforma_Salida"
-             targetNamespace="http://xmlns.oracle.com/Ejercicio02A/Ejercicio02A/Transforma_Salida"
+<wsdl:definitions name="TransformaSalida"
+             targetNamespace="http://xmlns.oracle.com/Ejercicio02A/Ejercicio02A/TransformaSalida"
              xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-             xmlns:client="http://xmlns.oracle.com/Ejercicio02A/Ejercicio02A/Transforma_Salida"
-             xmlns:ns1="http://www.example.org"
-             xmlns:ns2="http://www.example.org"
+             xmlns:client="http://xmlns.oracle.com/Ejercicio02A/Ejercicio02A/TransformaSalida"
+             xmlns:ns1="http://www.bwr.mx"
+             xmlns:ns2="http://www.bwr.mx"
              xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
 
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -15,10 +15,10 @@
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->   
 	<wsdl:types>
 		<schema xmlns="http://www.w3.org/2001/XMLSchema">
-			<import namespace="http://www.example.org" schemaLocation="../Schemas/entrada.xsd" />
+			<import namespace="http://www.bwr.mx" schemaLocation="../Schemas/ejemploEntrada.xsd" />
 		</schema>
 		<schema xmlns="http://www.w3.org/2001/XMLSchema">
-			<import namespace="http://www.example.org" schemaLocation="../Schemas/salida.xsd" />
+			<import namespace="http://www.bwr.mx" schemaLocation="../Schemas/salidaEjemplo.xsd" />
 		</schema>
 	</wsdl:types>
 
@@ -26,10 +26,10 @@
 	MESSAGE TYPE DEFINITION - Definition of the message types used as 
 	part of the port type defintions
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->      
-	<wsdl:message name="Transforma_SalidaRequestMessage">
+	<wsdl:message name="TransformaSalidaRequestMessage">
 		<wsdl:part name="payload" element="ns2:entrada" />
 	</wsdl:message>
-	<wsdl:message name="Transforma_SalidaResponseMessage">
+	<wsdl:message name="TransformaSalidaResponseMessage">
 		<wsdl:part name="payload" element="ns2:salida" />
 	</wsdl:message>
 
@@ -38,18 +38,18 @@
 	a logical service unit.
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-	<!-- portType implemented by the Transforma_Salida BPEL process -->
-	<wsdl:portType name="Transforma_Salida">
+	<!-- portType implemented by the TransformaSalida BPEL process -->
+	<wsdl:portType name="TransformaSalida">
 		<wsdl:operation name="process">
-			<wsdl:input  message="client:Transforma_SalidaRequestMessage" />
-			<wsdl:output message="client:Transforma_SalidaResponseMessage"/>
+			<wsdl:input  message="client:TransformaSalidaRequestMessage" />
+			<wsdl:output message="client:TransformaSalidaResponseMessage"/>
 		</wsdl:operation>
 	</wsdl:portType>
 
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	PARTNER LINK TYPE DEFINITION
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ --> 
-	<plnk:partnerLinkType name="Transforma_Salida">
-		<plnk:role name="Transforma_SalidaProvider" portType="client:Transforma_Salida"/>
+	<plnk:partnerLinkType name="TransformaSalida">
+		<plnk:role name="TransformaSalidaProvider" portType="client:TransformaSalida"/>
 	</plnk:partnerLinkType>
 </wsdl:definitions>
