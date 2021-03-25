@@ -7,14 +7,14 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="departamento" type="type_departamento" maxOccurs="4"/>
+        <xsd:element name="departamento" type="type_departamento" maxOccurs="unbounded"/>
       </xsd:sequence>
       <xsd:attribute name="empresa" type="xsd:string"/>
     </xsd:complexType>
   </xsd:element>
   <xsd:complexType name="type_departamento">
     <xsd:sequence>
-      <xsd:element name="empelado">
+      <xsd:element name="empelado" maxOccurs="unbounded">
         <xsd:complexType>
           <xsd:sequence>
             <xsd:element name="nombreEmpleado" type="xsd:string"/>

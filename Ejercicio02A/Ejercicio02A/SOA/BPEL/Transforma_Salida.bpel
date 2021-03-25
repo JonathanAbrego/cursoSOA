@@ -3,7 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   Oracle JDeveloper BPEL Designer 
   
-  Created: Tue Mar 23 15:52:45 CST 2021
+  Created: Tue Mar 23 16:31:23 CST 2021
   Author:  jonab
   Type: BPEL 2.0 Process
   Purpose: Synchronous BPEL Process
@@ -16,7 +16,17 @@
                xmlns:ora="http://schemas.oracle.com/xpath/extension"
                xmlns:ui="http://xmlns.oracle.com/soa/designer"
                xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
-         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ns1="http://www.example.org"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
 
     <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/Ejercicio02A/Ejercicio02A/Transforma_Salida" location="../WSDLs/Transforma_Salida.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <!-- 
@@ -58,9 +68,17 @@
   <sequence name="main">
 
     <!-- Receive input from requestor. (Note: This maps to operation defined in Transforma_Salida.wsdl) -->
-    <receive name="receiveInput" partnerLink="transforma_salida_client" portType="client:Transforma_Salida" operation="process" variable="inputVariable" createInstance="yes"/>
-
+    <receive name="entrda_parametros" partnerLink="transforma_salida_client" portType="client:Transforma_Salida" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="ReordenaSalida">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/Transformation1_2.xsl", $inputVariable.payload)</from>
+        <to variable="outputVariable" part="payload"/>
+      </copy>
+    </assign>
     <!-- Generate reply to synchronous request -->
-    <reply name="replyOutput" partnerLink="transforma_salida_client" portType="client:Transforma_Salida" operation="process" variable="outputVariable"/>
+    <reply name="salida" partnerLink="transforma_salida_client" portType="client:Transforma_Salida" operation="process" variable="outputVariable"/>
   </sequence>
 </process>

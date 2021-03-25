@@ -1,0 +1,36 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<ns0:salida empresa="BWR" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/Ejercicio02A/Ejercicio02A/Transforma_Salida" xmlns:ns0="http://www.example.org">
+   <ns0:departamento nombre="Consultoria" id="D01">
+      <ns0:empelado id="A001">
+         <ns0:nombreEmpleado>Eduardo Reyes</ns0:nombreEmpleado>
+      </ns0:empelado>
+      <ns0:empelado id="A003">
+         <ns0:nombreEmpleado>Fulanito Hernandez</ns0:nombreEmpleado>
+      </ns0:empelado>
+      <ns0:fecha>24-03-2021</ns0:fecha>
+   </ns0:departamento>
+   <ns0:departamento nombre="Sistemas" id="D02">
+      <ns0:empelado id="A001">
+         <ns0:nombreEmpleado>Eduardo Reyes</ns0:nombreEmpleado>
+      </ns0:empelado>
+      <ns0:empelado id="A002">
+         <ns0:nombreEmpleado>Enrique Miranda</ns0:nombreEmpleado>
+      </ns0:empelado>
+      <ns0:empelado id="A003">
+         <ns0:nombreEmpleado>Fulanito Hernandez</ns0:nombreEmpleado>
+      </ns0:empelado>
+      <ns0:fecha>24-03-2021</ns0:fecha>
+   </ns0:departamento>
+   <ns0:departamento nombre="Administración" id="D03">
+      <ns0:empelado id="A001">
+         <ns0:nombreEmpleado>Eduardo Reyes</ns0:nombreEmpleado>
+      </ns0:empelado>
+      <ns0:empelado id="A004">
+         <ns0:nombreEmpleado>Jonathan Abrego</ns0:nombreEmpleado>
+      </ns0:empelado>
+      <ns0:empelado id="A003">
+         <ns0:nombreEmpleado>Fulanito Hernandez</ns0:nombreEmpleado>
+      </ns0:empelado>
+      <ns0:fecha>24-03-2021</ns0:fecha>
+   </ns0:departamento>
+</ns0:salida>

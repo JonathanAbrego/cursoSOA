@@ -14,14 +14,14 @@
         <xsd:element name="empleados">
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element name="empleado" type="tipo_empleado" fixed="empleado" maxOccurs="3"/>
+              <xsd:element name="empleado" type="tipo_empleado"  maxOccurs="unbounded"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
         <xsd:element name="departamentos">
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element name="departamento" type="tipo_departamento" maxOccurs="3"/>
+              <xsd:element name="departamento" type="tipo_departamento" maxOccurs="unbounded"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
