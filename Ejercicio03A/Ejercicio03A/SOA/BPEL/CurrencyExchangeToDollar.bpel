@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Fri Mar 26 13:04:18 CST 2021
+  Author:  jonab
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="CurrencyExchangeToDollar"
+               targetNamespace="http://xmlns.oracle.com/Ejercicio03A/Ejercicio03A/CurrencyExchangeToDollar"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Ejercicio03A/Ejercicio03A/CurrencyExchangeToDollar"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/Ejercicio03A/Ejercicio03A/CurrencyExchangeToDollar" location="../WSDLs/CurrencyExchangeToDollar.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="currencyexchangetodollar_client" partnerLinkType="client:CurrencyExchangeToDollar" myRole="CurrencyExchangeToDollarProvider"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:CurrencyExchangeToDollarRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:CurrencyExchangeToDollarResponseMessage"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in CurrencyExchangeToDollar.wsdl) -->
+    <receive name="receiveInput" partnerLink="currencyexchangetodollar_client" portType="client:CurrencyExchangeToDollar" operation="process" variable="inputVariable" createInstance="yes"/>
+
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="currencyexchangetodollar_client" portType="client:CurrencyExchangeToDollar" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

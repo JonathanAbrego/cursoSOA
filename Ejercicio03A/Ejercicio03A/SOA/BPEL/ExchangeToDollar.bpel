@@ -1,0 +1,116 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Mon Mar 29 11:57:13 CST 2021
+  Author:  jonab
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="ExchangeToDollar"
+               targetNamespace="http://xmlns.oracle.com/Ejercicio03A/Ejercicio03A/ExchangeToDollar"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Ejercicio03A/Ejercicio03A/ExchangeToDollar"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://www.banguat.gob.gt/variables/ws/"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns2="http://www.bwr.mx"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/Ejercicio03A/Ejercicio03A/ExchangeToDollar" location="../WSDLs/ExchangeToDollar.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="exchangetodollar_client" partnerLinkType="client:ExchangeToDollar" myRole="ExchangeToDollarProvider"/>
+    <partnerLink name="ExchangeRate" partnerLinkType="ns1:ExchangeRate" partnerRole="TipoCambioSoap"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:ExchangeToDollarRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:ExchangeToDollarResponseMessage"/>
+    <variable name="Invoke1_Variables_InputVariable" messageType="ns1:VariablesSoapIn"/>
+    <variable name="Invoke1_Variables_OutputVariable" messageType="ns1:VariablesSoapOut"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in ExchangeToDollar.wsdl) -->
+    <receive name="receiveInput" partnerLink="exchangetodollar_client" portType="client:ExchangeToDollar" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="AssignID">
+      <copy>
+        <from>dvm:lookupValue("currencyCode.dvm","Code",$inputVariable.payload/ns2:input,"ID","")</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$inputVariable.payload/ns2:input</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns2:input</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Invoke1_Variables_InputVariable.parameters/ns1:variable</to>
+      </copy>
+    </assign>
+    <invoke name="InvokeOperationVariable" partnerLink="ExchangeRate" portType="ns1:TipoCambioSoap"
+            operation="Variables" inputVariable="Invoke1_Variables_InputVariable"
+            outputVariable="Invoke1_Variables_OutputVariable" bpelx:invokeAsDetail="no"/>
+    <if name="DoesTheExchangeRateExist">
+      <documentation>
+        <![CDATA[item=0]]>
+      </documentation>
+      <condition>$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:TotalItems = 0</condition>
+      <assign name="AssignBadOutput">
+        <copy>
+          <from>concat("Exchange Rate for ",dvm:lookupValue("currencyCode.dvm","ID",$inputVariable.payload/ns2:input,"Coin","")," isn't available")</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:output</to>
+        </copy>
+      </assign>
+      <else>
+        <documentation>
+          <![CDATA[item>0]]>
+        </documentation>
+        <assign name="AssignGoodOutput">
+          <copy>
+            <from>concat("The exchange rate for ",dvm:lookupValue("currencyCode.dvm","ID",$inputVariable.payload/ns2:input,"Coin","")," for ",$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:fecha," is ",$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:venta," for sale ",$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:compra," for buy")</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:output</to>
+          </copy>
+        </assign>
+      </else>
+    </if>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="exchangetodollar_client" portType="client:ExchangeToDollar" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>
