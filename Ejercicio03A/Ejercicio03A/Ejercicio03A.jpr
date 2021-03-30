@@ -318,4 +318,5 @@
    <value n="SCA_BPEL_FOLDER_PROPERTY_NAME" v="BPEL/"/>
    <value n="SOA_DVM_FOLDER_NAME" v=""/>
    <value n="SOA_TRANSFORMATION_FOLDER_NAME" v="Transformations/"/>
+   <value n="SOA_XREF_FOLDER_NAME" v=""/>
 </jpr:project>

@@ -28,7 +28,7 @@
          xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
          xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
          xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns2="http://www.bwr.mx"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
     <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/Ejercicio03A/Ejercicio03A/ExchangeToDollar" location="../WSDLs/ExchangeToDollar.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <!-- 
@@ -61,6 +61,7 @@
     <variable name="outputVariable" messageType="client:ExchangeToDollarResponseMessage"/>
     <variable name="Invoke1_Variables_InputVariable" messageType="ns1:VariablesSoapIn"/>
     <variable name="Invoke1_Variables_OutputVariable" messageType="ns1:VariablesSoapOut"/>
+    <variable name="auxCode" type="xsd:string"/>
   </variables>
 
   <!-- 
@@ -76,6 +77,10 @@
     <receive name="receiveInput" partnerLink="exchangetodollar_client" portType="client:ExchangeToDollar" operation="process" variable="inputVariable" createInstance="yes"/>
     <assign name="AssignID">
       <copy>
+        <from>$inputVariable.payload/ns2:input</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxCode</to>
+      </copy>
+      <copy>
         <from>dvm:lookupValue("currencyCode.dvm","Code",$inputVariable.payload/ns2:input,"ID","")</from>
         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$inputVariable.payload/ns2:input</to>
       </copy>
@@ -84,30 +89,73 @@
         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Invoke1_Variables_InputVariable.parameters/ns1:variable</to>
       </copy>
     </assign>
-    <invoke name="InvokeOperationVariable" partnerLink="ExchangeRate" portType="ns1:TipoCambioSoap"
-            operation="Variables" inputVariable="Invoke1_Variables_InputVariable"
-            outputVariable="Invoke1_Variables_OutputVariable" bpelx:invokeAsDetail="no"/>
-    <if name="DoesTheExchangeRateExist">
+    <if name="If1">
       <documentation>
-        <![CDATA[item=0]]>
+        <![CDATA[invalid]]>
       </documentation>
-      <condition>$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:TotalItems = 0</condition>
-      <assign name="AssignBadOutput">
+      <condition>dvm:lookupValue("currencyCode.dvm","Code",$auxCode,"ID","")= ""</condition>
+      <assign name="AssignResponse">
         <copy>
-          <from>concat("Exchange Rate for ",dvm:lookupValue("currencyCode.dvm","ID",$inputVariable.payload/ns2:input,"Coin","")," isn't available")</from>
+          <from>"invalid currency code"</from>
           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:output</to>
         </copy>
       </assign>
       <else>
         <documentation>
-          <![CDATA[item>0]]>
+          <![CDATA[valid currency code]]>
         </documentation>
-        <assign name="AssignGoodOutput">
-          <copy>
-            <from>concat("The exchange rate for ",dvm:lookupValue("currencyCode.dvm","ID",$inputVariable.payload/ns2:input,"Coin","")," for ",$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:fecha," is ",$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:venta," for sale ",$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:compra," for buy")</from>
-            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:output</to>
-          </copy>
-        </assign>
+        <sequence>
+          <invoke name="InvokeOperationVariable" partnerLink="ExchangeRate" portType="ns1:TipoCambioSoap"
+                  operation="Variables" inputVariable="Invoke1_Variables_InputVariable"
+                  outputVariable="Invoke1_Variables_OutputVariable" bpelx:invokeAsDetail="no"/>
+          <if name="DoesTheExchangeRateExist">
+            <documentation>
+              <![CDATA[item=0]]>
+            </documentation>
+            <condition>$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:TotalItems = 0</condition>
+            <assign name="AssignBadOutput">
+              <copy>
+                <from>concat("Exchange Rate for ",dvm:lookupValue("currencyCode.dvm","ID",$inputVariable.payload/ns2:input,"Coin","")," isn't available")</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:output</to>
+              </copy>
+            </assign>
+            <elseif>
+              <documentation>
+                <![CDATA[insideDB]]>
+              </documentation>
+              <condition>xref:lookupXRef('crossExchange.xref',"moneda",$inputVariable.payload/ns2:input,'common', false() )= $inputVariable.payload/ns2:input</condition>
+              <sequence>
+                <assign name="returnID">
+                  <copy>
+                    <from>xref:lookupXRef('crossExchange.xref',"moneda",$inputVariable.payload/ns2:input,'common', true() )</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:output</to>
+                  </copy>
+                </assign>
+              </sequence>
+            </elseif>
+            <else>
+              <documentation>
+                <![CDATA[item > 0]]>
+              </documentation>
+              <sequence>
+                <assign name="assingNewQuery">
+                  <copy>
+                    <from>xref:populateXRefRow('crossExchange.xref','moneda',$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:moneda,'name',$auxCode,'ADD')</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:output</to>
+                  </copy>
+                  <copy>
+                    <from>xref:populateXRefRow('crossExchange.xref','moneda',$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:moneda,'common',$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:moneda,'LINK')</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:output</to>
+                  </copy>
+                  <copy>
+                    <from>concat("The exchange rate for ",dvm:lookupValue("currencyCode.dvm","ID",$inputVariable.payload/ns2:input,"Coin","")," for ",$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:fecha," is ",$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:venta," for sale ",$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:compra," for buy")</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:output</to>
+                  </copy>
+                </assign>
+              </sequence>
+            </else>
+          </if>
+        </sequence>
       </else>
     </if>
     <!-- Generate reply to synchronous request -->

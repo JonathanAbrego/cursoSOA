@@ -1,2 +1,23 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Faults/>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/ns:composite/ns:reference[@name='ExchangeRate']</loc>
+      <line>35</line>
+      <col>79</col>
+      <file>C:\Oracle\Middleware\config\soa\Ejercicio03A\Ejercicio03A\SOA\composite.xml</file>
+      <name>C:\Oracle\Middleware\config\soa\Ejercicio03A\Ejercicio03A\SOA\composite.xml</name>
+      <fix/>
+      <msg>Fallo al buscar el enlace "ExchangeRate":"{http://www.banguat.gob.gt/variables/ws/}TipoCambioSoap" en el gestor de WSDL</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/ns:composite/ns:reference[@name='ExchangeRate']</loc>
+      <line>35</line>
+      <col>79</col>
+      <file>C:\Oracle\Middleware\config\soa\Ejercicio03A\Ejercicio03A\SOA\composite.xml</file>
+      <name>C:\Oracle\Middleware\config\soa\Ejercicio03A\Ejercicio03A\SOA\composite.xml</name>
+      <fix/>
+      <msg>Fallo al buscar el enlace "ExchangeRate":"{http://www.banguat.gob.gt/variables/ws/}TipoCambioSoap12" en el gestor de WSDL</msg>
+   </Fault>
+</Faults>
