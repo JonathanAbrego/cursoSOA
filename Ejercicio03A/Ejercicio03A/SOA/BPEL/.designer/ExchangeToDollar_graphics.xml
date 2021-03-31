@@ -7,7 +7,7 @@
       <partnerlink name="exchangetodollar_client" x="0" y="491" side="left"/>
       <partnerlink name="ExchangeRate" x="1012" y="418" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,165,1131,534" show_swimlanes="true">
+   <graph_layout viewport="0,363,1131,534" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
       <layout_item collapsed="false" xpath="/process/sequence/if/else/sequence" type="sequence"/>

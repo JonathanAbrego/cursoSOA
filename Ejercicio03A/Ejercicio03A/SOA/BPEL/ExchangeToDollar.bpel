@@ -94,9 +94,9 @@
         <![CDATA[invalid]]>
       </documentation>
       <condition>dvm:lookupValue("currencyCode.dvm","Code",$auxCode,"ID","")= ""</condition>
-      <assign name="AssignResponse">
+      <assign name="InvalidCode">
         <copy>
-          <from>"invalid currency code"</from>
+          <from>"Codigo de moneda invalido"</from>
           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:output</to>
         </copy>
       </assign>
@@ -113,9 +113,9 @@
               <![CDATA[item=0]]>
             </documentation>
             <condition>$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:TotalItems = 0</condition>
-            <assign name="AssignBadOutput">
+            <assign name="NotAvaible">
               <copy>
-                <from>concat("Exchange Rate for ",dvm:lookupValue("currencyCode.dvm","ID",$inputVariable.payload/ns2:input,"Coin","")," isn't available")</from>
+                <from>concat("Tipo de cambio para",dvm:lookupValue("currencyCode.dvm","ID",$inputVariable.payload/ns2:input,"Coin","")," no está disponible")</from>
                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:output</to>
               </copy>
             </assign>
@@ -125,7 +125,7 @@
               </documentation>
               <condition>xref:lookupXRef('crossExchange.xref',"moneda",$inputVariable.payload/ns2:input,'common', false() )= $inputVariable.payload/ns2:input</condition>
               <sequence>
-                <assign name="returnID">
+                <assign name="ReturnID">
                   <copy>
                     <from>xref:lookupXRef('crossExchange.xref',"moneda",$inputVariable.payload/ns2:input,'common', true() )</from>
                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:output</to>
@@ -138,7 +138,7 @@
                 <![CDATA[item > 0]]>
               </documentation>
               <sequence>
-                <assign name="assingNewQuery">
+                <assign name="NewElement">
                   <copy>
                     <from>xref:populateXRefRow('crossExchange.xref','moneda',$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:moneda,'name',$auxCode,'ADD')</from>
                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:output</to>
@@ -148,7 +148,7 @@
                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:output</to>
                   </copy>
                   <copy>
-                    <from>concat("The exchange rate for ",dvm:lookupValue("currencyCode.dvm","ID",$inputVariable.payload/ns2:input,"Coin","")," for ",$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:fecha," is ",$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:venta," for sale ",$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:compra," for buy")</from>
+                    <from>concat("El topo de cambio para ",dvm:lookupValue("currencyCode.dvm","ID",$inputVariable.payload/ns2:input,"Coin","")," a la ",$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:fecha," es ",$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:venta," a la venta ",$Invoke1_Variables_OutputVariable.parameters/ns1:VariablesResult/ns1:CambioDia/ns1:Var/ns1:compra," a la compra")</from>
                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:output</to>
                   </copy>
                 </assign>
