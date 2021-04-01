@@ -13,6 +13,8 @@
            xmlns:sca-ext="http://xmlns.oracle.com/sca/1.0-ext">
   <import namespace="http://www.bwr.mx/Training/SOA/PruebasBAM/StampInvoice/StampInvoiceProcess"
           location="WSDLs/stampinvoiceprocess_client_ep.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/Ejercicio04A/Ejercicio04A/getClientDetails"
+          location="WSDLs/getClientDetails.wsdl" importType="wsdl"/>
   <property name="productVersion" type="xs:string" many="false">12.2.1.4.0.190828</property>
   <property name="compositeID" type="xs:string" many="false">a80f52cc-6da5-49bf-bba4-ad45c844fc1f</property>
   <reference name="stampInvoice" ui:wsdlLocation="WSDLs/stampinvoiceprocess_client_ep.wsdl">
@@ -22,5 +24,14 @@
                 soapVersion="1.1">
       <property name="weblogic.wsee.wsat.transaction.flowOption" type="xs:string" many="false">WSDLDriven</property>
     </binding.ws>
+  </reference>
+  <reference name="getClientDetails" ui:wsdlLocation="WSDLs/getClientDetails.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/Ejercicio04A/Ejercicio04A/getClientDetails#wsdl.interface(getClientDetails_ptt)"/>
+    <binding.jca config="Adapters/getClientDetails_db.jca">
+      <property name="jca.retry.count" type="xs:int" many="false" override="may">4</property>
+      <property name="jca.retry.interval" type="xs:int" many="false" override="may">1</property>
+      <property name="jca.retry.backoff" type="xs:int" many="false" override="may">2</property>
+      <property name="jca.retry.maxInterval" type="xs:int" many="false" override="may">120</property>
+    </binding.jca>
   </reference>
 </composite>
