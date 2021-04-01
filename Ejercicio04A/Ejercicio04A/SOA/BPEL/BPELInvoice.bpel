@@ -32,7 +32,11 @@
          xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/Ejercicio04A/Ejercicio04A/getInvoiceDetail"
          xmlns:ns5="http://xmlns.oracle.com/pcbpel/adapter/db/top/getInvoiceDetail"
          xmlns:ns6="http://xmlns.oracle.com/pcbpel/adapter/db/Ejercicio04A/Ejercicio04A/getCustDetails"
-         xmlns:ns7="http://xmlns.oracle.com/pcbpel/adapter/db/top/getCustDetails">
+         xmlns:ns7="http://xmlns.oracle.com/pcbpel/adapter/db/top/getCustDetails"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns8="http://xmlns.oracle.com/pcbpel/adapter/db/Ejercicio04A/Ejercicio04A/getFolioFromRFC"
+         xmlns:ns9="http://xmlns.oracle.com/pcbpel/adapter/db/top/getFolioFromRFC"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
   <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/Ejercicio04A/Ejercicio04A/BPELInvoice" location="../WSDLs/BPELInvoice.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
   <!-- 
@@ -53,6 +57,7 @@
     <partnerLink name="getInvoiceDetail" partnerLinkType="ns4:getInvoiceDetail_plt"
                  partnerRole="getInvoiceDetail_role"/>
     <partnerLink name="getCustDetails" partnerLinkType="ns6:getCustDetails_plt" partnerRole="getCustDetails_role"/>
+    <partnerLink name="getFolioFromRFC" partnerLinkType="ns8:getFolioFromRFC_plt" partnerRole="getFolioFromRFC_role"/>
   </partnerLinks>
 
   <!-- 
@@ -75,6 +80,12 @@
               messageType="ns6:getCustDetailsSelect_inputParameters"/>
     <variable name="InvokeCustDetails_getCustDetailsSelect_OutputVariable"
               messageType="ns6:FinCustDetailsCollection_msg"/>
+    <variable name="Invoke1_getFolioFromRFCSelect_InputVariable"
+              messageType="ns8:getFolioFromRFCSelect_inputParameters"/>
+    <variable name="Invoke1_getFolioFromRFCSelect_OutputVariable" messageType="ns8:InvoiceHeaderCollection_msg"/>
+    <variable name="counter" type="xsd:integer">
+      <from>1</from>
+    </variable>
   </variables>
 
   <!-- 
@@ -88,7 +99,7 @@
 
     <!-- Receive input from requestor. (Note: This maps to operation defined in BPELInvoice.wsdl) -->
     <receive name="receiveInput" partnerLink="bpelinvoice_client" portType="client:BPELInvoice" operation="process" variable="inputVariable" createInstance="yes"/>
-    <assign name="Assign1">
+    <assign name="AssignDateToInputInvoiceHeader">
       <copy>
         <from>concat(substring($inputVariable.payload/ns1:fecha,1,4),"-", substring($inputVariable.payload/ns1:fecha,5,2),"-", substring($inputVariable.payload/ns1:fecha,7,2))</from>
         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$inputVariable.payload/ns1:fecha</to>
@@ -97,26 +108,77 @@
         <from>$inputVariable.payload/ns1:fecha</from>
         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Invoke1_getInvoiceHeaderSelect_InputVariable.getInvoiceHeaderSelect_inputParameters/ns3:date</to>
       </copy>
-      <copy>
-        <from>'1111'</from>
-        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeinvoiceDetails_getInvoiceDetailSelect_InputVariable.getInvoiceDetailSelect_inputParameters/ns5:folio</to>
-      </copy>
-      <copy>
-        <from>$inputVariable.payload/ns1:rfc</from>
-        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeCustDetails_getCustDetailsSelect_InputVariable.getCustDetailsSelect_inputParameters/ns7:rfc</to>
-      </copy>
     </assign>
-    <invoke name="InvokeInvoiceHeader" partnerLink="getInvoiceHeader"
-            portType="ns2:getInvoiceHeader_ptt" operation="getInvoiceHeaderSelect"
-            inputVariable="Invoke1_getInvoiceHeaderSelect_InputVariable"
+    <invoke name="InvokeInvoiceHeader" partnerLink="getInvoiceHeader" portType="ns2:getInvoiceHeader_ptt"
+            operation="getInvoiceHeaderSelect" inputVariable="Invoke1_getInvoiceHeaderSelect_InputVariable"
             outputVariable="Invoke1_getInvoiceHeaderSelect_OutputVariable" bpelx:invokeAsDetail="no"/>
-    <invoke name="InvokeinvoiceDetails" bpelx:invokeAsDetail="no" partnerLink="getInvoiceDetail"
-            portType="ns4:getInvoiceDetail_ptt" operation="getInvoiceDetailSelect"
-            inputVariable="InvokeinvoiceDetails_getInvoiceDetailSelect_InputVariable"
-            outputVariable="InvokeinvoiceDetails_getInvoiceDetailSelect_OutputVariable"/>
-    <invoke name="InvokeCustDetails" bpelx:invokeAsDetail="no" partnerLink="getCustDetails"
-            portType="ns6:getCustDetails_ptt" operation="getCustDetailsSelect"
-            inputVariable="InvokeCustDetails_getCustDetailsSelect_InputVariable"
-            outputVariable="InvokeCustDetails_getCustDetailsSelect_OutputVariable"/>
+    <if name="If1">
+      <documentation>
+        <![CDATA[exists elements]]>
+      </documentation>
+      <condition>$Invoke1_getInvoiceHeaderSelect_OutputVariable.InvoiceHeaderCollection/ns3:InvoiceHeader/ns3:folio &gt; 0</condition>
+      <sequence>
+        <assign name="AssignRFC_To_InputCustDetails">
+          <copy>
+            <from>$inputVariable.payload/ns1:rfc</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeCustDetails_getCustDetailsSelect_InputVariable.getCustDetailsSelect_inputParameters/ns7:rfc</to>
+          </copy>
+        </assign>
+        <invoke name="InvokeCustDetails" bpelx:invokeAsDetail="no" partnerLink="getCustDetails"
+                portType="ns6:getCustDetails_ptt" operation="getCustDetailsSelect"
+                inputVariable="InvokeCustDetails_getCustDetailsSelect_InputVariable"
+                outputVariable="InvokeCustDetails_getCustDetailsSelect_OutputVariable"/>
+        <if name="If2">
+          <documentation>
+            <![CDATA[exist customer]]>
+          </documentation>
+          <condition>$InvokeCustDetails_getCustDetailsSelect_OutputVariable.FinCustDetailsCollection/ns7:FinCustDetails/ns7:rowId &gt; 0</condition>
+          <sequence name="Sequence2">
+            <assign name="Assign2">
+              <copy>
+                <from>$inputVariable.payload/ns1:fecha</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Invoke1_getFolioFromRFCSelect_InputVariable.getFolioFromRFCSelect_inputParameters/ns9:date</to>
+              </copy>
+              <copy>
+                <from>$inputVariable.payload/ns1:rfc</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Invoke1_getFolioFromRFCSelect_InputVariable.getFolioFromRFCSelect_inputParameters/ns9:rfc</to>
+              </copy>
+            </assign>
+            <invoke name="Invoke1" bpelx:invokeAsDetail="no" partnerLink="getFolioFromRFC"
+                    portType="ns8:getFolioFromRFC_ptt" operation="getFolioFromRFCSelect"
+                    inputVariable="Invoke1_getFolioFromRFCSelect_InputVariable"
+                    outputVariable="Invoke1_getFolioFromRFCSelect_OutputVariable"/>
+          </sequence>
+          <else>
+            <documentation>
+              <![CDATA[don't exist]]>
+            </documentation>
+            <sequence name="Sequence3">
+              <while name="While">
+                <condition>$counter &lt;= count($Invoke1_getInvoiceHeaderSelect_OutputVariable.InvoiceHeaderCollection/ns3:InvoiceHeader)</condition>
+                <sequence name="Sequence4">
+                  <assign name="Assign1">
+                    <copy>
+                      <from>$Invoke1_getInvoiceHeaderSelect_OutputVariable.InvoiceHeaderCollection/ns3:InvoiceHeader[$counter]/ns3:folio</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeinvoiceDetails_getInvoiceDetailSelect_InputVariable.getInvoiceDetailSelect_inputParameters/ns5:folio</to>
+                    </copy>
+                  </assign>
+                  <assign name="Assign3">
+                    <copy>
+                      <from>$counter+1</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$counter</to>
+                    </copy>
+                  </assign>
+                  <invoke name="InvokeinvoiceDetails" bpelx:invokeAsDetail="no" partnerLink="getInvoiceDetail"
+                          portType="ns4:getInvoiceDetail_ptt" operation="getInvoiceDetailSelect"
+                          inputVariable="InvokeinvoiceDetails_getInvoiceDetailSelect_InputVariable"
+                          outputVariable="InvokeinvoiceDetails_getInvoiceDetailSelect_OutputVariable"/>
+                </sequence>
+              </while>
+            </sequence>
+          </else>
+        </if>
+      </sequence>
+    </if>
   </sequence>
 </process>

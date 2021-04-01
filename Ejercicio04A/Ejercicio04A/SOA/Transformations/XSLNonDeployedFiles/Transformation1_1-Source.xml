@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<InvoiceHeaderCollection xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/getInvoiceHeader">
+   <InvoiceHeader>
+      <folio>37</folio>
+      <transactionDate>2021-04-01T14:03:08.757</transactionDate>
+      <rfc>string38</rfc>
+   </InvoiceHeader>
+   <InvoiceHeader>
+      <folio>40</folio>
+      <transactionDate>2021-04-01T14:03:08.757</transactionDate>
+      <rfc>string41</rfc>
+   </InvoiceHeader>
+   <InvoiceHeader>
+      <folio>43</folio>
+      <transactionDate>2021-04-01T14:03:08.757</transactionDate>
+      <rfc>string44</rfc>
+   </InvoiceHeader>
+</InvoiceHeaderCollection>

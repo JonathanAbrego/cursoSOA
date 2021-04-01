@@ -305,6 +305,10 @@
    <hash n="oracle.tip.tools.ide.fabric.addin.SCAContentSetProvider">
       <hash n="sca-content">
          <list n="pattern-filters">
+            <string v="-Transformations/XSLNonDeployedFiles/UnitTestXrefFunctionReturn.dvm"/>
+            <string v="-Transformations/XSLNonDeployedFiles/UnitTestURLs.dvm"/>
+            <string v="-Transformations/XSLNonDeployedFiles/Transformation1_1-Target.xml"/>
+            <string v="-Transformations/XSLNonDeployedFiles/Transformation1_1-Source.xml"/>
             <string v="-SCA-INF/classes"/>
             <string v="+**"/>
          </list>
@@ -314,4 +318,5 @@
       </hash>
    </hash>
    <value n="SCA_BPEL_FOLDER_PROPERTY_NAME" v="BPEL/"/>
+   <value n="SOA_TRANSFORMATION_FOLDER_NAME" v="Transformations/"/>
 </jpr:project>
