@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>error</severity>
+      <loc>/ns:composite/ns:reference[@name='stampInvoice']</loc>
+      <line>18</line>
+      <col>93</col>
+      <file>C:\Oracle\Middleware\config\soa\Ejercicio04A\Ejercicio04A\SOA\composite.xml</file>
+      <name>C:\Oracle\Middleware\config\soa\Ejercicio04A\Ejercicio04A\SOA\composite.xml</name>
+      <fix/>
+      <msg>La referencia stampInvoice no existe como destino de transmisión</msg>
+   </Fault>
+</Faults>
