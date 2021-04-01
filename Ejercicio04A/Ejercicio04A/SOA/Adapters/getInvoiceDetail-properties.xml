@@ -1,0 +1,30 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="INVOICE_DETAILS.FOLIO:db_column_not_null">false</entry>
+   <entry key="INVOICE_DETAILS.ID:db_column_type">NUMBER</entry>
+   <entry key="INVOICE_DETAILS.ITEM:db_column_type">VARCHAR2</entry>
+   <entry key="INVOICE_DETAILS.FOLIO:db_column_type">VARCHAR2</entry>
+   <entry key="INVOICE_DETAILS.ITEM:db_column_not_null">false</entry>
+   <entry key="INVOICE_DETAILS.TAX:db_column_precision">38</entry>
+   <entry key="INVOICE_DETAILS.ID:db_column_not_null">true</entry>
+   <entry key="INVOICE_DETAILS:db_column_4">TAX</entry>
+   <entry key="INVOICE_DETAILS:db_column_3">AMOUNT</entry>
+   <entry key="INVOICE_DETAILS:db_column_2">ITEM</entry>
+   <entry key="INVOICE_DETAILS:db_column_1">FOLIO</entry>
+   <entry key="INVOICE_DETAILS:db_column_0">ID</entry>
+   <entry key="INVOICE_DETAILS.ID:db_column_precision">38</entry>
+   <entry key="return_single_result_set">false</entry>
+   <entry key="INVOICE_DETAILS.ITEM:db_column_size">20</entry>
+   <entry key="INVOICE_DETAILS.AMOUNT:db_column_scale">0</entry>
+   <entry key="INVOICE_DETAILS.AMOUNT:db_column_not_null">false</entry>
+   <entry key="INVOICE_DETAILS.FOLIO:db_column_size">20</entry>
+   <entry key="INVOICE_DETAILS.AMOUNT:db_column_type">NUMBER</entry>
+   <entry key="INVOICE_DETAILS:db_table_type">TABLE</entry>
+   <entry key="root_descriptor_alias">INVOICE_DETAILS</entry>
+   <entry key="INVOICE_DETAILS.TAX:db_column_not_null">false</entry>
+   <entry key="INVOICE_DETAILS.TAX:db_column_type">NUMBER</entry>
+   <entry key="INVOICE_DETAILS.AMOUNT:db_column_precision">38</entry>
+   <entry key="INVOICE_DETAILS.ID:db_column_scale">0</entry>
+   <entry key="INVOICE_DETAILS.TAX:db_column_scale">0</entry>
+</properties>
