@@ -1,6 +1,0 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<tns:getInvoiceDetailSelect_folioInputParameters xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/Ejercicio04A/Ejercicio04A/getInvoiceDetail" xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/Ejercicio04A/Ejercicio04A/getInvoiceHeader" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/top/getInvoiceDetail">
-   <tns:folio>37</tns:folio>
-   <tns:folio>40</tns:folio>
-   <tns:folio>43</tns:folio>
-</tns:getInvoiceDetailSelect_folioInputParameters>

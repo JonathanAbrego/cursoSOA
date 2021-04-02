@@ -1,0 +1,55 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="root_descriptor_alias">INVOICE_HEADER</entry>
+   <entry key="INVOICE_HEADER.CREATED_DATE:db_column_type">DATE</entry>
+   <entry key="INVOICE_DETAILS.TAX:db_column_precision">38</entry>
+   <entry key="INVOICE_HEADER.TRANSACTION_DATE:db_column_not_null">false</entry>
+   <entry key="INVOICE_HEADER.RFC:db_column_size">13</entry>
+   <entry key="INVOICE_HEADER.FOLIO:db_column_scale">0</entry>
+   <entry key="INVOICE_HEADER:db_table_type">TABLE</entry>
+   <entry key="INVOICE_HEADER:db_column_5">RFC</entry>
+   <entry key="INVOICE_DETAILS.AMOUNT:db_column_type">NUMBER</entry>
+   <entry key="INVOICE_HEADER:db_column_4">CREATED_DATE</entry>
+   <entry key="INVOICE_DETAILS.TAX:db_column_scale">0</entry>
+   <entry key="INVOICE_HEADER.CREATED_BY:db_column_size">20</entry>
+   <entry key="INVOICE_HEADER:db_column_3">CREATED_BY</entry>
+   <entry key="INVOICE_HEADER:db_column_2">TRANSACTION_DATE</entry>
+   <entry key="INVOICE_HEADER:db_column_1">FOLIO</entry>
+   <entry key="INVOICE_HEADER:db_column_0">ID</entry>
+   <entry key="INVOICE_DETAILS:db_column_4">TAX</entry>
+   <entry key="INVOICE_DETAILS.TAX:db_column_type">NUMBER</entry>
+   <entry key="INVOICE_DETAILS:db_column_3">AMOUNT</entry>
+   <entry key="INVOICE_DETAILS:db_column_2">ITEM</entry>
+   <entry key="INVOICE_HEADER.FOLIO:db_column_type">NUMBER</entry>
+   <entry key="INVOICE_DETAILS:db_column_1">FOLIO</entry>
+   <entry key="INVOICE_DETAILS:db_table_type">TABLE</entry>
+   <entry key="INVOICE_HEADER.FOLIO:db_column_precision">38</entry>
+   <entry key="INVOICE_DETAILS:db_column_0">ID</entry>
+   <entry key="INVOICE_HEADER.ID:db_column_not_null">true</entry>
+   <entry key="INVOICE_DETAILS.ITEM:db_column_type">VARCHAR2</entry>
+   <entry key="INVOICE_HEADER.CREATED_BY:db_column_not_null">false</entry>
+   <entry key="INVOICE_DETAILS.TAX:db_column_not_null">false</entry>
+   <entry key="INVOICE_DETAILS.ID:db_column_precision">38</entry>
+   <entry key="INVOICE_HEADER.ID:db_column_type">NUMBER</entry>
+   <entry key="INVOICE_HEADER.FOLIO:db_column_not_null">false</entry>
+   <entry key="INVOICE_HEADER.TRANSACTION_DATE:db_column_type">DATE</entry>
+   <entry key="INVOICE_DETAILS.AMOUNT:db_column_not_null">false</entry>
+   <entry key="INVOICE_DETAILS.FOLIO:db_column_not_null">false</entry>
+   <entry key="INVOICE_DETAILS.ITEM:db_column_size">20</entry>
+   <entry key="INVOICE_DETAILS.FOLIO:db_column_type">VARCHAR2</entry>
+   <entry key="return_single_result_set">true</entry>
+   <entry key="INVOICE_DETAILS.ID:db_column_type">NUMBER</entry>
+   <entry key="INVOICE_HEADER.ID:db_column_scale">0</entry>
+   <entry key="INVOICE_DETAILS.ID:db_column_not_null">true</entry>
+   <entry key="INVOICE_DETAILS.AMOUNT:db_column_precision">38</entry>
+   <entry key="INVOICE_HEADER.RFC:db_column_not_null">false</entry>
+   <entry key="INVOICE_DETAILS.AMOUNT:db_column_scale">0</entry>
+   <entry key="INVOICE_DETAILS.ITEM:db_column_not_null">false</entry>
+   <entry key="INVOICE_DETAILS.FOLIO:db_column_size">20</entry>
+   <entry key="INVOICE_HEADER.ID:db_column_precision">38</entry>
+   <entry key="INVOICE_HEADER.RFC:db_column_type">VARCHAR2</entry>
+   <entry key="INVOICE_DETAILS.ID:db_column_scale">0</entry>
+   <entry key="INVOICE_HEADER.CREATED_BY:db_column_type">VARCHAR2</entry>
+   <entry key="INVOICE_HEADER.CREATED_DATE:db_column_not_null">false</entry>
+</properties>

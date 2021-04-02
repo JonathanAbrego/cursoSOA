@@ -1,0 +1,99 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Thu Apr 01 22:57:32 CST 2021
+  Author:  jonab
+  Type: BPEL 2.0 Process
+  Purpose: One Way BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BPELInvoice"
+               targetNamespace="http://xmlns.oracle.com/Exercise04A/Exercise04A/BPELInvoice"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Exercise04A/Exercise04A/BPELInvoice"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/Exercise04A/Exercise04A/dbTransactions"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbTransactions" xmlns:ns2="http://www.bwr.mx"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/Exercise04A/Exercise04A/dbCustDetails"
+         xmlns:ns5="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbCustDetails">
+
+  <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/Exercise04A/Exercise04A/BPELInvoice" location="../WSDLs/BPELInvoice.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelinvoice_client" partnerLinkType="client:BPELInvoice" myRole="BPELInvoiceProvider"/>
+    <partnerLink name="dbTransactions" partnerLinkType="ns1:dbTransactions_plt" partnerRole="dbTransactions_role"/>
+    <partnerLink name="dbCustDetails" partnerLinkType="ns4:dbCustDetails_plt" partnerRole="dbCustDetails_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:BPELInvoiceRequestMessage"/>
+    <variable name="Invoke1_dbTransactionsSelect_InputVariable" messageType="ns1:dbTransactionsSelect_inputParameters"/>
+    <variable name="Invoke1_dbTransactionsSelect_OutputVariable" messageType="ns1:InvoiceHeaderCollection_msg"/>
+    <variable name="InvokeCustDetails_dbCustDetailsSelect_InputVariable"
+              messageType="ns4:dbCustDetailsSelect_inputParameters"/>
+    <variable name="InvokeCustDetails_dbCustDetailsSelect_OutputVariable"
+              messageType="ns4:FinCustDetailsCollection_msg"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in BPELInvoice.wsdl) -->
+    <receive name="receiveInput" partnerLink="bpelinvoice_client" portType="client:BPELInvoice" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="Assign1">
+      <copy>
+        <from>'2019-07-10'</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Invoke1_dbTransactionsSelect_InputVariable.dbTransactionsSelect_inputParameters/ns3:date</to>
+      </copy>
+      <copy>
+        <from>'MILL8603184X1'</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeCustDetails_dbCustDetailsSelect_InputVariable.dbCustDetailsSelect_inputParameters/ns5:rfc</to>
+      </copy>
+    </assign>
+    <invoke name="InvokeTransaction" bpelx:invokeAsDetail="no" partnerLink="dbTransactions" portType="ns1:dbTransactions_ptt"
+            operation="dbTransactionsSelect" inputVariable="Invoke1_dbTransactionsSelect_InputVariable"
+            outputVariable="Invoke1_dbTransactionsSelect_OutputVariable"/>
+    <invoke name="InvokeCustDetails" bpelx:invokeAsDetail="no" partnerLink="dbCustDetails"
+            portType="ns4:dbCustDetails_ptt" operation="dbCustDetailsSelect"
+            inputVariable="InvokeCustDetails_dbCustDetailsSelect_InputVariable"
+            outputVariable="InvokeCustDetails_dbCustDetailsSelect_OutputVariable"/>
+  </sequence>
+</process>

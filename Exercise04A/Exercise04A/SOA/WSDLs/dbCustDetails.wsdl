@@ -1,0 +1,32 @@
+<wsdl:definitions
+     name="dbCustDetails"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Exercise04A/Exercise04A/dbCustDetails"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/Exercise04A/Exercise04A/dbCustDetails"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbCustDetails"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="dbCustDetails_plt" >
+    <plt:role name="dbCustDetails_role" >
+      <plt:portType name="tns:dbCustDetails_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbCustDetails" schemaLocation="../Schemas/dbCustDetails_table.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="dbCustDetailsSelect_inputParameters">
+        <wsdl:part name="dbCustDetailsSelect_inputParameters" element="top:dbCustDetailsSelect_rfcInputParameters"/>
+    </wsdl:message>
+    <wsdl:message name="FinCustDetailsCollection_msg">
+        <wsdl:part name="FinCustDetailsCollection" element="top:FinCustDetailsCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="dbCustDetails_ptt">
+        <wsdl:operation name="dbCustDetailsSelect">
+            <wsdl:input message="tns:dbCustDetailsSelect_inputParameters"/>
+            <wsdl:output message="tns:FinCustDetailsCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>
