@@ -15,6 +15,10 @@
           importType="wsdl"/>
   <import namespace="http://xmlns.oracle.com/pcbpel/adapter/ftp/FTPrueba/FTPrueba/ftpReference"
           location="WSDLs/ftpReference.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/FTPrueba/FTPrueba/dbReference"
+          location="WSDLs/dbReference.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/ftp/FTPrueba/FTPrueba/ftpReference_2"
+          location="WSDLs/ftpReference_2.wsdl" importType="wsdl"/>
   <service name="bpelprocess1_client_ep" ui:wsdlLocation="WSDLs/BPELProcess1.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/FTPrueba/FTPrueba/BPELProcess1#wsdl.interface(BPELProcess1)"/>
     <binding.ws port="http://xmlns.oracle.com/FTPrueba/FTPrueba/BPELProcess1#wsdl.endpoint(bpelprocess1_client_ep/BPELProcess1_pt)"/>
@@ -30,12 +34,31 @@
       <reference name="ftpReference" ui:wsdlLocation="WSDLs/ftpReference.wsdl">
         <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/FTPrueba/FTPrueba/ftpReference#wsdl.interface(Put_ptt)"/>
       </reference>
+      <reference name="dbReference" ui:wsdlLocation="WSDLs/dbReference.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/FTPrueba/FTPrueba/dbReference#wsdl.interface(dbReference_ptt)"/>
+      </reference>
+      <reference name="ftpReference_2" ui:wsdlLocation="WSDLs/ftpReference_2.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/FTPrueba/FTPrueba/ftpReference_2#wsdl.interface(Put_ptt)"/>
+      </reference>
     </componentType>
     <property name="bpel.config.transaction" type="xs:string" many="false">required</property>
   </component>
   <reference name="ftpReference" ui:wsdlLocation="WSDLs/ftpReference.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/FTPrueba/FTPrueba/ftpReference#wsdl.interface(Put_ptt)"/>
     <binding.jca config="Adapters/ftpReference_ftp.jca"/>
+  </reference>
+  <reference name="dbReference" ui:wsdlLocation="WSDLs/dbReference.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/FTPrueba/FTPrueba/dbReference#wsdl.interface(dbReference_ptt)"/>
+    <binding.jca config="Adapters/dbReference_db.jca">
+      <property name="jca.retry.count" type="xs:int" many="false" override="may">4</property>
+      <property name="jca.retry.interval" type="xs:int" many="false" override="may">1</property>
+      <property name="jca.retry.backoff" type="xs:int" many="false" override="may">2</property>
+      <property name="jca.retry.maxInterval" type="xs:int" many="false" override="may">120</property>
+    </binding.jca>
+  </reference>
+  <reference name="ftpReference_2" ui:wsdlLocation="WSDLs/ftpReference_2.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/FTPrueba/FTPrueba/ftpReference_2#wsdl.interface(Put_ptt)"/>
+    <binding.jca config="Adapters/ftpReference_2_ftp.jca"/>
   </reference>
   <wire>
     <source.uri>bpelprocess1_client_ep</source.uri>
@@ -44,5 +67,13 @@
   <wire>
     <source.uri>BPELProcess1/ftpReference</source.uri>
     <target.uri>ftpReference</target.uri>
+  </wire>
+  <wire>
+    <source.uri>BPELProcess1/dbReference</source.uri>
+    <target.uri>dbReference</target.uri>
+  </wire>
+  <wire>
+    <source.uri>BPELProcess1/ftpReference_2</source.uri>
+    <target.uri>ftpReference_2</target.uri>
   </wire>
 </composite>

@@ -14,14 +14,14 @@
    <entry key="return_single_result_set">false</entry>
    <entry key="FIN_CUST_DETAILS.ROW_ID:db_column_not_null">true</entry>
    <entry key="FIN_CUST_DETAILS.RFC:db_column_type">VARCHAR2</entry>
-   <entry key="FIN_CUST_DETAILS.CUSTOMER_NAME:db_column_type">VARCHAR2</entry>
    <entry key="FIN_CUST_DETAILS.ADDRESS_ID:db_column_precision">38</entry>
+   <entry key="FIN_CUST_DETAILS.CUSTOMER_NAME:db_column_type">VARCHAR2</entry>
    <entry key="root_descriptor_alias">FIN_CUST_DETAILS</entry>
    <entry key="FIN_CUST_DETAILS:db_column_4">RFC</entry>
-   <entry key="FIN_CUST_DETAILS:db_column_3">ADDRESS_ID</entry>
    <entry key="FIN_CUST_DETAILS.ADDRESS_ID:db_column_not_null">false</entry>
-   <entry key="FIN_CUST_DETAILS.CUSTOMER_LASTNAME:db_column_size">250</entry>
+   <entry key="FIN_CUST_DETAILS:db_column_3">ADDRESS_ID</entry>
    <entry key="FIN_CUST_DETAILS:db_column_2">CUSTOMER_LASTNAME</entry>
+   <entry key="FIN_CUST_DETAILS.CUSTOMER_LASTNAME:db_column_size">250</entry>
    <entry key="FIN_CUST_DETAILS:db_column_1">CUSTOMER_NAME</entry>
    <entry key="FIN_CUST_DETAILS:db_column_0">ROW_ID</entry>
    <entry key="FIN_CUST_DETAILS.ROW_ID:db_column_scale">0</entry>

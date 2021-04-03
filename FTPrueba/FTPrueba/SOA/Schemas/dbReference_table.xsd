@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbCustDetails" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbCustDetails" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbReference" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbReference" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
    <xs:element name="FinCustDetailsCollection" type="FinCustDetailsCollection"/>
    <xs:complexType name="FinCustDetailsCollection">
       <xs:sequence>
@@ -13,8 +13,8 @@
          <xs:element name="rfc" type="string13" minOccurs="0" nillable="true"/>
       </xs:sequence>
    </xs:complexType>
-   <xs:element name="dbCustDetailsSelectInputParameters" type="dbCustDetailsSelect"/>
-   <xs:complexType name="dbCustDetailsSelect">
+   <xs:element name="dbReferenceSelectInputParameters" type="dbReferenceSelect"/>
+   <xs:complexType name="dbReferenceSelect">
       <xs:sequence/>
    </xs:complexType>
    <xs:simpleType name="string250">

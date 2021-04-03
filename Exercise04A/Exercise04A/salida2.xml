@@ -1,0 +1,8 @@
+<exam:Invoice>
+         <exam:InvoiceFolio>?</exam:InvoiceFolio>
+         <exam:InvoiceDate>?</exam:InvoiceDate>
+         <exam:InvoiceAmount>?</exam:InvoiceAmount>
+         <exam:InvoiceTaxAmount>?</exam:InvoiceTaxAmount>
+         <exam:RFC>?</exam:RFC>
+         <exam:CustomerName>?</exam:CustomerName>
+      </exam:Invoice>

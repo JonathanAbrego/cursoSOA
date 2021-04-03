@@ -18,7 +18,10 @@
                xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
          xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
          xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/ftp/FTPrueba/FTPrueba/ftpReference"
-         xmlns:ns2="http://TargetNamespace.com/ftpReference">
+         xmlns:ns2="http://TargetNamespace.com/ftpReference"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/FTPrueba/FTPrueba/dbReference"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/ftp/FTPrueba/FTPrueba/ftpReference_2"
+         xmlns:ns5="http://www.bwr.mx">
 
     <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/FTPrueba/FTPrueba/BPELProcess1" location="../WSDLs/BPELProcess1.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <!-- 
@@ -35,6 +38,8 @@
     -->
     <partnerLink name="bpelprocess1_client" partnerLinkType="client:BPELProcess1" myRole="BPELProcess1Provider"/>
     <partnerLink name="ftpReference" partnerLinkType="ns1:Put_plt" partnerRole="Put_role"/>
+    <partnerLink name="dbReference" partnerLinkType="ns3:dbReference_plt" partnerRole="dbReference_role"/>
+    <partnerLink name="ftpReference_2" partnerLinkType="ns4:Put_plt" partnerRole="Put_role"/>
   </partnerLinks>
 
   <!-- 
@@ -50,6 +55,9 @@
     <!-- Reference to the message that will be returned to the requester-->
     <variable name="outputVariable" messageType="client:BPELProcess1ResponseMessage"/>
     <variable name="Invoke1_Put_InputVariable" messageType="ns1:Put_msg"/>
+    <variable name="Invoke2_dbReferenceSelect_OutputVariable" messageType="ns3:FinCustDetailsCollection_msg"/>
+    <variable name="Invoke2_dbReferenceSelect_InputVariable" messageType="ns3:dbReferenceSelect_inputParameters"/>
+    <variable name="Invoke3_Put_InputVariable" messageType="ns4:Put_msg"/>
   </variables>
 
   <!-- 
@@ -68,7 +76,16 @@
         <from>$inputVariable.payload/client:input</from>
         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Invoke1_Put_InputVariable.body/ns2:C1</to>
       </copy>
+      <copy>
+        <from>$inputVariable.payload/client:input</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Invoke3_Put_InputVariable.body/ns5:InvoiceRFC</to>
+      </copy>
     </assign>
+    <invoke name="Invoke3" bpelx:invokeAsDetail="no" partnerLink="ftpReference_2" portType="ns4:Put_ptt"
+            operation="Put" inputVariable="Invoke3_Put_InputVariable"/>
+    <invoke name="Invoke2" partnerLink="dbReference" portType="ns3:dbReference_ptt"
+            operation="dbReferenceSelect" outputVariable="Invoke2_dbReferenceSelect_OutputVariable"
+            bpelx:invokeAsDetail="no" inputVariable="Invoke2_dbReferenceSelect_InputVariable"/>
     <invoke name="Invoke1" bpelx:invokeAsDetail="no" partnerLink="ftpReference" portType="ns1:Put_ptt" operation="Put"
             inputVariable="Invoke1_Put_InputVariable"/>
     <!-- Generate reply to synchronous request -->

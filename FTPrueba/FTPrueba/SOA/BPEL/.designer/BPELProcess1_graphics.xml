@@ -4,10 +4,12 @@
    <annotationfile/>
    <iconize/>
    <partnerlink_locations>
-      <partnerlink name="bpelprocess1_client" x="0" y="235" side="left"/>
-      <partnerlink name="ftpReference" x="1030" y="284" side="right"/>
+      <partnerlink name="bpelprocess1_client" x="0" y="323" side="left"/>
+      <partnerlink name="dbReference" x="0" y="380" side="left"/>
+      <partnerlink name="ftpReference" x="1019" y="476" side="right"/>
+      <partnerlink name="ftpReference_2" x="1019" y="284" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,0,1146,534" show_swimlanes="true">
+   <graph_layout viewport="0,0,1141,514" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
    </graph_layout>

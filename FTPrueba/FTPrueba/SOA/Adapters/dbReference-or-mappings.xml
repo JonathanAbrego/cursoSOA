@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <object-persistence xmlns="http://www.eclipse.org/eclipselink/xsds/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:eclipselink="http://www.eclipse.org/eclipselink/xsds/persistence" version="Eclipse Persistence Services - 2.6.7.v20190604-418f1a1c56">
-   <name>dbCustDetails-OR</name>
+   <name>dbReference-OR</name>
    <class-mapping-descriptors>
       <class-mapping-descriptor xsi:type="object-relational-class-mapping-descriptor">
-         <class>dbCustDetails.FinCustDetails</class>
+         <class>dbReference.FinCustDetails</class>
          <alias>FIN_CUST_DETAILS</alias>
          <primary-key>
             <field table="FIN_CUST_DETAILS" name="ROW_ID" xsi:type="column"/>
@@ -11,8 +11,8 @@
          <events/>
          <querying>
             <queries>
-               <query name="dbCustDetailsSelect" xsi:type="read-all-query">
-                  <reference-class>dbCustDetails.FinCustDetails</reference-class>
+               <query name="dbReferenceSelect" xsi:type="read-all-query">
+                  <reference-class>dbReference.FinCustDetails</reference-class>
                   <container xsi:type="list-container-policy">
                      <collection-type>java.util.Vector</collection-type>
                   </container>

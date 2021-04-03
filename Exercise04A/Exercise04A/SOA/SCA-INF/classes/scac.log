@@ -1,22 +1,22 @@
 SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
 SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
-2021-04-01 23:52:12.789/2.214 Oracle Coherence 12.2.1.4.0 <Info> (thread=main, member=n/a): Loaded operational configuration from "jar:file:/C:/Oracle/Middleware/Oracle_Home/coherence/lib/coherence.jar!/tangosol-coherence.xml"
-2021-04-01 23:52:12.822/2.247 Oracle Coherence 12.2.1.4.0 <Info> (thread=main, member=n/a): Loaded operational overrides from "jar:file:/C:/Oracle/Middleware/Oracle_Home/coherence/lib/coherence.jar!/tangosol-coherence-override-dev.xml"
-2021-04-01 23:52:12.824/2.249 Oracle Coherence 12.2.1.4.0 <Info> (thread=main, member=n/a): Optional configuration override "/tangosol-coherence-override.xml" is not specified
-2021-04-01 23:52:12.827/2.251 Oracle Coherence 12.2.1.4.0 <Info> (thread=main, member=n/a): Optional configuration override "cache-factory-config.xml" is not specified
-2021-04-01 23:52:12.828/2.252 Oracle Coherence 12.2.1.4.0 <Info> (thread=main, member=n/a): Optional configuration override "cache-factory-builder-config.xml" is not specified
-2021-04-01 23:52:12.829/2.253 Oracle Coherence 12.2.1.4.0 <Info> (thread=main, member=n/a): Optional configuration override "/custom-mbeans.xml" is not specified
+2021-04-03 00:03:59.319/1.321 Oracle Coherence 12.2.1.4.0 <Info> (thread=main, member=n/a): Loaded operational configuration from "jar:file:/C:/Oracle/Middleware/Oracle_Home/coherence/lib/coherence.jar!/tangosol-coherence.xml"
+2021-04-03 00:03:59.341/1.343 Oracle Coherence 12.2.1.4.0 <Info> (thread=main, member=n/a): Loaded operational overrides from "jar:file:/C:/Oracle/Middleware/Oracle_Home/coherence/lib/coherence.jar!/tangosol-coherence-override-dev.xml"
+2021-04-03 00:03:59.342/1.344 Oracle Coherence 12.2.1.4.0 <Info> (thread=main, member=n/a): Optional configuration override "/tangosol-coherence-override.xml" is not specified
+2021-04-03 00:03:59.344/1.346 Oracle Coherence 12.2.1.4.0 <Info> (thread=main, member=n/a): Optional configuration override "cache-factory-config.xml" is not specified
+2021-04-03 00:03:59.345/1.347 Oracle Coherence 12.2.1.4.0 <Info> (thread=main, member=n/a): Optional configuration override "cache-factory-builder-config.xml" is not specified
+2021-04-03 00:03:59.346/1.348 Oracle Coherence 12.2.1.4.0 <Info> (thread=main, member=n/a): Optional configuration override "/custom-mbeans.xml" is not specified
 
 Oracle Coherence Version 12.2.1.4.0 Build 74888
  Grid Edition: Development mode
 Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
 
-2021-04-01 23:52:14.167/3.592 Oracle Coherence GE 12.2.1.4.0 <Info> (thread=main, member=n/a): The cluster name has not been configured, a value of "jonab's cluster" has been automatically generated
-2021-04-01 23:52:15.516/4.941 Oracle Coherence GE 12.2.1.4.0 <Info> (thread=main, member=n/a): Created cache factory com.tangosol.net.ExtensibleConfigurableCacheFactory
-abr 01, 2021 11:52:16 PM oracle.soa.scac.ValidateComposite loadWSDLs
+2021-04-03 00:03:59.865/1.867 Oracle Coherence GE 12.2.1.4.0 <Info> (thread=main, member=n/a): The cluster name has not been configured, a value of "jonab's cluster" has been automatically generated
+2021-04-03 00:04:00.184/2.185 Oracle Coherence GE 12.2.1.4.0 <Info> (thread=main, member=n/a): Created cache factory com.tangosol.net.ExtensibleConfigurableCacheFactory
+abr 03, 2021 12:04:01 AM oracle.soa.scac.ValidateComposite loadWSDLs
 ADVERTENCIA: Validating WSDLs from WSDLManager....  with option UseSoaInfraMds:false
-abr 01, 2021 11:52:16 PM oracle.fabric.common.wsdl.SchemaManager isIncrementalBuildSupported
+abr 03, 2021 12:04:01 AM oracle.fabric.common.wsdl.SchemaManager isIncrementalBuildSupported
 INFORMACIÓN: XMLSchema incremental build enabled.
 Java HotSpot(TM) 64-Bit Server VM warning: ignoring option PermSize=32m; support was removed in 8.0
 Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=256m; support was removed in 8.0

@@ -18,7 +18,7 @@
       </schema>
     </wsdl:types>
     <wsdl:message name="dbCustDetailsSelect_inputParameters">
-        <wsdl:part name="dbCustDetailsSelect_inputParameters" element="top:dbCustDetailsSelect_rfcInputParameters"/>
+        <wsdl:part name="dbCustDetailsSelect_inputParameters" element="top:dbCustDetailsSelectInputParameters"/>
     </wsdl:message>
     <wsdl:message name="FinCustDetailsCollection_msg">
         <wsdl:part name="FinCustDetailsCollection" element="top:FinCustDetailsCollection"/>
