@@ -1,0 +1,457 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Mon Apr 05 13:20:29 CDT 2021
+  Author:  jonab
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BPELInvoice"
+               targetNamespace="http://xmlns.oracle.com/Ejercicio04A/Ejercicio04A/BPELInvoice"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Ejercicio04A/Ejercicio04A/BPELInvoice"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/Ejercicio04A/Ejercicio04A/dbTransaction"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbTransaction" xmlns:ns3="http://www.bwr.mx"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/ftp/Ejercicio04A/Ejercicio04A/ftpInvoiceUUID"
+         xmlns:ns5="http://TargetNamespace.com/ftpInvoiceUUID"
+         xmlns:ns6="http://xmlns.oracle.com/pcbpel/adapter/db/Ejercicio04A/Ejercicio04A/dbCusDetails"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns7="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbCusDetails"
+         xmlns:ns8="http://xmlns.oracle.com/pcbpel/adapter/ftp/Ejercicio04A/Ejercicio04A/ftpInvoiceReject"
+         xmlns:ns9="http://www.exam.org"
+         xmlns:ns10="http://www.bwr.mx/Training/SOA/PruebasBAM/StampInvoice/StampInvoiceProcess"
+         xmlns:ns11="http://www.bwr.mx/Training/SOA/Exam">
+
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/Ejercicio04A/Ejercicio04A/BPELInvoice" location="../WSDLs/BPELInvoice.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelinvoice_client" partnerLinkType="client:BPELInvoice" myRole="BPELInvoiceProvider"/>
+    <partnerLink name="dbTransaction" partnerLinkType="ns1:dbTransaction_plt" partnerRole="dbTransaction_role"/>
+    <partnerLink name="ftpInvoiceUUID" partnerLinkType="ns4:Put_plt" partnerRole="Put_role"/>
+    <partnerLink name="dbCusDetails" partnerLinkType="ns6:dbCusDetails_plt" partnerRole="dbCusDetails_role"/>
+    <partnerLink name="ftpInvoiceReject" partnerLinkType="ns8:Put_plt" partnerRole="Put_role"/>
+    <partnerLink name="stamInvoice" partnerLinkType="ns10:StampInvoiceProcess"
+                 partnerRole="StampInvoiceProcessProvider"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:BPELInvoiceRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:BPELInvoiceResponseMessage"/>
+    <variable name="InvokeTransaction_dbTransactionSelect_InputVariable"
+              messageType="ns1:dbTransactionSelect_inputParameters"/>
+    <variable name="InvokeTransaction_dbTransactionSelect_OutputVariable"
+              messageType="ns1:InvoiceHeaderCollection_msg"/>
+    <variable name="InvokeNoDate_Put_InputVariable" messageType="ns4:Put_msg"/>
+    <variable name="InvokeCustDetails_dbCusDetailsSelect_InputVariable"
+              messageType="ns6:dbCusDetailsSelect_inputParameters"/>
+    <variable name="InvokeCustDetails_dbCusDetailsSelect_OutputVariable"
+              messageType="ns6:FinCustDetailsCollection_msg"/>
+    <variable name="i" type="xsd:integer">
+      <from>1</from>
+    </variable>
+    <variable name="auxRFC" type="xsd:boolean"/>
+    <variable name="j" type="xsd:integer">
+      <from>1</from>
+    </variable>
+    <variable name="customer" type="xsd:integer">
+      <from>1</from>
+    </variable>
+    <variable name="auxAmount" type="xsd:double">
+      <from>0</from>
+    </variable>
+    <variable name="auxTax" type="xsd:double">
+      <from>0</from>
+    </variable>
+    <variable name="auxName" type="xsd:string"/>
+    <variable name="InvokeInvoiceReject_Put_InputVariable" messageType="ns8:Put_msg"/>
+    <variable name="InvokeStampInvoice_stamp_InputVariable" messageType="ns10:StampInvoiceProcessRequestMessage"/>
+    <variable name="InvokeInvoiceUUID_Put_InputVariable" messageType="ns4:Put_msg"/>
+    <variable name="InvokeStampInvoice_stamp_OutputVariable" messageType="ns10:StampInvoiceProcessResponseMessage"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in BPELInvoice.wsdl) -->
+    <receive name="receiveInput" partnerLink="bpelinvoice_client" portType="client:BPELInvoice" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="searchOnTransaction">
+      <copy>
+        <from>concat(substring($inputVariable.payload/ns3:fecha,1,4),"-", substring($inputVariable.payload/ns3:fecha,5,2),"-", substring($inputVariable.payload/ns3:fecha,7,2))</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeTransaction_dbTransactionSelect_InputVariable.dbTransactionSelect_inputParameters/ns2:date</to>
+      </copy>
+      <copy>
+        <from>false()</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxRFC</to>
+      </copy>
+    </assign>
+    <invoke name="InvokeTransaction" bpelx:invokeAsDetail="no" partnerLink="dbTransaction"
+            portType="ns1:dbTransaction_ptt" operation="dbTransactionSelect"
+            inputVariable="InvokeTransaction_dbTransactionSelect_InputVariable"
+            outputVariable="InvokeTransaction_dbTransactionSelect_OutputVariable"/>
+    <if name="If1">
+      <documentation>
+        <![CDATA[exist transaction]]>
+      </documentation>
+      <condition>$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection != ""</condition>
+      <sequence name="Sequence2">
+        <invoke name="InvokeCustDetails" bpelx:invokeAsDetail="no" partnerLink="dbCusDetails"
+                portType="ns6:dbCusDetails_ptt" operation="dbCusDetailsSelect"
+                inputVariable="InvokeCustDetails_dbCusDetailsSelect_InputVariable"
+                outputVariable="InvokeCustDetails_dbCusDetailsSelect_OutputVariable"/>
+        <while name="While1">
+          <condition>$i &lt;= count($InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader)</condition>
+          <if name="If_Exist_Customer">
+            <documentation>
+              <![CDATA[exist Cust]]>
+            </documentation>
+            <condition>$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:rfc=$inputVariable.payload/ns3:rfc </condition>
+            <assign name="auxRFCTrue">
+              <copy>
+                <from>true()</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxRFC</to>
+              </copy>
+              <copy>
+                <from>$i+1</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$i</to>
+              </copy>
+            </assign>
+            <else>
+              <documentation>
+                <![CDATA[doesnt Cust]]>
+              </documentation>
+              <assign name="nextIter">
+                <copy>
+                  <from>$i+1</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$i</to>
+                </copy>
+              </assign>
+            </else>
+          </if>
+        </while>
+        <assign name="rest_i">
+          <copy>
+            <from>1</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$i</to>
+          </copy>
+        </assign>
+        <if name="If_found_cust">
+          <documentation>
+            <![CDATA[customer]]>
+          </documentation>
+          <condition>$auxRFC = true()</condition>
+          <sequence name="Sequence4">
+            <while name="WhileCustDetails">
+              <condition>$customer &lt;= count($InvokeCustDetails_dbCusDetailsSelect_OutputVariable.FinCustDetailsCollection/ns7:FinCustDetails)</condition>
+              <if name="If_Exist_Cust">
+                <documentation>
+                  <![CDATA[exist]]>
+                </documentation>
+                <condition>$inputVariable.payload/ns3:rfc =$InvokeCustDetails_dbCusDetailsSelect_OutputVariable.FinCustDetailsCollection/ns7:FinCustDetails[$customer]/ns7:rfc</condition>
+                <assign name="SaveNameCust">
+                  <copy>
+                    <from>$InvokeCustDetails_dbCusDetailsSelect_OutputVariable.FinCustDetailsCollection/ns7:FinCustDetails[$customer]/ns7:customerName</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxName</to>
+                  </copy>
+                  <copy>
+                    <from>$customer+1</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$customer</to>
+                  </copy>
+                </assign>
+                <else>
+                  <documentation>
+                    <![CDATA[doens exist]]>
+                  </documentation>
+                  <assign name="NextIter">
+                    <copy>
+                      <from>$customer+1</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$customer</to>
+                    </copy>
+                  </assign>
+                </else>
+              </if>
+            </while>
+            <while name="WhileInvoiceHeader">
+              <condition>$i&lt;= count($InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader)</condition>
+              <sequence name="Sequence5">
+                <if name="IfCustomer">
+                  <documentation>
+                    <![CDATA[match]]>
+                  </documentation>
+                  <condition>$inputVariable.payload/ns3:rfc = $InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:rfc</condition>
+                  <sequence>
+                    <while name="WhileInvoiceDetails">
+                      <condition>$j &lt;= count($InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:invoiceDetailsCollection/ns2:InvoiceDetails)</condition>
+                      <assign name="SumAmountAndTax" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <copy>
+         <from>$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:invoiceDetailsCollection/ns2:InvoiceDetails[$j]/ns2:amount + $auxAmount</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxAmount</to>
+      </copy>
+      <copy>
+         <from>$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:invoiceDetailsCollection/ns2:InvoiceDetails[$j]/ns2:tax + $auxTax</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxTax</to>
+      </copy>
+      <copy>
+         <from>$j+1</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$j</to>
+      </copy>
+   </assign>
+                    </while>
+                    <assign name="FillStampInvoice">
+                      <copy>
+                        <from>$auxName</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeStampInvoice_stamp_InputVariable.payload/ns11:CustomerName</to>
+                      </copy>
+                      <copy>
+                        <from>concat(substring($inputVariable.payload/ns3:fecha,3,2), substring($inputVariable.payload/ns3:fecha,5,2), substring($inputVariable.payload/ns3:fecha,7,2))</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeStampInvoice_stamp_InputVariable.payload/ns11:InvoiceDate</to>
+                      </copy>
+                      <copy>
+                        <from>$inputVariable.payload/ns3:rfc</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeStampInvoice_stamp_InputVariable.payload/ns11:RFC</to>
+                      </copy>
+                      <copy>
+                        <from>$auxTax</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeStampInvoice_stamp_InputVariable.payload/ns11:InvoiceTaxAmount</to>
+                      </copy>
+                      <copy>
+                        <from>$auxAmount</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeStampInvoice_stamp_InputVariable.payload/ns11:InvoiceAmount</to>
+                      </copy>
+                      <copy>
+                        <from>$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:folio</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeStampInvoice_stamp_InputVariable.payload/ns11:InvoiceFolio</to>
+                      </copy>
+                    </assign>
+                    <invoke name="InvokeStampInvoice" partnerLink="stamInvoice" portType="ns10:StampInvoiceProcess"
+                            operation="stamp" inputVariable="InvokeStampInvoice_stamp_InputVariable"
+                            bpelx:invokeAsDetail="no" outputVariable="InvokeStampInvoice_stamp_OutputVariable"/>
+                    <assign name="Assign1">
+                      <copy>
+                        <from>0</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxAmount</to>
+                      </copy>
+                      <copy>
+                        <from>concat($inputVariable.payload/ns3:fecha,'|',$inputVariable.payload/ns3:rfc,'|',$auxAmount ,'|',$auxTax,'|',$InvokeStampInvoice_stamp_OutputVariable.payload/ns11:UUID)</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeInvoiceUUID_Put_InputVariable.body/ns5:C1</to>
+                      </copy>
+                      <copy>
+                        <from>0</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxTax</to>
+                      </copy>
+                      <copy>
+                        <from>1</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$j</to>
+                      </copy>
+                    </assign>
+                    <invoke name="InvokeInvoiceUUID" partnerLink="ftpInvoiceUUID"
+                            portType="ns4:Put_ptt" operation="Put" inputVariable="InvokeInvoiceUUID_Put_InputVariable"
+                            bpelx:invokeAsDetail="no">
+                      <bpelx:toProperties>
+                        <bpelx:toProperty name="jca.ftp.FileName">concat(substring($inputVariable.payload/ns3:fecha,1,4),"_", substring($inputVariable.payload/ns3:fecha,5,2),"_", substring($inputVariable.payload/ns3:fecha,7,2),"_",$inputVariable.payload/ns3:rfc,"_",$InvokeStampInvoice_stamp_OutputVariable.payload/ns11:UUID,".txt" )</bpelx:toProperty>
+                      </bpelx:toProperties>
+                    </invoke>
+                    <assign name="nextIter" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <copy>
+         <from>$i+1</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$i</to>
+      </copy>
+   </assign>
+                  </sequence>
+                  <else>
+                    <documentation>
+                      <![CDATA[dimiss]]>
+                    </documentation>
+                    <assign name="nextIter">
+                      <copy>
+                        <from>$i+1</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$i</to>
+                      </copy>
+                    </assign>
+                  </else>
+                </if>
+              </sequence>
+            </while>
+          </sequence>
+          <else>
+            <documentation>
+              <![CDATA[not customer]]>
+            </documentation>
+            <while name="WhileInvoiceHeader">
+              <condition>$i&lt;=count($InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader)</condition>
+              <sequence>
+                <while name="WhileInvoiceDetails">
+                  <condition>$j &lt;= count($InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:invoiceDetailsCollection/ns2:InvoiceDetails)</condition>
+                  <assign name="SumAmountAndTax">
+                    <copy>
+                      <from>$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:invoiceDetailsCollection/ns2:InvoiceDetails[$j]/ns2:amount + $auxAmount</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxAmount</to>
+                    </copy>
+                    <copy>
+                      <from>$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:invoiceDetailsCollection/ns2:InvoiceDetails[$j]/ns2:tax + $auxTax</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxTax</to>
+                    </copy>
+                    <copy>
+                      <from>$j+1</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$j</to>
+                    </copy>
+                  </assign>
+                </while>
+                <while name="WhileCustDetails">
+                  <condition>$customer &lt;= count($InvokeCustDetails_dbCusDetailsSelect_OutputVariable.FinCustDetailsCollection/ns7:FinCustDetails)</condition>
+                  <if name="If_Customer">
+                    <documentation>
+                      <![CDATA[customer]]>
+                    </documentation>
+                    <condition> $InvokeCustDetails_dbCusDetailsSelect_OutputVariable.FinCustDetailsCollection/ns7:FinCustDetails[$customer]/ns7:rfc = $InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:rfc</condition>
+                    <assign name="SaveNameCustomer">
+                      <copy>
+                        <from>$InvokeCustDetails_dbCusDetailsSelect_OutputVariable.FinCustDetailsCollection/ns7:FinCustDetails[$customer]/ns7:customerName</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxName</to>
+                      </copy>
+                      <copy>
+                        <from>$customer+1</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$customer</to>
+                      </copy>
+                    </assign>
+                    <else>
+                      <documentation>
+                        <![CDATA[noCustomer]]>
+                      </documentation>
+                      <assign name="Nextiter">
+                        <copy>
+                          <from>$customer+1</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$customer</to>
+                        </copy>
+                      </assign>
+                    </else>
+                  </if>
+                </while>
+                <assign name="FillInvoice">
+                  <copy>
+                    <from>$auxName</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeInvoiceReject_Put_InputVariable.body/ns9:CustomerName</to>
+                  </copy>
+                  <copy>
+                    <from>concat(substring($inputVariable.payload/ns3:fecha,3,2), substring($inputVariable.payload/ns3:fecha,5,2), substring($inputVariable.payload/ns3:fecha,7,2))</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeInvoiceReject_Put_InputVariable.body/ns9:InvoiceDate</to>
+                  </copy>
+                  <copy>
+                    <from>$auxAmount</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeInvoiceReject_Put_InputVariable.body/ns9:InvoiceAmount</to>
+                  </copy>
+                  <copy>
+                    <from>$auxTax</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeInvoiceReject_Put_InputVariable.body/ns9:InvoiceTaxAmount</to>
+                  </copy>
+                  <copy>
+                    <from>$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:rfc</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeInvoiceReject_Put_InputVariable.body/ns9:RFC</to>
+                  </copy>
+                  <copy>
+                    <from>$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:folio</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeInvoiceReject_Put_InputVariable.body/ns9:InvoiceFolio</to>
+                  </copy>
+                  <copy>
+                    <from>1</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$customer</to>
+                  </copy>
+                </assign>
+                <invoke name="InvokeInvoiceReject" partnerLink="ftpInvoiceReject"
+                        portType="ns8:Put_ptt" operation="Put" inputVariable="InvokeInvoiceReject_Put_InputVariable"
+                        bpelx:invokeAsDetail="no">
+                  <bpelx:toProperties>
+                    <bpelx:toProperty name="jca.ftp.FileName">concat(xp20:format-dateTime(xp20:current-date(),'[Y0001][M01][D01]' ),'_',$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:rfc,'_',$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:folio,'_','jonathan.abrego','.xml' )</bpelx:toProperty>
+                  </bpelx:toProperties>
+                </invoke>
+                <assign name="restarVars">
+                  <copy>
+                    <from>0</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxAmount</to>
+                  </copy>
+                  <copy>
+                    <from>0</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxTax</to>
+                  </copy>
+                  <copy>
+                    <from>1</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$j</to>
+                  </copy>
+                </assign>
+                <assign name="NextIter_i">
+                  <copy>
+                    <from>$i+1</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$i</to>
+                  </copy>
+                </assign>
+              </sequence>
+            </while>
+          </else>
+        </if>
+      </sequence>
+      <else>
+        <documentation>
+          <![CDATA[no transaction]]>
+        </documentation>
+        <sequence name="Sequence1">
+          <assign name="OutputMess">
+            <copy>
+              <from>"No transactions"</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeNoDate_Put_InputVariable.body/ns5:C1</to>
+            </copy>
+          </assign>
+          <invoke name="InvokeNoDate" partnerLink="ftpInvoiceUUID" portType="ns4:Put_ptt"
+                  operation="Put" inputVariable="InvokeNoDate_Put_InputVariable" bpelx:invokeAsDetail="no">
+            <bpelx:toProperties>
+              <bpelx:toProperty name="jca.ftp.FileName">concat('NoTransactions_',substring($inputVariable.payload/ns3:fecha,1,4),'_',substring($inputVariable.payload/ns3:fecha,5,2),'_',substring($inputVariable.payload/ns3:fecha,7,2))</bpelx:toProperty>
+            </bpelx:toProperties>
+          </invoke>
+        </sequence>
+      </else>
+    </if>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="bpelinvoice_client" portType="client:BPELInvoice" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

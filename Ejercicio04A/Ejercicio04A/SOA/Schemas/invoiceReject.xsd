@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.exam.org"
+            targetNamespace="http://www.exam.org" elementFormDefault="qualified">
+  <xsd:element name="Invoice">
+    <xsd:annotation>
+      <xsd:documentation>A sample element</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="InvoiceFolio" type="xsd:integer"/>
+        <xsd:element name="InvoiceDate" type="xsd:double"/>
+        <xsd:element name="InvoiceAmount" type="xsd:double"/>
+        <xsd:element name="InvoiceTaxAmount" type="xsd:double"/>
+        <xsd:element name="RFC" type="xsd:string"/>
+        <xsd:element name="CustomerName" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

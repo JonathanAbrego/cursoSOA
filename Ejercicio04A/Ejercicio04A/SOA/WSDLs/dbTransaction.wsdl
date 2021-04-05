@@ -1,0 +1,32 @@
+<wsdl:definitions
+     name="dbTransaction"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Ejercicio04A/Ejercicio04A/dbTransaction"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/Ejercicio04A/Ejercicio04A/dbTransaction"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbTransaction"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="dbTransaction_plt" >
+    <plt:role name="dbTransaction_role" >
+      <plt:portType name="tns:dbTransaction_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbTransaction" schemaLocation="../Schemas/dbTransaction_table.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="dbTransactionSelect_inputParameters">
+        <wsdl:part name="dbTransactionSelect_inputParameters" element="top:dbTransactionSelect_dateInputParameters"/>
+    </wsdl:message>
+    <wsdl:message name="InvoiceHeaderCollection_msg">
+        <wsdl:part name="InvoiceHeaderCollection" element="top:InvoiceHeaderCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="dbTransaction_ptt">
+        <wsdl:operation name="dbTransactionSelect">
+            <wsdl:input message="tns:dbTransactionSelect_inputParameters"/>
+            <wsdl:output message="tns:InvoiceHeaderCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

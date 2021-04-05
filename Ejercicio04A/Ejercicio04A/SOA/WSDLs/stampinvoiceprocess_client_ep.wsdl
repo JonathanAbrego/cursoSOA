@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+     name="StampInvoiceProcess"
+     targetNamespace="http://www.bwr.mx/Training/SOA/PruebasBAM/StampInvoice/StampInvoiceProcess"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:client="http://www.bwr.mx/Training/SOA/PruebasBAM/StampInvoice/StampInvoiceProcess"
+     xmlns:ns1="http://www.bwr.mx/Training/SOA/Exam"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    >
+    <wsdl:documentation>
+        <abstractWSDL>http://soa-server:7103/soa-infra/services/default/StampInvoice!2.0/WSDLs/StampInvoiceProcess.wsdl</abstractWSDL>
+    </wsdl:documentation>
+    <plnk:partnerLinkType name="StampInvoiceProcess">
+        <plnk:role name="StampInvoiceProcessProvider" portType="client:StampInvoiceProcess"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://www.bwr.mx/Training/SOA/Exam" schemaLocation="../Schemas/InvoiceTypes.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="StampInvoiceProcessRequestMessage">
+        <wsdl:part name="payload" element="ns1:Invoice"/>
+    </wsdl:message>
+    <wsdl:message name="StampInvoiceProcessResponseMessage">
+        <wsdl:part name="payload" element="ns1:StampInvoice"/>
+    </wsdl:message>
+    <wsdl:portType name="StampInvoiceProcess">
+        <wsdl:operation name="stamp">
+            <wsdl:input message="client:StampInvoiceProcessRequestMessage"/>
+            <wsdl:output message="client:StampInvoiceProcessResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="StampInvoiceProcessBinding" type="client:StampInvoiceProcess">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="stamp">
+            <soap:operation style="document" soapAction="stamp"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="stampinvoiceprocess_client_ep">
+        <wsdl:port name="StampInvoiceProcess_pt" binding="client:StampInvoiceProcessBinding">
+            <soap:address location="http://soa-server:7103/soa-infra/services/default/StampInvoice/stampinvoiceprocess_client_ep"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
