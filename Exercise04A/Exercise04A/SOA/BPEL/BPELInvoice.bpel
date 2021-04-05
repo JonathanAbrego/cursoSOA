@@ -95,6 +95,7 @@
     <variable name="auxRFC" type="xsd:boolean"/>
     <variable name="auxName" type="xsd:string"/>
     <variable name="InvokeInvoiceReject_Put_InputVariable" messageType="ns10:Put_msg"/>
+    <variable name="InvokeNoDate_Put_InputVariable" messageType="ns6:Put_msg"/>
   </variables>
   <!-- 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,19 +126,19 @@
       <documentation>
         <![CDATA[exists transaction date]]>
       </documentation>
-      <condition>count($Invoke1_dbTransactionsSelect_OutputVariable.InvoiceHeaderCollection) &gt; 0</condition>
+      <condition>$Invoke1_dbTransactionsSelect_OutputVariable.InvoiceHeaderCollection != ""</condition>
       <sequence>
         <invoke name="InvokeCustDetails" partnerLink="dbCustDetails" portType="ns4:dbCustDetails_ptt"
                 operation="dbCustDetailsSelect" inputVariable="InvokeCustDetails_dbCustDetailsSelect_InputVariable"
                 outputVariable="InvokeCustDetails_dbCustDetailsSelect_OutputVariable" bpelx:invokeAsDetail="no"/>
         <while name="WhileExistCustomerTransaction">
           <condition>$i &lt;= count($Invoke1_dbTransactionsSelect_OutputVariable.InvoiceHeaderCollection/ns3:InvoiceHeader)</condition>
-          <if name="If1">
+          <if name="IfExistsCustomer">
             <documentation>
               <![CDATA[existCust]]>
             </documentation>
             <condition>$Invoke1_dbTransactionsSelect_OutputVariable.InvoiceHeaderCollection/ns3:InvoiceHeader[$i]/ns3:rfc = $inputVariable.payload/ns2:rfc</condition>
-            <assign name="SaveCustomer" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+            <assign name="customerTrue" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
               <copy>
                 <from>true()</from>
                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxRFC</to>
@@ -341,6 +342,9 @@
                       <condition>$customer &lt;= count($InvokeCustDetails_dbCustDetailsSelect_OutputVariable.FinCustDetailsCollection/ns5:FinCustDetails)</condition>
                       <sequence name="Sequence5">
                         <if name="If_Search_Custom">
+                          <documentation>
+                            <![CDATA[customer]]>
+                          </documentation>
                           <condition>$InvokeCustDetails_dbCustDetailsSelect_OutputVariable.FinCustDetailsCollection/ns5:FinCustDetails[$customer]/ns5:rfc = $Invoke1_dbTransactionsSelect_OutputVariable.InvoiceHeaderCollection/ns3:InvoiceHeader[$i]/ns3:rfc</condition>
                           <assign name="SaveCustomer">
                             <copy>
@@ -353,6 +357,9 @@
                             </copy>
                           </assign>
                           <else>
+                            <documentation>
+                              <![CDATA[noCustomer]]>
+                            </documentation>
                             <sequence>
                               <assign name="customerAdd">
                                 <copy>
@@ -429,6 +436,25 @@
           </else>
         </if>
       </sequence>
+      <else>
+        <documentation>
+          <![CDATA[no transaction]]>
+        </documentation>
+        <sequence name="Sequence8">
+          <assign name="OutpuMess">
+            <copy>
+              <from>"No transactions"</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeNoDate_Put_InputVariable.body/ns7:C1</to>
+            </copy>
+          </assign>
+          <invoke name="InvokeNoDate" partnerLink="ftpInvoiceUUID" portType="ns6:Put_ptt"
+                  operation="Put" inputVariable="InvokeNoDate_Put_InputVariable" bpelx:invokeAsDetail="no">
+            <bpelx:toProperties>
+              <bpelx:toProperty name="jca.ftp.FileName">concat('NoTransactions_',substring($inputVariable.payload/ns2:fecha,1,4),'_',substring($inputVariable.payload/ns2:fecha,5,2),'_',substring($inputVariable.payload/ns2:fecha,7,2))</bpelx:toProperty>
+            </bpelx:toProperties>
+          </invoke>
+        </sequence>
+      </else>
     </if>
   </sequence>
 </process>
