@@ -104,6 +104,9 @@
     <variable name="InvokeStampInvoice_stamp_InputVariable" messageType="ns10:StampInvoiceProcessRequestMessage"/>
     <variable name="InvokeInvoiceUUID_Put_InputVariable" messageType="ns4:Put_msg"/>
     <variable name="InvokeStampInvoice_stamp_OutputVariable" messageType="ns10:StampInvoiceProcessResponseMessage"/>
+    <variable name="k" type="xsd:integer">
+      <from>1</from>
+    </variable>
   </variables>
 
   <!-- 
@@ -213,6 +216,15 @@
                 </else>
               </if>
             </while>
+            <assign name="CreateListOutput">
+              <bpelx:annotation>
+                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+              </bpelx:annotation>
+              <copy>
+                <from>ora:doXSLTransformForDoc("../Transformations/TransformationListOut.xsl", $InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection, "inputVariable.payload", $inputVariable.payload)</from>
+                <to variable="outputVariable" part="payload"/>
+              </copy>
+            </assign>
             <while name="WhileInvoiceHeader">
               <condition>$i&lt;= count($InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader)</condition>
               <sequence name="Sequence5">
@@ -268,22 +280,24 @@
                     <invoke name="InvokeStampInvoice" partnerLink="stamInvoice" portType="ns10:StampInvoiceProcess"
                             operation="stamp" inputVariable="InvokeStampInvoice_stamp_InputVariable"
                             bpelx:invokeAsDetail="no" outputVariable="InvokeStampInvoice_stamp_OutputVariable"/>
-                    <assign name="Assign1">
+                    <assign name="FillListInvoice">
                       <copy>
-                        <from>0</from>
-                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxAmount</to>
+                        <from>$auxAmount</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Invoice[$k]/ns3:InvoiceAmount</to>
                       </copy>
+                      <copy>
+                        <from>$auxTax</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Invoice[$k]/ns3:InvoiceTaxAmount</to>
+                      </copy>
+                      <copy>
+                        <from>$InvokeStampInvoice_stamp_OutputVariable.payload/ns11:UUID</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Invoice[$k]/ns3:UUID</to>
+                      </copy>
+                    </assign>
+                    <assign name="InvoiceUUID">
                       <copy>
                         <from>concat($inputVariable.payload/ns3:fecha,'|',$inputVariable.payload/ns3:rfc,'|',$auxAmount ,'|',$auxTax,'|',$InvokeStampInvoice_stamp_OutputVariable.payload/ns11:UUID)</from>
                         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeInvoiceUUID_Put_InputVariable.body/ns5:C1</to>
-                      </copy>
-                      <copy>
-                        <from>0</from>
-                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxTax</to>
-                      </copy>
-                      <copy>
-                        <from>1</from>
-                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$j</to>
                       </copy>
                     </assign>
                     <invoke name="InvokeInvoiceUUID" partnerLink="ftpInvoiceUUID"
@@ -294,22 +308,40 @@
                       </bpelx:toProperties>
                     </invoke>
                     <assign name="nextIter" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
-      <copy>
-         <from>$i+1</from>
-         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$i</to>
-      </copy>
-   </assign>
+                      <copy>
+                        <from>0</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxAmount</to>
+                      </copy>
+                      <copy>
+                        <from>0</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxTax</to>
+                      </copy>
+                      <copy>
+                        <from>1</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$j</to>
+                      </copy>
+                      <copy>
+                        <from>$i+1</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$i</to>
+                      </copy>
+                      <copy>
+                        <from>$k+1</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$k</to>
+                      </copy>
+                    </assign>
                   </sequence>
                   <else>
                     <documentation>
                       <![CDATA[dimiss]]>
                     </documentation>
-                    <assign name="nextIter">
-                      <copy>
-                        <from>$i+1</from>
-                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$i</to>
-                      </copy>
-                    </assign>
+                    <sequence>
+                      <assign name="nextIter">
+                        <copy>
+                          <from>$i+1</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$i</to>
+                        </copy>
+                      </assign>
+                    </sequence>
                   </else>
                 </if>
               </sequence>
@@ -403,7 +435,7 @@
                         portType="ns8:Put_ptt" operation="Put" inputVariable="InvokeInvoiceReject_Put_InputVariable"
                         bpelx:invokeAsDetail="no">
                   <bpelx:toProperties>
-                    <bpelx:toProperty name="jca.ftp.FileName">concat(xp20:format-dateTime(xp20:current-date(),'[Y0001][M01][D01]' ),'_',$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:rfc,'_',$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:folio,'_','jonathan.abrego','.xml' )</bpelx:toProperty>
+                    <bpelx:toProperty name="jca.ftp.FileName">concat(xp20:format-dateTime(xp20:current-date(),'[Y0001][M01][D01]' ),'_',$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:rfc,'_',concat(substring($inputVariable.payload/ns3:fecha,3,2),substring($inputVariable.payload/ns3:fecha,5,2),substring($inputVariable.payload/ns3:fecha,7,2)),'_',$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:folio,'_','jonathan.abrego','.xml' )</bpelx:toProperty>
                   </bpelx:toProperties>
                 </invoke>
                 <assign name="restarVars">

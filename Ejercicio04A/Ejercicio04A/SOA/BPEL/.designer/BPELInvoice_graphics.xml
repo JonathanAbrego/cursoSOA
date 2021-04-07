@@ -4,14 +4,14 @@
    <annotationfile/>
    <iconize/>
    <partnerlink_locations>
-      <partnerlink name="bpelinvoice_client" x="5" y="1482" side="left"/>
-      <partnerlink name="ftpInvoiceUUID" x="5" y="1539" side="left"/>
+      <partnerlink name="bpelinvoice_client" x="5" y="1578" side="left"/>
+      <partnerlink name="ftpInvoiceUUID" x="5" y="1635" side="left"/>
       <partnerlink name="ftpInvoiceReject" x="5" y="2137" side="left"/>
-      <partnerlink name="dbTransaction" x="1463" y="284" side="right"/>
-      <partnerlink name="dbCusDetails" x="1463" y="514" side="right"/>
-      <partnerlink name="stamInvoice" x="1463" y="2276" side="right"/>
+      <partnerlink name="dbTransaction" x="1527" y="284" side="right"/>
+      <partnerlink name="dbCusDetails" x="1527" y="514" side="right"/>
+      <partnerlink name="stamInvoice" x="1527" y="2372" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,2100,1171,509" show_swimlanes="true">
+   <graph_layout viewport="187,2025,1171,556" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
       <layout_item collapsed="false" xpath="/process/sequence/if/sequence" type="sequence"/>
@@ -22,6 +22,7 @@
       <layout_item collapsed="false" xpath="/process/sequence/if/sequence/if/sequence/while[2]/sequence" type="sequence"/>
       <layout_item collapsed="false" xpath="/process/sequence/if/sequence/if/sequence/while[2]/sequence/if/sequence" type="sequence"/>
       <layout_item collapsed="false" xpath="/process/sequence/if/sequence/if/sequence/while[2]/sequence/if/sequence/while" type="while"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/sequence/if/sequence/while[2]/sequence/if/else/sequence" type="sequence"/>
       <layout_item collapsed="false" xpath="/process/sequence/if/sequence/if/else/while" type="while"/>
       <layout_item collapsed="false" xpath="/process/sequence/if/sequence/if/else/while/sequence" type="sequence"/>
       <layout_item collapsed="false" xpath="/process/sequence/if/sequence/if/else/while/sequence/while[1]" type="while"/>

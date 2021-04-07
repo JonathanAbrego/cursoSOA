@@ -7,17 +7,17 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="ListInvoice" type="Invoice" maxOccurs="unbounded"/>
+        <xsd:element name="Invoice" type="Invoice" maxOccurs="unbounded" minOccurs="0"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
   <xsd:complexType name="Invoice">
     <xsd:sequence>
-      <xsd:element name="InvoiceDate" type="xsd:string"/>
-      <xsd:element name="RFC" type="xsd:string"/>
-      <xsd:element name="InvoiceAmount" type="xsd:double"/>
-      <xsd:element name="InvoiceTaxAmount" type="xsd:double"/>
-      <xsd:element name="UUID" type="xsd:string"/>
+      <xsd:element name="InvoiceDate" type="xsd:string" nillable="true"/>
+      <xsd:element name="RFC" type="xsd:string" nillable="true"/>
+      <xsd:element name="InvoiceAmount" type="xsd:double" nillable="true"/>
+      <xsd:element name="InvoiceTaxAmount" type="xsd:double" nillable="true"/>
+      <xsd:element name="UUID" type="xsd:string" nillable="true"/>
     </xsd:sequence>
   </xsd:complexType>
 </xsd:schema>
