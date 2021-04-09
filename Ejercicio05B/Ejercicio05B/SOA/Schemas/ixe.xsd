@@ -1,0 +1,30 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" xmlns:tns="http://bwr.mx/ftpIXE" targetNamespace="http://bwr.mx/ftpIXE" elementFormDefault="qualified" attributeFormDefault="unqualified" nxsd:version="NXSD" nxsd:stream="chars" nxsd:encoding="US-ASCII">
+
+
+  <xsd:element name="Root-Element">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="orden" minOccurs="1" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="C1" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"
+                           nillable="false"/>
+              <xsd:element name="C2" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"
+                           nillable="false"/>
+              <xsd:element name="C3" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"
+                           nillable="false"/>
+              <xsd:element name="C4" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="${eol}" nxsd:quotedBy="&quot;"
+                           nillable="false" minOccurs="1"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+<xsd:annotation>
+      <xsd:appinfo>NXSDSAMPLE=ixe.csv</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+</xsd:schema>

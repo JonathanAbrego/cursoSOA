@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<expenses id="id133" fecha="30-01-2020" xmlns="http://www.bwr.mx">
+   <rows>
+      <row>
+      <uuid>WERT34560980oi45</uuid>
+      <number_tdc>4141123512361258</number_tdc>
+	  <amount>50.50</amount>
+	  <tax>1.00</tax>
+	  <country>MXN</country>
+    </row>
+	<row>
+      <uuid>AART34560980oi45</uuid>
+      <number_tdc>4745123512361258</number_tdc>
+	  <amount>50.50</amount>
+	  <tax>2.00</tax>
+	  <country>CAD</country>
+    </row>
+	<row>
+      <uuid>HHH34560980oi45</uuid>
+      <number_tdc>4152123512361258</number_tdc>
+	  <amount>100.50</amount>
+	  <tax>1.00</tax>
+	  <tax>5.00</tax>
+	  <country>USA</country>
+    </row>
+	<row>
+      <uuid>ABCD34560980oi45</uuid>
+      <number_tdc>4040123512361258</number_tdc>
+	  <amount>50.50</amount>
+	  <tax>1.00</tax>
+	  <tax>6.00</tax>
+	  <country>MXN</country>
+    </row>
+   </rows>
+</expenses>

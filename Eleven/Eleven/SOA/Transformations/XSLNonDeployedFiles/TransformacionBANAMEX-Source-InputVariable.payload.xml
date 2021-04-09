@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<expenses id="id24" fecha="2021-04-09" xmlns="http://www.bwr.mx">
+   <rows>
+      <row>
+         <uuid>uuid25</uuid>
+         <number_tdc>26</number_tdc>
+         <amount>270.73</amount>
+         <tax>280.73</tax>
+         <tax>290.73</tax>
+         <tax>300.73</tax>
+         <country>MXN</country>
+      </row>
+      <row>
+         <uuid>uuid32</uuid>
+         <number_tdc>33</number_tdc>
+         <amount>340.72</amount>
+         <tax>350.72</tax>
+         <tax>360.72</tax>
+         <tax>370.72</tax>
+         <country>country38</country>
+      </row>
+      <row>
+         <uuid>uuid39</uuid>
+         <number_tdc>40</number_tdc>
+         <amount>410.72</amount>
+         <tax>420.72</tax>
+         <tax>430.72</tax>
+         <tax>440.72</tax>
+         <country>MXN</country>
+      </row>
+   </rows>
+</expenses>

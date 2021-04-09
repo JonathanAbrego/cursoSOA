@@ -237,19 +237,19 @@
                     <while name="WhileInvoiceDetails">
                       <condition>$j &lt;= count($InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:invoiceDetailsCollection/ns2:InvoiceDetails)</condition>
                       <assign name="SumAmountAndTax" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
-      <copy>
-         <from>$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:invoiceDetailsCollection/ns2:InvoiceDetails[$j]/ns2:amount + $auxAmount</from>
-         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxAmount</to>
-      </copy>
-      <copy>
-         <from>$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:invoiceDetailsCollection/ns2:InvoiceDetails[$j]/ns2:tax + $auxTax</from>
-         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxTax</to>
-      </copy>
-      <copy>
-         <from>$j+1</from>
-         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$j</to>
-      </copy>
-   </assign>
+                        <copy>
+                          <from>$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:invoiceDetailsCollection/ns2:InvoiceDetails[$j]/ns2:amount + $auxAmount</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxAmount</to>
+                        </copy>
+                        <copy>
+                          <from>$InvokeTransaction_dbTransactionSelect_OutputVariable.InvoiceHeaderCollection/ns2:InvoiceHeader[$i]/ns2:invoiceDetailsCollection/ns2:InvoiceDetails[$j]/ns2:tax + $auxTax</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$auxTax</to>
+                        </copy>
+                        <copy>
+                          <from>$j+1</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$j</to>
+                        </copy>
+                      </assign>
                     </while>
                     <assign name="FillStampInvoice">
                       <copy>

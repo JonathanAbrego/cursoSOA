@@ -1,0 +1,15 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<tns:gastos xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/ftp/Eleven/Eleven/ftpEscribeCSV" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/Eleven/Eleven/BPELFtp" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:tns="http://bwr.mc/ftpEscribeCSV">
+   <tns:gasto>
+      <tns:uuid>uuid2</tns:uuid>
+      <tns:tdc>3</tns:tdc>
+      <tns:monto>40.73</tns:monto>
+      <tns:impuesto>6</tns:impuesto>
+   </tns:gasto>
+   <tns:gasto>
+      <tns:uuid>uuid16</tns:uuid>
+      <tns:tdc>17</tns:tdc>
+      <tns:monto>180.73</tns:monto>
+      <tns:impuesto>1</tns:impuesto>
+   </tns:gasto>
+</tns:gastos>

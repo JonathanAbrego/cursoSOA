@@ -1,0 +1,33 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="BPELFtp"
+     targetNamespace="http://xmlns.oracle.com/Eleven/Eleven/BPELFtp"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:client="http://xmlns.oracle.com/Eleven/Eleven/BPELFtp"
+     xmlns:ns1="http://www.bwr.mx"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+    >
+    <plnk:partnerLinkType name="BPELFtp">
+        <plnk:role name="BPELFtpProvider" portType="client:BPELFtp"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="http://xmlns.oracle.com/Eleven/Eleven/BPELFtp" xmlns:ns1="http://www.bwr.mx"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+            <import namespace="http://www.bwr.mx" schemaLocation="../Schemas/entrada.xsd"/>
+        </schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="http://xmlns.oracle.com/Eleven/Eleven/BPELFtp" xmlns:ns1="http://www.bwr.mx"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+            <xsd:import namespace="http://www.bwr.mx" schemaLocation="../Schemas/moneda.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="BPELFtpRequestMessage">
+        <wsdl:part name="payload" element="ns1:expenses"/>
+    </wsdl:message>
+    <wsdl:portType name="BPELFtp">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:BPELFtpRequestMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

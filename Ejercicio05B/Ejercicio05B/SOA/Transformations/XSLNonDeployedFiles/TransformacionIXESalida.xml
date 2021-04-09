@@ -1,0 +1,15 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<tns:Root-Element xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/ftp/Ejercicio05B/Ejercicio05B/ftpIXE" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/Ejercicio05B/Ejercicio05B/BPELFtp" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:tns="http://bwr.mx/ftpIXE">
+   <tns:orden>
+      <tns:C1>WERT34560980oi45</tns:C1>
+      <tns:C2>4141123512361258</tns:C2>
+      <tns:C3>50.50</tns:C3>
+      <tns:C4>1</tns:C4>
+   </tns:orden>
+   <tns:orden>
+      <tns:C1>ABCD34560980oi45</tns:C1>
+      <tns:C2>4040123512361258</tns:C2>
+      <tns:C3>50.50</tns:C3>
+      <tns:C4>7</tns:C4>
+   </tns:orden>
+</tns:Root-Element>

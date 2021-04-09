@@ -6,13 +6,13 @@
       <xsd:sequence>
         <xsd:element name="id" type="xsd:string"/>
         <xsd:element name="fecha" type="xsd:date"/>
-        <xsd:element name="gasto" maxOccurs="unbounded">
+        <xsd:element name="gasto" maxOccurs="unbounded" minOccurs="0">
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element name="uuid" type="xsd:string"/>
-              <xsd:element name="subtotal" type="xsd:float"/>
-              <xsd:element name="impuesto" type="xsd:float"/>
-              <xsd:element name="pais" type="xsd:string"/>
+              <xsd:element name="uuid" type="xsd:string" nillable="true"/>
+              <xsd:element name="subtotal" type="xsd:float" nillable="true"/>
+              <xsd:element name="impuesto" type="xsd:float" nillable="true"/>
+              <xsd:element name="pais" type="xsd:string" nillable="true"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>

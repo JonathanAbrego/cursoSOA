@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.bwr.mx" targetNamespace="http://www.bwr.mx"
+            elementFormDefault="qualified">
+  <xsd:element name="gastos">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="id" type="xsd:string"/>
+        <xsd:element name="fecha" type="xsd:date"/>
+        <xsd:element name="gasto" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="uuid" type="xsd:string"/>
+              <xsd:element name="subtotal" type="xsd:float"/>
+              <xsd:element name="impuesto" type="xsd:float"/>
+              <xsd:element name="pais" type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

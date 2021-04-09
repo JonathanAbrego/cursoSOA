@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<ns0:gastos xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/ftp/Eleven/Eleven/ftpEscribeXML" xmlns:client="http://xmlns.oracle.com/Eleven/Eleven/BPELFtp" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:ns0="http://www.bwr.mx">
+   <ns0:id>id24</ns0:id>
+   <ns0:fecha>2021-04-09</ns0:fecha>
+   <ns0:gasto>
+      <ns0:uuid>uuid25</ns0:uuid>
+      <ns0:subtotal>270.73</ns0:subtotal>
+      <ns0:impuesto>280.73</ns0:impuesto>
+      <ns0:pais>MXN</ns0:pais>
+   </ns0:gasto>
+   <ns0:gasto>
+      <ns0:uuid>uuid39</ns0:uuid>
+      <ns0:subtotal>410.72</ns0:subtotal>
+      <ns0:impuesto>420.72</ns0:impuesto>
+      <ns0:pais>MXN</ns0:pais>
+   </ns0:gasto>
+</ns0:gastos>

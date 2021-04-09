@@ -15,11 +15,11 @@
         </dgm:operations>
     </dgm:gService>
     <dgm:gReference name="dbTransaction">
-        <dgm:body borderWidth="2" arcRad="20" X="870" Y="26" width="136" height="84">
+        <dgm:body borderWidth="2" arcRad="20" X="860" Y="26" width="136" height="84">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="860" Y="19" width="156" height="98">
+        <dgm:shadow arcRad="20" X="850" Y="19" width="156" height="98">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="dbTransaction" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/Ejercicio04A/Ejercicio04A/dbTransaction#wsdl.interface(dbTransaction_ptt)"/>
@@ -29,11 +29,11 @@
         </dgm:operations>
     </dgm:gReference>
     <dgm:gReference name="ftpInvoiceUUID">
-        <dgm:body borderWidth="2" arcRad="20" X="870" Y="144" width="136" height="84">
+        <dgm:body borderWidth="2" arcRad="20" X="860" Y="144" width="136" height="84">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="860" Y="137" width="156" height="98">
+        <dgm:shadow arcRad="20" X="850" Y="137" width="156" height="98">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="ftpInvoiceUUID" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/Ejercicio04A/Ejercicio04A/ftpInvoiceUUID#wsdl.interface(Put_ptt)"/>
@@ -43,11 +43,11 @@
         </dgm:operations>
     </dgm:gReference>
     <dgm:gReference name="dbCusDetails">
-        <dgm:body borderWidth="2" arcRad="20" X="870" Y="262" width="136" height="84">
+        <dgm:body borderWidth="2" arcRad="20" X="860" Y="262" width="136" height="84">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="860" Y="255" width="156" height="98">
+        <dgm:shadow arcRad="20" X="850" Y="255" width="156" height="98">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="dbCusDetails" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/Ejercicio04A/Ejercicio04A/dbCusDetails#wsdl.interface(dbCusDetails_ptt)"/>
@@ -57,11 +57,11 @@
         </dgm:operations>
     </dgm:gReference>
     <dgm:gReference name="ftpInvoiceReject">
-        <dgm:body borderWidth="2" arcRad="20" X="870" Y="380" width="136" height="84">
+        <dgm:body borderWidth="2" arcRad="20" X="860" Y="380" width="136" height="84">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="860" Y="373" width="156" height="98">
+        <dgm:shadow arcRad="20" X="850" Y="373" width="156" height="98">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="ftpInvoiceReject" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/Ejercicio04A/Ejercicio04A/ftpInvoiceReject#wsdl.interface(Put_ptt)"/>
@@ -71,11 +71,11 @@
         </dgm:operations>
     </dgm:gReference>
     <dgm:gReference name="stamInvoice">
-        <dgm:body borderWidth="2" arcRad="20" X="870" Y="498" width="136" height="84">
+        <dgm:body borderWidth="2" arcRad="20" X="860" Y="498" width="136" height="84">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="860" Y="491" width="156" height="98">
+        <dgm:shadow arcRad="20" X="850" Y="491" width="156" height="98">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="stamInvoice" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://www.bwr.mx/Training/SOA/PruebasBAM/StampInvoice/StampInvoiceProcess#wsdl.interface(StampInvoiceProcess)"/>
@@ -85,12 +85,12 @@
         </dgm:operations>
     </dgm:gReference>
     <dgm:gComponent name="BPELInvoice">
-        <dgm:body borderWidth="2" arcRad="20" X="449" Y="223" width="130" height="161">
+        <dgm:body borderWidth="2" arcRad="20" X="444" Y="223" width="130" height="161">
             <dgm:borderColor r="69" g="113" b="140"/>
             <dgm:lightBgColor r="166" g="208" b="230"/>
             <dgm:darkBgColor r="99" g="162" b="201"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="439" Y="216" width="150" height="177">
+        <dgm:shadow arcRad="20" X="434" Y="216" width="150" height="177">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="bpelinvoice_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/Ejercicio04A/Ejercicio04A/BPELInvoice#wsdl.interface(BPELInvoice)"/>
@@ -102,42 +102,42 @@
         <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
     </dgm:gComponent>
     <dgm:gWireLink source="bpelinvoice_client_ep" target="BPELInvoice/bpelinvoice_client" width="2">
-        <dgm:gSegment X1="168" Y1="248" X2="439" Y2="248"/>
+        <dgm:gSegment X1="168" Y1="248" X2="434" Y2="248"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="BPELInvoice/dbTransaction" target="dbTransaction" width="2">
-        <dgm:gSegment X1="589" Y1="248" X2="613" Y2="248"/>
-        <dgm:gSegment X1="613" Y1="248" X2="613" Y2="36"/>
-        <dgm:gSegment X1="613" Y1="36" X2="860" Y2="36"/>
+        <dgm:gSegment X1="584" Y1="248" X2="608" Y2="248"/>
+        <dgm:gSegment X1="608" Y1="248" X2="608" Y2="36"/>
+        <dgm:gSegment X1="608" Y1="36" X2="850" Y2="36"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="BPELInvoice/ftpInvoiceUUID" target="ftpInvoiceUUID" width="2">
-        <dgm:gSegment X1="589" Y1="273" X2="628" Y2="273"/>
-        <dgm:gSegment X1="628" Y1="273" X2="628" Y2="154"/>
-        <dgm:gSegment X1="628" Y1="154" X2="860" Y2="154"/>
+        <dgm:gSegment X1="584" Y1="273" X2="623" Y2="273"/>
+        <dgm:gSegment X1="623" Y1="273" X2="623" Y2="154"/>
+        <dgm:gSegment X1="623" Y1="154" X2="850" Y2="154"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="BPELInvoice/dbCusDetails" target="dbCusDetails" width="2">
-        <dgm:gSegment X1="589" Y1="298" X2="643" Y2="298"/>
-        <dgm:gSegment X1="643" Y1="298" X2="643" Y2="272"/>
-        <dgm:gSegment X1="643" Y1="272" X2="860" Y2="272"/>
+        <dgm:gSegment X1="584" Y1="298" X2="638" Y2="298"/>
+        <dgm:gSegment X1="638" Y1="298" X2="638" Y2="272"/>
+        <dgm:gSegment X1="638" Y1="272" X2="850" Y2="272"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="BPELInvoice/ftpInvoiceReject" target="ftpInvoiceReject" width="2">
-        <dgm:gSegment X1="589" Y1="323" X2="628" Y2="323"/>
-        <dgm:gSegment X1="628" Y1="323" X2="628" Y2="390"/>
-        <dgm:gSegment X1="628" Y1="390" X2="860" Y2="390"/>
+        <dgm:gSegment X1="584" Y1="323" X2="623" Y2="323"/>
+        <dgm:gSegment X1="623" Y1="323" X2="623" Y2="390"/>
+        <dgm:gSegment X1="623" Y1="390" X2="850" Y2="390"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="BPELInvoice/stamInvoice" target="stamInvoice" width="2">
-        <dgm:gSegment X1="589" Y1="348" X2="613" Y2="348"/>
-        <dgm:gSegment X1="613" Y1="348" X2="613" Y2="508"/>
-        <dgm:gSegment X1="613" Y1="508" X2="860" Y2="508"/>
+        <dgm:gSegment X1="584" Y1="348" X2="608" Y2="348"/>
+        <dgm:gSegment X1="608" Y1="348" X2="608" Y2="508"/>
+        <dgm:gSegment X1="608" Y1="508" X2="850" Y2="508"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>

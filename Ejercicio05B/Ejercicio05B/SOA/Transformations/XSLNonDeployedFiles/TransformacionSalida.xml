@@ -1,0 +1,35 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<ns0:expenses id="id133" fecha="20200130" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/Ejercicio05B/Ejercicio05B/BPELFtp" xmlns:ns0="http://www.bwr.mx">
+   <ns0:rows>
+      <ns0:row>
+         <ns0:uuid>AART34560980oi45</ns0:uuid>
+         <ns0:number_tdc>4745123512361258</ns0:number_tdc>
+         <ns0:amount>50.50</ns0:amount>
+         <ns0:tax>2.00</ns0:tax>
+         <ns0:country>CAD</ns0:country>
+      </ns0:row>
+      <ns0:row>
+         <ns0:uuid>WERT34560980oi45</ns0:uuid>
+         <ns0:number_tdc>4141123512361258</ns0:number_tdc>
+         <ns0:amount>50.50</ns0:amount>
+         <ns0:tax>1.00</ns0:tax>
+         <ns0:country>MXN</ns0:country>
+      </ns0:row>
+      <ns0:row>
+         <ns0:uuid>ABCD34560980oi45</ns0:uuid>
+         <ns0:number_tdc>4040123512361258</ns0:number_tdc>
+         <ns0:amount>50.50</ns0:amount>
+         <ns0:tax>1.00</ns0:tax>
+         <ns0:tax>6.00</ns0:tax>
+         <ns0:country>MXN</ns0:country>
+      </ns0:row>
+      <ns0:row>
+         <ns0:uuid>HHH34560980oi45</ns0:uuid>
+         <ns0:number_tdc>4152123512361258</ns0:number_tdc>
+         <ns0:amount>100.50</ns0:amount>
+         <ns0:tax>1.00</ns0:tax>
+         <ns0:tax>5.00</ns0:tax>
+         <ns0:country>USA</ns0:country>
+      </ns0:row>
+   </ns0:rows>
+</ns0:expenses>

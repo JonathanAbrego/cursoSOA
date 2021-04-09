@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.bwr.mx" targetNamespace="http://www.bwr.mx"
+            elementFormDefault="qualified">
+  <xsd:element name="expenses">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="rows">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="row" maxOccurs="unbounded">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="uuid" type="xsd:string"/>
+                    <xsd:element name="number_tdc" type="xsd:integer"/>
+                    <xsd:element name="amount" type="xsd:float"/>
+                    <xsd:element name="tax" maxOccurs="unbounded" type="xsd:float"/>
+                    <xsd:element name="country" type="xsd:string"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="id" type="xsd:string"/>
+      <xsd:attribute name="fecha" type="xsd:date"/>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

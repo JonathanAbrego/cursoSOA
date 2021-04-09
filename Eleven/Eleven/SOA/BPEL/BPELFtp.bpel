@@ -1,0 +1,160 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Thu Apr 08 19:14:43 CDT 2021
+  Author:  jonab
+  Type: BPEL 2.0 Process
+  Purpose: One Way BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BPELFtp"
+               targetNamespace="http://xmlns.oracle.com/Eleven/Eleven/BPELFtp"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Eleven/Eleven/BPELFtp"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/ftp/Eleven/Eleven/ftpIXE"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/ftp/Eleven/Eleven/ftpEscribeCSV"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ns3="http://www.bwr.mx"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns4="http://bwr.mc/ftpEscribeCSV"
+         xmlns:ns5="http://xmlns.oracle.com/pcbpel/adapter/ftp/Eleven/Eleven/ftpEscribeXML">
+  <import namespace="http://www.bwr.mx" location="../Schemas/moneda.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+  <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/Eleven/Eleven/BPELFtp" location="../WSDLs/BPELFtp.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelftp_client" partnerLinkType="client:BPELFtp" myRole="BPELFtpProvider"/>
+    <partnerLink name="ftpEscribeCSV" partnerLinkType="ns2:Put_plt" partnerRole="Put_role"/>
+    <partnerLink name="ftpEscribeXML" partnerLinkType="ns5:Put_plt" partnerRole="Put_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="InputVariable" messageType="client:BPELFtpRequestMessage"/>
+    <variable name="InvocaFtpEscribeCSV_Put_InputVariable" messageType="ns2:Put_msg"/>
+    <variable name="FechaXML" type="xsd:string"/>
+    <variable name="InvocarFtpEscribeXML_Put_InputVariable" messageType="ns5:Put_msg"/>
+    <variable name="MonedaActual" element="ns3:moneda"/>
+    <variable name="IteradorMonedas" type="xsd:integer">
+      <from>1</from>
+    </variable>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in BPELFtp.wsdl) -->
+    <receive name="Entrada" partnerLink="bpelftp_client" portType="client:BPELFtp" operation="process"
+             variable="InputVariable" createInstance="yes"/>
+    <assign name="TransformacionOrderna">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/TransformacionOrdena.xsl", $InputVariable.payload)</from>
+        <to variable="InputVariable" part="payload"/>
+      </copy>
+    </assign>
+    <assign name="FechaXML">
+      <copy>
+        <from>concat(substring($InputVariable.payload/@fecha,7,4),substring($InputVariable.payload/@fecha,4,2),substring($InputVariable.payload/@fecha,1,2))</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$FechaXML</to>
+      </copy>
+    </assign>
+    <assign name="TransformacionIXE">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/TransformacionIXE.xsl", $InputVariable.payload)</from>
+        <to variable="InvocaFtpEscribeCSV_Put_InputVariable" part="body"/>
+      </copy>
+    </assign>
+    <invoke name="InvocaFtpEscribeCSV" partnerLink="ftpEscribeCSV" portType="ns2:Put_ptt"
+            operation="Put" inputVariable="InvocaFtpEscribeCSV_Put_InputVariable" bpelx:invokeAsDetail="no">
+      <bpelx:toProperties>
+        <bpelx:toProperty name="jca.ftp.FileName">concat('IXE','_','JABREGO','_',$InputVariable.payload/@id,'_',$FechaXML,'_',xp20:format-dateTime(xp20:current-date(),'[Y001][M01][D01]'),'.csv')</bpelx:toProperty>
+      </bpelx:toProperties>
+    </invoke>
+    <assign name="InicializaMoneda">
+      <copy>
+        <from>""</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$MonedaActual/ns3:actual</to>
+      </copy>
+    </assign>
+    <while name="MientrasHayaMonedas">
+      <condition>$IteradorMonedas &lt;= count($InputVariable.payload/ns3:rows/ns3:row)</condition>
+      <sequence name="Sequence1">
+        <if name="SiMonedaDiferente">
+          <documentation>
+            <![CDATA[CambioMoneda]]>
+          </documentation>
+          <condition>$InputVariable.payload/ns3:rows/ns3:row[$IteradorMonedas]/ns3:country != $MonedaActual/ns3:actual</condition>
+          <sequence>
+            <assign name="ActualizaMonedaActual">
+              <copy>
+                <from>$InputVariable.payload/ns3:rows/ns3:row[$IteradorMonedas]/ns3:country</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$MonedaActual/ns3:actual</to>
+              </copy>
+            </assign>
+            <assign name="TransformacionXML">
+              <bpelx:annotation>
+                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+              </bpelx:annotation>
+              <copy>
+                <from>ora:doXSLTransformForDoc("../Transformations/TransformacionBANAMEX.xsl", $MonedaActual, "InputVariable.payload", $InputVariable.payload)</from>
+                <to variable="InvocarFtpEscribeXML_Put_InputVariable" part="body"/>
+              </copy>
+            </assign>
+            <invoke name="InvocarFtpEscribeXML" partnerLink="ftpEscribeXML" portType="ns5:Put_ptt" operation="Put"
+                    inputVariable="InvocarFtpEscribeXML_Put_InputVariable" bpelx:invokeAsDetail="no">
+              <bpelx:toProperties>
+                <bpelx:toProperty name="jca.ftp.FileName">concat('BANAMEX','_',$MonedaActual/ns3:actual,'_','JABREGO','_',$InputVariable.payload/@id,'_',$FechaXML,'_',xp20:format-dateTime(xp20:current-date(),'[Y001][M01][D01]'),'.xml')</bpelx:toProperty>
+              </bpelx:toProperties>
+            </invoke>
+          </sequence>
+        </if>
+        <assign name="IncrementaIteradorActual">
+          <copy>
+            <from>$IteradorMonedas+1</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$IteradorMonedas</to>
+          </copy>
+        </assign>
+      </sequence>
+    </while>
+  </sequence>
+</process>

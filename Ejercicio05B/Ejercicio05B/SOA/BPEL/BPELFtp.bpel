@@ -27,7 +27,10 @@
          xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
          xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
          xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
-         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns2="http://www.bwr.mx">
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns2="http://www.bwr.mx"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/ftp/Ejercicio05B/Ejercicio05B/ftpIXE"
+         xmlns:ns4="http://bwr.mx/ftpIXE" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/Ejercicio05B/Ejercicio05B/BPELFtp" location="../WSDLs/BPELFtp.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
   <!-- 
@@ -44,6 +47,7 @@
     -->
     <partnerLink name="bpelftp_client" partnerLinkType="client:BPELFtp" myRole="BPELFtpProvider"/>
     <partnerLink name="ftpBanamex" partnerLinkType="ns1:Put_plt" partnerRole="Put_role"/>
+    <partnerLink name="ftpIXE" partnerLinkType="ns3:Put_plt" partnerRole="Put_role"/>
   </partnerLinks>
 
   <!-- 
@@ -56,6 +60,20 @@
     <!-- Reference to the message passed as input during initiation -->
     <variable name="inputVariable" messageType="client:BPELFtpRequestMessage"/>
     <variable name="InvokeFTPBanamex_Put_InputVariable" messageType="ns1:Put_msg"/>
+    <variable name="InvokeFTPIXE_Put_InputVariable" messageType="ns3:Put_msg"/>
+    <variable name="TotalMonedas" type="xsd:integer">
+      <from>1</from>
+    </variable>
+    <variable name="MonedaIXE" type="xsd:integer">
+      <from>2</from>
+    </variable>
+    <variable name="MonedaBanamex" type="xsd:integer">
+      <from>1</from>
+    </variable>
+    <variable name="MonedaActual" type="xsd:string"/>
+    <variable name="Impuestos" type="xsd:float">
+      <from>0</from>
+    </variable>
   </variables>
 
   <!-- 
@@ -68,34 +86,21 @@
   <sequence name="main">
 
     <!-- Receive input from requestor. (Note: This maps to operation defined in BPELFtp.wsdl) -->
-    <receive name="receiveInput" partnerLink="bpelftp_client" portType="client:BPELFtp" operation="process" variable="inputVariable" createInstance="yes"/>
-    <assign name="Assign1">
+    <receive name="MensajeEntarda" partnerLink="bpelftp_client" portType="client:BPELFtp" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="TransformacionSalidaIXE">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
       <copy>
-        <from>'A501'</from>
-        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeFTPBanamex_Put_InputVariable.body/ns2:id</to>
-      </copy>
-      <copy>
-        <from>'30-01-2002'</from>
-        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeFTPBanamex_Put_InputVariable.body/ns2:fecha</to>
-      </copy>
-      <copy>
-        <from>'sadasd'</from>
-        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeFTPBanamex_Put_InputVariable.body/ns2:gasto/ns2:uuid</to>
-      </copy>
-      <copy>
-        <from>3500</from>
-        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeFTPBanamex_Put_InputVariable.body/ns2:gasto/ns2:subtotal</to>
-      </copy>
-      <copy>
-        <from>32</from>
-        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeFTPBanamex_Put_InputVariable.body/ns2:gasto/ns2:impuesto</to>
-      </copy>
-      <copy>
-        <from>'MXN'</from>
-        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeFTPBanamex_Put_InputVariable.body/ns2:gasto/ns2:pais</to>
+        <from>ora:doXSLTransformForDoc("../Transformations/TransformationIXE.xsl", $inputVariable.payload)</from>
+        <to variable="InvokeFTPIXE_Put_InputVariable" part="body"/>
       </copy>
     </assign>
-    <invoke name="InvokeFTPBanamex" bpelx:invokeAsDetail="no" partnerLink="ftpBanamex" portType="ns1:Put_ptt"
-            operation="Put" inputVariable="InvokeFTPBanamex_Put_InputVariable"/>
+    <invoke name="InvocarFtpIXE" partnerLink="ftpIXE" portType="ns3:Put_ptt" operation="Put"
+            inputVariable="InvokeFTPIXE_Put_InputVariable" bpelx:invokeAsDetail="no">
+      <bpelx:toProperties>
+        <bpelx:toProperty name="jca.ftp.FileName">concat('IXE','_','JABREGO','_',$inputVariable.payload/@id,'_',$inputVariable.payload/@fecha,'_',xp20:format-dateTime(xp20:current-date(),'[Y0001][M01][D01]'),'.csv')</bpelx:toProperty>
+      </bpelx:toProperties>
+    </invoke>
   </sequence>
 </process>
