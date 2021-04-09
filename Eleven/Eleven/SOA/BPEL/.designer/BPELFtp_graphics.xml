@@ -5,15 +5,16 @@
    <iconize/>
    <partnerlink_locations>
       <partnerlink name="bpelftp_client" x="14" y="90" side="left"/>
-      <partnerlink name="ftpEscribeXML" x="14" y="1093" side="left"/>
-      <partnerlink name="ftpEscribeCSV" x="1301" y="476" side="right"/>
+      <partnerlink name="ftpEscribeXML" x="14" y="1301" side="left"/>
+      <partnerlink name="ftpEscribeCSV" x="920" y="1035" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,566,1418,798" show_swimlanes="true">
+   <graph_layout viewport="0,0,1037,455" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
       <layout_item collapsed="false" xpath="/process/sequence/while" type="while"/>
       <layout_item collapsed="false" xpath="/process/sequence/while/sequence" type="sequence"/>
       <layout_item collapsed="false" xpath="/process/sequence/while/sequence/if/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/while/sequence/if/sequence/if/sequence" type="sequence"/>
    </graph_layout>
    <bookmarks/>
 </graphics>

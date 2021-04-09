@@ -61,7 +61,7 @@
     <variable name="InputVariable" messageType="client:BPELFtpRequestMessage"/>
     <variable name="InvocaFtpEscribeCSV_Put_InputVariable" messageType="ns2:Put_msg"/>
     <variable name="FechaXML" type="xsd:string"/>
-    <variable name="InvocarFtpEscribeXML_Put_InputVariable" messageType="ns5:Put_msg"/>
+    <variable name="InvocarFtpEscribeXML_Put_InpurVariable" messageType="ns5:Put_msg"/>
     <variable name="MonedaActual" element="ns3:moneda"/>
     <variable name="IteradorMonedas" type="xsd:integer">
       <from>1</from>
@@ -95,21 +95,6 @@
         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$FechaXML</to>
       </copy>
     </assign>
-    <assign name="TransformacionIXE">
-      <bpelx:annotation>
-        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
-      </bpelx:annotation>
-      <copy>
-        <from>ora:doXSLTransformForDoc("../Transformations/TransformacionIXE.xsl", $InputVariable.payload)</from>
-        <to variable="InvocaFtpEscribeCSV_Put_InputVariable" part="body"/>
-      </copy>
-    </assign>
-    <invoke name="InvocaFtpEscribeCSV" partnerLink="ftpEscribeCSV" portType="ns2:Put_ptt"
-            operation="Put" inputVariable="InvocaFtpEscribeCSV_Put_InputVariable" bpelx:invokeAsDetail="no">
-      <bpelx:toProperties>
-        <bpelx:toProperty name="jca.ftp.FileName">concat('IXE','_','JABREGO','_',$InputVariable.payload/@id,'_',$FechaXML,'_',xp20:format-dateTime(xp20:current-date(),'[Y001][M01][D01]'),'.csv')</bpelx:toProperty>
-      </bpelx:toProperties>
-    </invoke>
     <assign name="InicializaMoneda">
       <copy>
         <from>""</from>
@@ -131,17 +116,40 @@
                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$MonedaActual/ns3:actual</to>
               </copy>
             </assign>
+            <if name="SiMXN">
+              <documentation>
+                <![CDATA[EsMXN]]>
+              </documentation>
+              <condition>$MonedaActual/ns3:actual = 'MXN'</condition>
+              <sequence>
+                <assign name="TransformacionIXE">
+                  <bpelx:annotation>
+                    <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                  </bpelx:annotation>
+                  <copy>
+                    <from>ora:doXSLTransformForDoc("../Transformations/TransformacionIXE.xsl", $InputVariable.payload)</from>
+                    <to variable="InvocaFtpEscribeCSV_Put_InputVariable" part="body"/>
+                  </copy>
+                </assign>
+                <invoke name="InvocaFtpEscribeCSV" partnerLink="ftpEscribeCSV" portType="ns2:Put_ptt" operation="Put"
+                        inputVariable="InvocaFtpEscribeCSV_Put_InputVariable" bpelx:invokeAsDetail="no">
+                  <bpelx:toProperties>
+                    <bpelx:toProperty name="jca.ftp.FileName">concat('IXE','_','JABREGO','_',$InputVariable.payload/@id,'_',$FechaXML,'_',xp20:format-dateTime(xp20:current-date(),'[Y001][M01][D01]'),'.csv')</bpelx:toProperty>
+                  </bpelx:toProperties>
+                </invoke>
+              </sequence>
+            </if>
             <assign name="TransformacionXML">
               <bpelx:annotation>
                 <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
               </bpelx:annotation>
               <copy>
                 <from>ora:doXSLTransformForDoc("../Transformations/TransformacionBANAMEX.xsl", $MonedaActual, "InputVariable.payload", $InputVariable.payload)</from>
-                <to variable="InvocarFtpEscribeXML_Put_InputVariable" part="body"/>
+                <to variable="InvocarFtpEscribeXML_Put_InpurVariable" part="body"/>
               </copy>
             </assign>
             <invoke name="InvocarFtpEscribeXML" partnerLink="ftpEscribeXML" portType="ns5:Put_ptt" operation="Put"
-                    inputVariable="InvocarFtpEscribeXML_Put_InputVariable" bpelx:invokeAsDetail="no">
+                    inputVariable="InvocarFtpEscribeXML_Put_InpurVariable" bpelx:invokeAsDetail="no">
               <bpelx:toProperties>
                 <bpelx:toProperty name="jca.ftp.FileName">concat('BANAMEX','_',$MonedaActual/ns3:actual,'_','JABREGO','_',$InputVariable.payload/@id,'_',$FechaXML,'_',xp20:format-dateTime(xp20:current-date(),'[Y001][M01][D01]'),'.xml')</bpelx:toProperty>
               </bpelx:toProperties>

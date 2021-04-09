@@ -15,11 +15,11 @@
         </dgm:operations>
     </dgm:gService>
     <dgm:gReference name="FtpEscribeCSV">
-        <dgm:body borderWidth="2" arcRad="20" X="424" Y="26" width="136" height="84">
+        <dgm:body borderWidth="2" arcRad="20" X="780" Y="26" width="136" height="84">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="414" Y="19" width="156" height="98">
+        <dgm:shadow arcRad="20" X="770" Y="19" width="156" height="98">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="FtpEscribeCSV" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/Eleven/Eleven/ftpEscribeCSV#wsdl.interface(Put_ptt)"/>
@@ -29,11 +29,11 @@
         </dgm:operations>
     </dgm:gReference>
     <dgm:gReference name="FtpEscribeXML">
-        <dgm:body borderWidth="2" arcRad="20" X="424" Y="144" width="136" height="84">
+        <dgm:body borderWidth="2" arcRad="20" X="780" Y="144" width="136" height="84">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="414" Y="137" width="156" height="98">
+        <dgm:shadow arcRad="20" X="770" Y="137" width="156" height="98">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="FtpEscribeXML" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/Eleven/Eleven/ftpEscribeXML#wsdl.interface(Put_ptt)"/>
@@ -43,12 +43,12 @@
         </dgm:operations>
     </dgm:gReference>
     <dgm:gComponent name="BPELFtp">
-        <dgm:body borderWidth="2" arcRad="20" X="226" Y="84" width="130" height="86">
+        <dgm:body borderWidth="2" arcRad="20" X="404" Y="84" width="130" height="86">
             <dgm:borderColor r="69" g="113" b="140"/>
             <dgm:lightBgColor r="166" g="208" b="230"/>
             <dgm:darkBgColor r="99" g="162" b="201"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="216" Y="77" width="150" height="102">
+        <dgm:shadow arcRad="20" X="394" Y="77" width="150" height="102">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="bpelftp_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/Eleven/Eleven/BPELFtp#wsdl.interface(BPELFtp)"/>
@@ -57,21 +57,21 @@
         <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
     </dgm:gComponent>
     <dgm:gWireLink source="bpelftp_client_ep" target="BPELFtp/bpelftp_client" width="2">
-        <dgm:gSegment X1="168" Y1="109" X2="216" Y2="109"/>
+        <dgm:gSegment X1="168" Y1="109" X2="394" Y2="109"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="BPELFtp/ftpEscribeCSV" target="FtpEscribeCSV" width="2">
-        <dgm:gSegment X1="366" Y1="109" X2="390" Y2="109"/>
-        <dgm:gSegment X1="390" Y1="109" X2="390" Y2="36"/>
-        <dgm:gSegment X1="390" Y1="36" X2="414" Y2="36"/>
+        <dgm:gSegment X1="544" Y1="109" X2="568" Y2="109"/>
+        <dgm:gSegment X1="568" Y1="109" X2="568" Y2="36"/>
+        <dgm:gSegment X1="568" Y1="36" X2="770" Y2="36"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="BPELFtp/ftpEscribeXML" target="FtpEscribeXML" width="2">
-        <dgm:gSegment X1="366" Y1="134" X2="390" Y2="134"/>
-        <dgm:gSegment X1="390" Y1="134" X2="390" Y2="154"/>
-        <dgm:gSegment X1="390" Y1="154" X2="414" Y2="154"/>
+        <dgm:gSegment X1="544" Y1="134" X2="568" Y2="134"/>
+        <dgm:gSegment X1="568" Y1="134" X2="568" Y2="154"/>
+        <dgm:gSegment X1="568" Y1="154" X2="770" Y2="154"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
