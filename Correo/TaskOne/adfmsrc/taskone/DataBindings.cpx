@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application" version="12.2.1.22.48" id="DataBindings"
+             SeparateXMLFiles="false" Package="taskone" ClientType="Generic">
+  <pageMap>
+    <page path="/Humantask1_TaskDetails.jspx" usageId="taskone_Humantask1_TaskDetailsPageDef"/>
+    <page path="/Humantask1_TaskNotification.jspx" usageId="taskone_Humantask1_TaskNotificationPageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="taskone_Humantask1_TaskDetailsPageDef" path="taskone.pageDefs.Humantask1_TaskDetailsPageDef"/>
+    <page id="taskone_Humantask1_TaskNotificationPageDef" path="taskone.pageDefs.Humantask1_TaskNotificationPageDef"/>
+  </pageDefinitionUsages>
+  <dataControlUsages>
+    <dc id="TaskOne_Humantask1" path="taskone.TaskOne_Humantask1"/>
+  </dataControlUsages>
+</Application>
