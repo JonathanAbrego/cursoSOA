@@ -23,8 +23,8 @@
             </participant>
          </stage>
       </participants>
-      <notification includeTaskAttachments="false" actionable="false" secureNotifications="false"
-                    oneNotificationPerUserPerAction="false" hideWorklistUrlInEmail="false">
+      <notification includeTaskAttachments="true" actionable="true" secureNotifications="false"
+                    oneNotificationPerUserPerAction="false" hideWorklistUrlInEmail="true">
          <action name="ASSIGN" recipient="ASSIGNEES">
             <![CDATA[concat(string('Task '), /task:task/task:title, string(' requires your attention.'))]]>
          </action>
@@ -35,7 +35,7 @@
             <![CDATA[concat(string('Task '), /task:task/task:title, string(' requires your attention.'))]]>
          </action>
          <groupNotificationConfiguration>SEND_INDIVIDUAL_NOTIFICATION</groupNotificationConfiguration>
-         <commentScope>TASK</commentScope>
+         <commentScope>PARENT_TASK</commentScope>
       </notification>
    </routingSlip>
    <workflowConfiguration features="ucm,RSCUSTOMIZATION,RULESOPTIMIZATION" xmlns:ns0="http://xmlns.oracle.com/bpm/bpmobject/Data/BOData" xmlns="http://xmlns.oracle.com/bpel/workflow/configuration">
@@ -55,6 +55,7 @@
       <allowInitiatorEditParticipants>false</allowInitiatorEditParticipants>
       <allowParticipantsEditParticipants>false</allowParticipantsEditParticipants>
       <globalCreationTask>false</globalCreationTask>
+      <taskFlowFileLocation>file:/C:/Oracle/Middleware/config/soa/BpmAplicacionPrueba/TareaOperaciones/public_html/WEB-INF/Humantask1_TaskFlow.xml</taskFlowFileLocation>
       <enableAutoClaim>true</enableAutoClaim>
       <workflowConditions/>
       <taskSequenceTypes>FUTURE</taskSequenceTypes>

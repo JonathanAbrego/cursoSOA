@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application" version="12.2.1.22.48" id="DataBindings"
+             SeparateXMLFiles="false" Package="tareaoperaciones" ClientType="Generic">
+  <pageMap>
+    <page path="/Humantask1_TaskDetails.jspx" usageId="tareaoperaciones_Humantask1_TaskDetailsPageDef"/>
+    <page path="/Humantask1_TaskNotification.jspx" usageId="tareaoperaciones_Humantask1_TaskNotificationPageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="tareaoperaciones_Humantask1_TaskDetailsPageDef"
+          path="tareaoperaciones.pageDefs.Humantask1_TaskDetailsPageDef"/>
+    <page id="tareaoperaciones_Humantask1_TaskNotificationPageDef"
+          path="tareaoperaciones.pageDefs.Humantask1_TaskNotificationPageDef"/>
+  </pageDefinitionUsages>
+  <dataControlUsages>
+    <dc id="TareaOperaciones_Humantask1" path="tareaoperaciones.TareaOperaciones_Humantask1"/>
+  </dataControlUsages>
+</Application>
